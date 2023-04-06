@@ -22,6 +22,30 @@
   src: url("../../fonts/Inter-Bold.woff") format("woff");
 }
 
+@font-face {
+  font-family: "jose-l";
+  font-weight: 300;
+  src: url("../../fonts/JosefinSans-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "jose-r";
+  font-weight: 400;
+  src: url("../../fonts/JosefinSans-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "jose-sb";
+  font-weight: 600;
+  src: url("../../fonts/JosefinSans-SemiBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "jose-b";
+  font-weight: 700;
+  src: url("../../fonts/JosefinSans-Bold.woff") format("woff");
+}
+
 // declare a class which applies it
 
 .inter-l {
@@ -32,58 +56,74 @@
   font-family: 'inter-r';
 }
 
-.inter-b {
-  font-family: 'inter-b';
+.jose-sb {
+  font-family: 'jose-sb';
 }
 
-.inter-xs {
+.jose-l {
+  font-family: 'jose-l';
+}
+
+.jose-r {
+  font-family: 'jose-r';
+}
+
+.jose-sb {
+  font-family: 'jose-sb';
+}
+
+.jose-b {
+  font-family: 'jose-b';
+}
+
+.text-xs {
   font-size: 12px;
 }
 
-.inter-sm {
+.text-sm {
   font-size: 14px;
 }
 
-.inter-base {
+.text-base {
   font-size: 16px;
 }
 
-.inter-lg {
+.text-lg {
   font-size: 18px;
 }
 
-.inter-xl {
+.text-xl {
   font-size: 20px;
 }
 
-.inter-2xl {
+.text-2xl {
   font-size: 24px;
 }
 
-.inter-3xl {
+.text-3xl {
   font-size: 30px;
 }
 
-.inter-4xl {
+.text-4xl {
   font-size: 36px;
 }
 
-.inter-5xl {
+.text-5xl {
   font-size: 48px;
 }
 
-inter-6xl {
+text-6xl {
   font-size: 60px;
 }
 
-.inter-7xl {
+.text-7xl {
   font-size: 72px;
 }
 
-inter-8xl {
+text-8xl {
   font-size: 96px;
 }
 
-.inter-9xl {
+.text-9xl {
   font-size: 128px;
 }
