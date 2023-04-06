@@ -49,35 +49,35 @@
 // declare a class which applies it
 
 .inter-l {
-  font-family: 'inter-l';
+  font-family: "inter-l";
 }
 
 .inter-r {
-  font-family: 'inter-r';
+  font-family: "inter-r";
 }
 
 .inter-sb {
-  font-family: 'inter-sb';
+  font-family: "inter-sb";
 }
 
 .inter-b {
-  font-family: 'inter-b';
+  font-family: "inter-b";
 }
 
 .jose-l {
-  font-family: 'jose-l';
+  font-family: "jose-l";
 }
 
 .jose-r {
-  font-family: 'jose-r';
+  font-family: "jose-r";
 }
 
 .jose-sb {
-  font-family: 'jose-sb';
+  font-family: "jose-sb";
 }
 
 .jose-b {
-  font-family: 'jose-b';
+  font-family: "jose-b";
 }
 
 .text-xs {
@@ -130,4 +130,54 @@ text-8xl {
 
 .text-9xl {
   font-size: 128px;
+}
+
+//global styles
+
+//Landing Page
+.headline-tag {
+  position: absolute;
+  top: 224px;
+  left: 216px;
+  max-width: 592px;
+}
+
+.search-landing {
+  padding: 42px 104px;
+  position: absolute;
+  width: 1008px;
+  height: 153px;
+  left: 17%;
+  top: 520px;
+  background: #fafafa;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.04),
+    0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.category-landing {
+  margin-top: 176px;
+}
+
+.category-image {
+  width: 383px;
+  height: 516px;
+}
+
+.feature-landing {
+  margin-top: 100px;
+}
+
+.feature-card {
+  width: 383.48px;
+  height: 516px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.04),
+    0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 32px 48px;
+}
+
+.feature-image {
+  height: 320px;
+  width: 290px;
 }
