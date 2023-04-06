@@ -9,9 +9,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'IndexPage'
-})
+export default {
+  name: 'LandingPage'
+}
 </script>
