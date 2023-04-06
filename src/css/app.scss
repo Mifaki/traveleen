@@ -134,6 +134,56 @@ text-8xl {
 
 //global styles
 
+
+//Header
+.header {
+  height: 100px;
+  max-height: 100px;
+  background-color: white;
+}
+
+.nav-footer {
+  gap: 32px;
+}
+
+//Footer
+.footer {
+  height: 389px;
+  background: #059669;
+  color: #FAFAFA;
+}
+
+.footer-container {
+  width: fit-content;
+  margin-top: 79px;
+}
+
+.footer-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.footer-bottom-left {
+  width: 587px;
+  height: 52px;
+  background: #064E3B;
+  border-radius: 0px 100px 0px 0px;
+}
+
+.footer-bottom-right {
+  width: 587px;
+  height: 52px;
+  background: #064E3B;
+  border-radius: 0px 100px 0px 0px;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.footer-contact {
+  width: fit-content;
+  gap: 15px;
+}
 //Landing Page
 .headline-tag {
   position: absolute;
@@ -166,6 +216,7 @@ text-8xl {
 
 .feature-landing {
   margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 .feature-card {
