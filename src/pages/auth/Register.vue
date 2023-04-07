@@ -64,6 +64,8 @@
 
 <script>
 import { ref } from 'vue';
+import { api } from 'src/boot/axios';
+
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default {
@@ -77,17 +79,26 @@ export default {
       passwordConfirmation: ref(null),
       isPwd: ref(true),
       isConfirm: ref(true),
+      user: null
     };
   },
 
   methods: {
     async submit() {
       const userData = {
-        username: this.username,
         email: this.email,
         password: this.password
       }
-      await console.log(userData);
+      await api.post('/api/register', userData).then((response) => {
+        let data = response.data;
+        localStorage.setItem('token', data.token);
+        console.log(data)
+        if (response.status === 200) {
+          this.$router.push('/login');
+        }
+      }).catch((error) => {
+        console.log(error);
+      })
     },
 
     isValidEmail(email) {

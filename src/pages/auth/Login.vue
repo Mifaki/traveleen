@@ -27,12 +27,13 @@
               <q-checkbox size="55px" v-model="remember" label="Ingat Saya" class="inter-r text-base neutral-900" />
               <q-btn flat label="Lupa Kata Sandi?" no-caps size="16px" class="inter-r text-base neutral-900" />
             </div>
-            <q-btn class="masuk-button jakarta-b q-mt-xl q-mb-md" type="submit" unelevated label="Masuk" text-color="white"
-            no-caps />
+            <q-btn class="masuk-button jakarta-b q-mt-xl q-mb-md" type="submit" unelevated label="Masuk"
+              text-color="white" no-caps />
           </q-form>
           <div class="register-link row q-mx-auto">
             <p class="inter-sb text-base neutral-500 q-mb-none">Tidak Punya Akun?</p>
-            <router-link class="inter-sb text-base neutral-900 q-mb-none q-ml-xs cursor-pointer register-link" to="/register">
+            <router-link class="inter-sb text-base neutral-900 q-mb-none q-ml-xs cursor-pointer register-link"
+              to="/register">
               Daftar
             </router-link>
           </div>
@@ -50,6 +51,7 @@
 
 <script>
 import { ref } from 'vue';
+import { api } from 'src/boot/axios';
 
 export default {
   name: 'Landing',
@@ -66,10 +68,20 @@ export default {
   methods: {
     async submit() {
       const userData = {
-        usename: this.username,
+        email: this.username,
         password: this.password
       }
-      await console.log(userData);
+      await api.post('/api/login', userData).then((response) => {
+        let data = response.data;
+        console.log(data);
+        localStorage.setItem('token', data.token);
+        console.log(response);
+        if (response.status === 200) {
+          this.$router.push('/');
+        }
+      }).catch((error) => {
+        console.log(error);
+      })
     }
   }
 }
