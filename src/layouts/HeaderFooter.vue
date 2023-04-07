@@ -9,8 +9,8 @@
         <p class="neutral-600 inter-sb text-base q-mb-none">Store</p>
       </div>
       <div>
-        <q-btn flat label="Masuk" class="neutral-600 text-base" no-caps />
-        <q-btn unelevated rounded label="Daftar" class="register-button text-base" no-caps />
+        <q-btn flat label="Masuk" class="neutral-600 text-base" no-caps to="/login" replace />
+        <q-btn unelevated rounded label="Daftar" class="register-button text-base" no-caps to="/register" replace />
       </div>
     </q-header>
     <q-page-container>

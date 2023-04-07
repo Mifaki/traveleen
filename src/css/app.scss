@@ -133,6 +133,13 @@ text-8xl {
 }
 
 //global styles
+::-webkit-scrollbar {
+  display: none;
+}
+
+.auth-form-container {
+  width: 436px;
+}
 
 
 //Header
@@ -232,3 +239,21 @@ text-8xl {
   height: 320px;
   width: 290px;
 }
+
+//login Page
+.login-container {
+  height: 1024px;
+}
+
+.login-image {
+  background-image: url("/icons/Auth/login-bg.jpg");
+  background-repeat: round;
+}
+
+//Register Page
+.register-image {
+  background-image: url("/icons/Auth/register-bg.jpg");
+  background-repeat: round;
+}
+
+

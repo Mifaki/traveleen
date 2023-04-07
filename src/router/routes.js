@@ -8,6 +8,22 @@ const routes = [
     ]
   },
 
+  {
+    path: '/login',
+    component: () => import('src/layouts/BlankLayout.vue'),
+    children: [
+      { path: '', name:'Login', component: () => import('src/pages/auth/Login.vue') }
+    ]
+  },
+
+  {
+    path: '/register',
+    component: () => import('src/layouts/BlankLayout.vue'),
+    children: [
+      { path: '', name:'Register', component: () => import('src/pages/auth/Register.vue') }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
