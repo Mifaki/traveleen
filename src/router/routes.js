@@ -24,6 +24,14 @@ const routes = [
     ]
   },
 
+  {
+    path: '/catalog',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'Catalog', component: () => import('src/pages/Catalog.vue') }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

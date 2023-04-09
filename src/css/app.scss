@@ -141,7 +141,6 @@ text-8xl {
   width: 436px;
 }
 
-
 //Header
 .header {
   height: 100px;
@@ -157,7 +156,7 @@ text-8xl {
 .footer {
   height: 389px;
   background: #059669;
-  color: #FAFAFA;
+  color: #fafafa;
 }
 
 .footer-container {
@@ -175,14 +174,14 @@ text-8xl {
 .footer-bottom-left {
   width: 587px;
   height: 52px;
-  background: #064E3B;
+  background: #064e3b;
   border-radius: 0px 100px 0px 0px;
 }
 
 .footer-bottom-right {
   width: 587px;
   height: 52px;
-  background: #064E3B;
+  background: #064e3b;
   border-radius: 0px 100px 0px 0px;
   transform: matrix(-1, 0, 0, 1, 0, 0);
 }
@@ -256,4 +255,26 @@ text-8xl {
   background-repeat: round;
 }
 
+//Catalog Page
+.catalog-card {
+  width: 280px;
+  height: 374px;
+  padding: 12px;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
 
+.catalog-thumbnail {
+  width: 256px;
+  height: 177px;
+}
+
+.category-option {
+  width: 280px;
+  height: 258px;
+  background: white;
+  padding: 24px 9px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
