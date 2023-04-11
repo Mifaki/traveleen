@@ -67,25 +67,27 @@
               hide-pagination :rows-per-page-options="[10]">
               <template v-slot:item="props">
                 <div class="q-pa-xs col-xs-12 col-sm-7 col-md-5 col-lg-4 column items-center">
-                  <q-card class="catalog-card">
-                    <q-icon :name=props.row.thumbnail class="catalog-thumbnail" />
-                    <div class="row q-mt-md items-center">
-                      <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
-                      <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ props.row.region }}</p>
-                    </div>
-                    <p class="inter-r text-lg emerald-600 q-mb-none q-mt-sm">{{ props.row.category }}</p>
-                    <p class="inter-b text-2xl neutral-900 q-mb-none">{{ props.row.name }}</p>
-                    <div class="row justify-between items-center q-mt-lg">
-                      <div class="row">
-                        <q-icon name="img:/icons/Catalog/star.svg" size="26px" />
-                        <div class="row items-end">
-                          <p class="inter-b text-base emerald-600 q-mb-none">{{ props.row.rating }}</p>
-                          <p class="inter-r text-base neutral-500 q-mb-none">({{ props.row.totalRatings }})</p>
-                        </div>
+                  <q-item clickable :to="`/${props.row.id}`" replace>
+                    <q-card class="catalog-card">
+                      <q-icon :name=props.row.thumbnail class="catalog-thumbnail" />
+                      <div class="row q-mt-md items-center">
+                        <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
+                        <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ props.row.region }}</p>
                       </div>
-                      <P class="inter-sb text-xl neutral-900 q-mb-none">RP {{ formatNumber(props.row.price) }}</P>
-                    </div>
-                  </q-card>
+                      <p class="inter-r text-lg emerald-600 q-mb-none q-mt-sm">{{ props.row.category }}</p>
+                      <p class="inter-b text-2xl neutral-900 q-mb-none">{{ props.row.name }}</p>
+                      <div class="row justify-between items-center q-mt-lg">
+                        <div class="row">
+                          <q-icon name="img:/icons/Catalog/star.svg" size="26px" />
+                          <div class="row items-end">
+                            <p class="inter-b text-base emerald-600 q-mb-none">{{ props.row.rating }}</p>
+                            <p class="inter-r text-base neutral-500 q-mb-none">({{ props.row.totalRatings }})</p>
+                          </div>
+                        </div>
+                        <P class="inter-sb text-xl neutral-900 q-mb-none">RP {{ formatNumber(props.row.price) }}</P>
+                      </div>
+                    </q-card>
+                  </q-item>
                 </div>
               </template>
             </q-table>
@@ -120,7 +122,7 @@ const rows = [
     id: 1,
     region: 'Bali',
     category: 'Pantai',
-    thumbnail: 'img:/icons/Catalog/beach.jpg',
+    thumbnail: 'img:/icons/beach.jpg',
     name: 'Nusa Dua',
     rating: 8.7,
     totalRatings: 375,
@@ -160,7 +162,7 @@ const rows = [
     id: 5,
     region: 'Bali',
     category: 'Pantai',
-    thumbnail: 'img:/icons/Catalog/beach.jpg',
+    thumbnail: 'img:/icons/beach.jpg',
     name: 'Kuta Beach',
     rating: 8.3,
     totalRatings: 425,
@@ -190,7 +192,7 @@ const rows = [
     id: 8,
     region: 'Bali',
     category: 'Pantai',
-    thumbnail: 'img:/icons/Catalog/beach.jpg',
+    thumbnail: 'img:/icons/beach.jpg',
     name: 'Sanur Beach',
     rating: 8.1,
     totalRatings: 310,
@@ -300,11 +302,4 @@ export default {
 </script>
 
 <style>
-.select-box {
-  width: 280px;
-}
-
-.search-box {
-  width: 592px;
-}
 </style>
