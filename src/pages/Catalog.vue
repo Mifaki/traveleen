@@ -31,14 +31,37 @@
             </div>
           </div>
           <div class="col-9">
-            <p class="inter-b text-3xl neutral-900 q-mb-none" v-if="chooseRegion">
-              Menampilkan Tempat wisata di {{ chooseRegion }}
-            </p>
+            <div v-if="chooseRegion" class="row justify-between items-center q-mb-lg">
+              <p class="inter-b text-3xl neutral-900 q-mb-none">
+                Menampilkan Tempat wisata di {{ chooseRegion }}
+              </p>
+              <q-select rounded outlined v-model="sortBy" :options="sortOptions" clearable
+                class="select-box inter-r text-base emerald-60 q-mr-lg" dense>
+                <template v-slot:selected>
+                  <template v-if="sortBy">
+                    {{ sortBy }}
+                  </template>
+                  <template v-else>Semua</template>
+                </template>
+              </q-select>
+            </div>
+            <div v-else class="column items-end q-mb-lg">
+              <q-select rounded outlined v-model="sortBy" :options="sortOptions" clearable
+                  class="select-box inter-r text-base emerald-60 q-mr-lg" dense>
+                  <template v-slot:selected>
+                    <template v-if="sortBy">
+                      {{ sortBy }}
+                    </template>
+                    <template v-else>Semua</template>
+                  </template>
+                </q-select>
+            </div>
             <q-parallax :height="200" :speed="1.5">
               <template v-slot:media>
                 <img src="/icons/Catalog/header-image.jpg">
               </template>
-              <p class="inter-b text-3xl neutral-50 q-mb-none q-pa-xl">Jangan biarkan lingkungan kita tercemar oleh sampah, yuk peduli dalam mengurangi sampah</p>
+              <p class="inter-b text-3xl neutral-50 q-mb-none q-pa-xl">Jangan biarkan lingkungan kita tercemar oleh
+                sampah, yuk peduli dalam mengurangi sampah</p>
             </q-parallax>
             <q-table :rows="filteredRows" :columns="columns" :filter="chooseCategory" row-key="id" grid hide-header
               hide-pagination :rows-per-page-options="[10]">
@@ -203,11 +226,15 @@ export default {
       search: ref(''),
       model: ref(null),
       chooseRegion: ref(null),
+      sortBy: ref(null),
       chooseCategory: ref(null),
       columns,
       rows,
       regionOptions: [
         'Bali', 'Jawa Timur', 'Jawa Tengah', 'Jawa Barat'
+      ],
+      sortOptions: [
+        'Paling Populer', 'Harga Tertinggi', 'Harga Terendah',
       ],
       options: [
         {
@@ -238,12 +265,36 @@ export default {
 
   computed: {
     filteredRows() {
-      return this.rows.filter(row => {
-        const regionMatch = !this.chooseRegion || row.region.toLowerCase().includes(this.chooseRegion.toLowerCase())
-        const searchMatch = !this.search || Object.values(row).some(val => String(val).toLowerCase().includes(this.search.toLowerCase()))
-        return regionMatch && searchMatch
-      })
-    },
+      const filtered = this.rows.filter(row => {
+        let validSearch = true;
+        let validRegion = true;
+        let validCategory = true;
+
+        if (this.search) {
+          validSearch = row.name.toLowerCase().includes(this.search.toLowerCase());
+        }
+
+        if (this.chooseRegion && this.chooseRegion !== "Semua") {
+          validRegion = row.region === this.chooseRegion;
+        }
+
+        if (this.chooseCategory && this.chooseCategory !== "Semua") {
+          validCategory = row.category === this.chooseCategory;
+        }
+
+        return validSearch && validRegion && validCategory;
+      });
+
+      if (this.sortBy === "Paling Populer") {
+        return filtered.sort((a, b) => b.rating - a.rating);
+      } else if (this.sortBy === "Harga Tertinggi") {
+        return filtered.sort((a, b) => b.price - a.price);
+      } else if (this.sortBy === "Harga Terendah") {
+        return filtered.sort((a, b) => a.price - b.price);
+      } else {
+        return filtered;
+      }
+    }
   },
 }
 </script>
