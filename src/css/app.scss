@@ -326,3 +326,27 @@ text-8xl {
   border-radius: 72px;
   color: white;
 }
+
+.rating-comment {
+  max-width: 384px;
+}
+
+.buy-detail {
+  width: 384px;
+  max-height: 397px;
+  padding: 32px;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.detail-description {
+  max-width: 800px;
+  height: 496px;
+  background: white;
+  padding: 32px;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}

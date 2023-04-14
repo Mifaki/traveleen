@@ -39,7 +39,7 @@
         </div>
         <div class="row q-mt-xl">
           <div class="col-8">
-            <div class="detail-rating row">
+            <div class="detail-rating row justify-between">
               <div>
                 <p class="inter-b text-2xl neutral-900 q-mb-none">Dari {{ totalRatings }} Pengguna</p>
                 <div class="col-3">
@@ -49,15 +49,64 @@
                     </div>
                     <p class="inter-b text-3xl emerald-600 q-mb-none q-ml-md">Luar Biasa</p>
                   </div>
-                  <div class="row">
-                    <q-icon :name='$props.row[0].thumbnail[0]' />
+                  <div class="row q-mt-lg">
+                    <q-icon :name='rows[1].thumbnail[0]' size="72px" />
+                    <q-icon :name='rows[1].thumbnail[1]' size="72px" class="q-mx-md" />
+                    <q-icon :name='rows[1].thumbnail[0]' size="72px" />
                   </div>
                 </div>
               </div>
+              <div class="rating-comment column justify-between">
+                <div>
+                  <p class="inter-b text-2xl neutral-900 q-mb-none">Apa Yang Dikatakan Pengguna</p>
+                  <p class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ rows[0].comment }}</p>
+                </div>
+                <div>
+                  <div class="row">
+                    <p class="inter-r text-base neutral-900 q-mb-none">{{ rows[0].name }} - </p>
+                    <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ rows[0].date }}</p>
+                  </div>
+                  <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end">Lihat Semua</p>
+                </div>
+              </div>
+            </div>
+            <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Wisata</p>
+            <div class="detail-description">
+              <p class="inter-r text-base neutral-900 q-mb-none text-justify">{{ description.replace(/(\.[^\.]*\.)/g, '$1 ') }}</p>
             </div>
           </div>
-          <div class="col-3">
-            <p>gua cape bang</p>
+          <div class="col-4 buy-detail">
+            <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
+            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" />
+            <p class="inter-sb text-lg neutral-900 q-mb-none q-my-sm">jam Buka (Waktu Lokal)</p>
+            <div class="row justify-between">
+              <p class="inter-r text-base neutral-900 q-mb-none">Senin</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[0] }}</p>
+            </div>
+            <div class="row justify-between q-my-xs">
+              <p class="inter-r text-base neutral-900 q-mb-none">Selasa</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[1] }}</p>
+            </div>
+            <div class="row justify-between">
+              <p class="inter-r text-base neutral-900 q-mb-none">Rabu</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[2] }}</p>
+            </div>
+            <div class="row justify-between q-my-xs">
+              <p class="inter-r text-base neutral-900 q-mb-none">Kamis</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[3] }}</p>
+            </div>
+            <div class="row justify-between">
+              <p class="inter-r text-base neutral-900 q-mb-none">Jumat</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[4] }}</p>
+            </div>
+            <div class="row justify-between q-my-xs">
+              <p class="inter-r text-base neutral-900 q-mb-none">Sabtu</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[5] }}</p>
+            </div>
+            <div class="row justify-between">
+              <p class="inter-r text-base neutral-900 q-mb-none">Minggu</p>
+              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[6] }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -98,7 +147,7 @@ const rows = [
     date: 'Senin, 5 April 2023',
     comment: 'Pantai Nusa Dua adalah pantai yang lumayan bagus. Tidak terlalu ramai, tapi juga tidak terlalu sepi. Pantainya bersih dan bagus untuk berjemur.',
     rating: 7,
-    thumbnail: ['img:/icons/Detail/comments-image.jpg', 'img:/icons/Detail/comments-image-1.jpg'],
+    thumbnail: ['img:/icons/Detail/comments-image.jpg', 'img:/icons/Detail/comments-image-2.jpg'],
   },
   {
     id: 3,
@@ -137,8 +186,8 @@ export default {
       name: 'Nusa Dua',
       rating: 8.7,
       totalRatings: 375,
-      price: 90000,
-      description: 'Nusa Dua adalah sebuah pantai yang terletak di Bali, Indonesia. Pantai ini terkenal sebagai salah satu pantai yang sangat eksklusif dan mewah di Bali. Nusa Dua memiliki pasir putih yang halus dan air laut yang jernih dan tenang, sehingga pantai ini sangat cocok untuk berenang atau hanya sekedar bersantai di tepi pantai. Selain itu, pantai ini juga dikelilingi oleh hotel-hotel bintang lima dan tempat-tempat wisata yang menarik.\n Di Nusa Dua, Anda dapat menikmati berbagai aktivitas seperti jet ski, snorkeling, atau bahkan menyelam untuk melihat keindahan terumbu karang yang berwarna-warni. Pantai ini juga memiliki pemandangan matahari terbenam yang sangat indah, sehingga sangat disarankan untuk menikmati keindahan ini bersama pasangan atau keluarga.\n Selain itu, Nusa Dua juga memiliki banyak restoran dan kafe yang menyajikan makanan dan minuman yang lezat dengan pemandangan pantai yang indah. Anda juga dapat membeli oleh-oleh khas Bali di toko-toko yang terdapat di sekitar pantai ini.\nSecara keseluruhan, Nusa Dua adalah tempat yang sangat cocok untuk menikmati liburan yang tenang dan santai di Bali. Dengan pasir putih yang lembut, air laut yang tenang, dan banyaknya aktivitas yang dapat dilakukan, Nusa Dua akan menjadi tempat yang tak terlupakan bagi siapa saja yang mengunjunginya.',
+      price: 10000,
+      description: 'Nusa Dua adalah sebuah pantai yang terletak di Bali, Indonesia. Pantai ini terkenal sebagai salah satu pantai yang sangat eksklusif dan mewah di Bali. Nusa Dua memiliki pasir putih yang halus dan air laut yang jernih dan tenang, sehingga pantai ini sangat cocok untuk berenang atau hanya sekedar bersantai di tepi pantai. Selain itu, pantai ini juga dikelilingi oleh hotel-hotel bintang lima dan tempat-tempat wisata yang menarik. Di Nusa Dua, Anda dapat menikmati berbagai aktivitas seperti jet ski, snorkeling, atau bahkan menyelam untuk melihat keindahan terumbu karang yang berwarna-warni. Pantai ini juga memiliki pemandangan matahari terbenam yang sangat indah, sehingga sangat disarankan untuk menikmati keindahan ini bersama pasangan atau keluarga. Selain itu, Nusa Dua juga memiliki banyak restoran dan kafe yang menyajikan makanan dan minuman yang lezat dengan pemandangan pantai yang indah. Anda juga dapat membeli oleh-oleh khas Bali di toko-toko yang terdapat di sekitar pantai ini. Secara keseluruhan, Nusa Dua adalah tempat yang sangat cocok untuk menikmati liburan yang tenang dan santai di Bali. Dengan pasir putih yang lembut, air laut yang tenang, dan banyaknya aktivitas yang dapat dilakukan, Nusa Dua akan menjadi tempat yang tak terlupakan bagi siapa saja yang mengunjunginya.',
       jamOperasional: ['09.30 - 16.00', '09.30 - 16.00', '09.30 - 16.00', '09.30 - 16.00', '09.30 - 16.00', '08.30 - 18.00', '08.30 - 18.00']
 
     }
@@ -154,6 +203,25 @@ export default {
       columns,
       rows,
     }
+  },
+
+  methods: {
+    formatNumber(value) {
+      return value.toLocaleString('en-US');
+    },
+  },
+
+  computed: {
+    formattedDescription() {
+      return this.description.replace(/(\.[^\.]*){2}/g, "$& ");
+    }
   }
 }
 </script>
+
+<style>
+.buy-button {
+  width: 100%;
+  height: 48px;
+}
+</style>
