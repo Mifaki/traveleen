@@ -32,7 +32,7 @@
           <div class="row justify-between items-center">
             <q-icon :name="thumbnail[0]" class="thumbnail-left" />
             <div class="column">
-              <q-icon :name="thumbnail[1]" class="thumbnail-right q-mb-md"/>
+              <q-icon :name="thumbnail[1]" class="thumbnail-right q-mb-md" />
               <q-icon :name="thumbnail[2]" class="thumbnail-right" />
             </div>
           </div>
@@ -66,13 +66,17 @@
                     <p class="inter-r text-base neutral-900 q-mb-none">{{ rows[0].name }} - </p>
                     <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ rows[0].date }}</p>
                   </div>
-                  <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end">Lihat Semua</p>
+                  <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end cursor-pointer" @click="scrollToComments">Lihat Semua</p>
                 </div>
               </div>
             </div>
             <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Wisata</p>
             <div class="detail-description">
-              <p class="inter-r text-base neutral-900 q-mb-none text-justify">{{ description.replace(/(\.[^\.]*\.)/g, '$1 ') }}</p>
+              <p class="inter-r text-base neutral-900 q-mb-none text-justify">{{ description }}</p>
+            </div>
+            <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Lokasi</p>
+            <div class="detail-location">
+              <q-img src="/icons/Detail/location.jpg" />
             </div>
           </div>
           <div class="col-4 buy-detail">
@@ -107,6 +111,32 @@
               <p class="inter-r text-base neutral-900 q-mb-none">Minggu</p>
               <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[6] }}</p>
             </div>
+          </div>
+          <div class="detail-comments q-mt-xl" id="comments-section">
+            <p class="inter-b text-3xl neutral-900 q-mb-none">{{ totalRatings }} Pengguna <span
+                class="inter-b text-3xl emerald-600 q-mb-none">Traveleen</span> telah membagikan pengalaman di
+              wisata ini:</p>
+            <q-table :rows="rows" :columns="columns" row-key="id" grid hide-header hide-pagination
+              :rows-per-page-options="[10]">
+              <template v-slot:item="props">
+                <div class="comment-container row items-center q-my-sm">
+                  <div class="personal-rating-bg column justify-center text-center">
+                    <p class="inter-b text-xl q-mb-none">{{ props.row.rating }}</p>
+                  </div>
+                  <div class="col-11 column q-ml-md">
+                    <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.name }}</p>
+                    <p class="inter-r text-sm neutral-700 q-mb-none">{{ props.row.date }}</p>
+                    <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ props.row.comment }}</P>
+                    <div class="row q-mt-sm" v-if="props.row.thumbnail[0]">
+                      <q-icon :name='props.row.thumbnail[0]' size="72px" />
+                      <q-icon :name='props.row.thumbnail[1]' size="72px" class="q-mx-md" />
+                      <q-icon :name='props.row.thumbnail[2]' size="72px" />
+                    </div>
+                  </div>
+                  <div class="divider q-my-md" v-if="props.row.id < rows.length" />
+                </div>
+              </template>
+            </q-table>
           </div>
         </div>
       </div>
@@ -171,8 +201,8 @@ const rows = [
     date: 'Kamis, 28 oktober 2022',
     comment: 'Pantai Nusa Dua adalah pantai yang sangat bagus. Airnya bersih dan pantainya sangat indah. Ada banyak kegiatan air yang bisa dinikmati di sini dan saya pasti akan kembali ke sini suatu saat nanti.',
     rating: 9,
-    thumbnail: ['img:/icons/Detail/comments-image-3.jpg', 'img:/icons/Detail/comments-image-4.jpg', 'img:/icons/Detail/comments-image-5.jpg' ],
-  }
+    thumbnail: ['img:/icons/Detail/comments-image-3.jpg', 'img:/icons/Detail/comments-image-4.jpg', 'img:/icons/Detail/comments-image-5.jpg'],
+  },
 ]
 
 export default {
@@ -209,6 +239,11 @@ export default {
     formatNumber(value) {
       return value.toLocaleString('en-US');
     },
+
+    scrollToComments() {
+      const commentsSection = document.getElementById("comments-section");
+      commentsSection.scrollIntoView({ behavior: "smooth" });
+    }
   },
 
   computed: {

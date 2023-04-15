@@ -149,6 +149,12 @@ text-8xl {
   width: 592px;
 }
 
+.divider {
+  height: 1px;
+  width: 100%;
+  background: #d4d4d4;
+}
+
 //Header
 .header {
   height: 100px;
@@ -343,10 +349,43 @@ text-8xl {
 
 .detail-description {
   max-width: 800px;
-  height: 496px;
+  height: fit-content;
   background: white;
   padding: 32px;
   box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
     0px 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+}
+
+.detail-location {
+  width: 800px;
+  height: 295px;
+  padding: 32px;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.detail-comments {
+  width: 100%;
+  height: fit-content;
+  padding: 32px;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.personal-rating-bg {
+  width: 76px;
+  height: 76px;
+  background: #059669;
+  border-radius: 62px;
+  color: white;
+}
+
+.comment-container {
+  width: 100%;
+  height: fit-content;
 }
