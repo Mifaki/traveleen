@@ -8,12 +8,12 @@
         </div>
         <div v-if="loggedIn" class="row items-center">
           <div class="row q-mr-xl">]
-            <router-link to="/about">
+            <RouterLink to="/about">
               <p class="inter-sb text-base neutral-600 q-mb-none">Tentang</p>
-            </router-link>
-            <router-link to="/history">
+            </RouterLink>
+            <RouterLink to="/history">
               <p class="inter-sb text-base neutral-600 q-mb-none q-mx-lg">Riwayat</p>
-            </router-link>
+            </RouterLink>
             <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
                 class="inter-sb text-base emerald-600 q-mb-none">({{ coin }})</span></p>
           </div>
@@ -30,7 +30,7 @@
       </div>
     </q-header>
     <q-page-container>
-      <router-view></router-view>
+      <RouterView></RouterView>
     </q-page-container>
     <q-footer class="footer">
       <div class="footer-container q-mx-auto text-center">
@@ -61,13 +61,6 @@
 import { api } from 'src/boot/axios';
 
 export default {
-  data() {
-    return {
-      users: null,
-      loggedIn: false,
-      coin: 28000
-    }
-  },
 
   async mounted() {
     try {
@@ -75,9 +68,18 @@ export default {
       this.users = response.data
       console.log(this.users);
       this.loggedIn = true;
+      window.localStorage.setItem('loggedIn', JSON.stringify(true));
     }
     catch (error) {
       console.log(error);
+    }
+  },
+
+  data() {
+    return {
+      users: null,
+      loggedIn: false,
+      coin: 28000
     }
   }
 }

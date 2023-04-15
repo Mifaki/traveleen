@@ -233,18 +233,40 @@ a {
   border-radius: 12px;
 }
 
-.category-landing {
-  margin-top: 176px;
+.education-home {
+  width: 500px;
+  height: fit-content;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
 }
 
-.category-image {
-  width: 383px;
-  height: 516px;
+//Landing Page
+.headline-landing {
+  width: 100%;
+  height: 650px;
+  background: linear-gradient(
+      270deg,
+      rgba(0, 0, 0, 0.5) 52.38%,
+      rgba(0, 0, 0, 0.400722) 68.16%,
+      rgba(0, 0, 0, 0.257031) 78.83%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("/icons/LandingPage/headline-bg.jpg") round;
+  padding: 0 112px;
+}
+
+.landing-desc {
+  width: 100%;
+  height: fit-content;
+  padding: 49px 98px;
+  background: #059669;
+  border-radius: 12px;
 }
 
 .feature-landing {
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin: 100px 0;
 }
 
 .feature-card {
@@ -253,7 +275,7 @@ a {
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.04),
     0px 20px 25px -5px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  padding: 32px 48px;
+  padding: 32px;
 }
 
 .feature-image {
@@ -261,13 +283,16 @@ a {
   width: 290px;
 }
 
-.education-home {
-  width: 500px;
+.headline-container {
+  max-width: 592px;
   height: fit-content;
-  background: white;
-  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
-    0px 1px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
+}
+
+.green-tagline {
+  width: 100%;
+  height: fit-content;
+  background: #059669;
+  padding: 48px 96px;
 }
 
 //login Page
