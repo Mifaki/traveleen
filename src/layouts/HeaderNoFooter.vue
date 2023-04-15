@@ -52,6 +52,7 @@ export default {
       this.users = response.data
       console.log(this.users);
       this.loggedIn = true;
+      window.localStorage.setItem('loggedIn', JSON.stringify(true));
     }
     catch (error) {
       console.log(error);
