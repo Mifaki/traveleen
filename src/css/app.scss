@@ -162,6 +162,7 @@ a.router-link-exact-active {
 a {
   text-decoration: none;
 }
+
 //Header
 .header {
   height: 100px;
@@ -211,7 +212,7 @@ a {
   width: fit-content;
   gap: 15px;
 }
-//Landing Page
+//Home Page
 .headline-tag {
   position: absolute;
   top: 224px;
@@ -219,7 +220,7 @@ a {
   max-width: 592px;
 }
 
-.search-landing {
+.search-home {
   padding: 42px 104px;
   position: absolute;
   width: 1008px;
@@ -258,6 +259,15 @@ a {
 .feature-image {
   height: 320px;
   width: 290px;
+}
+
+.education-home {
+  width: 500px;
+  height: fit-content;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
 }
 
 //login Page
