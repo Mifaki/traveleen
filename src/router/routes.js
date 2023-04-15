@@ -1,6 +1,13 @@
 
 const routes = [
   {
+    path: '/',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'LandingPage', component: () => import('src/pages/LandingPage.vue') }
+    ]
+  },
+  {
     path: '/home',
     component: () => import('src/layouts/HeaderFooter.vue'),
     children: [
