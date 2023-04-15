@@ -1,21 +1,28 @@
 <template>
   <q-layout>
-    <q-header class="header row items-center justify-around">
+    <q-header class="header row items-center justify-between q-mx-xl q-px-xl">
       <div class="row">
         <q-icon name="img:/icons/icon.svg" size="33px" class="q-mr-sm" />
         <p class="neutral-900 jose-b text-2xl q-mb-none">TRAVELEEN</p>
       </div>
-      <div class="nav-footer row">
-        <p class="neutral-600 inter-sb text-base q-mb-none">Beranda</p>
-        <p class="neutral-600 inter-sb text-base q-mb-none">About</p>
-        <p class="neutral-600 inter-sb text-base q-mb-none">Destination</p>
-        <p class="neutral-600 inter-sb text-base q-mb-none">Store</p>
-      </div>
-      <div v-if="loggedIn">
-        <q-icon name="img:/icons/header/notification.svg" size="32px" class="q-mr-lg"/>
-        <q-icon name="img:/icons/header/profile.svg" size="64px" />
+      <div v-if="loggedIn" class="row items-center">
+        <div class="row q-mr-xl">
+          <router-link to="/about">
+            <p class="inter-sb text-base neutral-600 q-mb-none">Tentang</p>
+          </router-link>
+          <router-link to="/history">
+            <p class="inter-sb text-base neutral-600 q-mb-none q-mx-lg">Riwayat</p>
+          </router-link>
+          <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
+              class="inter-sb text-base emerald-600 q-mb-none">({{ coin }})</span></p>
+        </div>
+        <div class="row items-center">
+          <q-icon name="img:/icons/header/profile.svg" size="64px" />
+          <P class="inter-sb text-base neutral-600 q-mb-none q-ml-md">{{ users.data.first_name }}</P>
+        </div>
       </div>
       <div v-else>
+        <q-btn flat label="Tentang" class="neutral-600 text-base" no-caps to="/about" replace />
         <q-btn flat label="Masuk" class="neutral-600 text-base" no-caps to="/login" replace />
         <q-btn unelevated rounded label="Daftar" class="register-button text-base" no-caps to="/register" replace />
       </div>
