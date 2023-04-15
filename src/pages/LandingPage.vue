@@ -7,9 +7,9 @@
               class="jose-b text-4xl emerald-600 q-mb-none">TRAVELEEN</span></p>
           <p class="inter-sb text-base neutral-50 q-mb-none">Yuk, jadikan liburanmu lebih berarti dengan Traveleen dan
             turut menjaga kelestarian alam sekitar kita!</p>
-          <q-btn v-if="isLoggedIn" unelevated label="Home" to="/home" class="start-button text-base inter-sb q-mt-lg"
+          <q-btn v-if="isLoggedIn" unelevated label="Mulai Sekarang" to="/home" class="start-button text-base inter-sb q-mt-lg"
             no-caps />
-          <q-btn v-else unelevated label="Login" to="/login" class="start-button text-base inter-sb q-mt-lg" no-caps />
+          <q-btn v-else unelevated label="Mulai Sekarang" to="/login" class="start-button text-base inter-sb q-mt-lg" no-caps />
         </div>
       </div>
       <div class="q-mx-xl q-px-xl q-mt-xl">
