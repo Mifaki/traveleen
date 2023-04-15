@@ -245,12 +245,6 @@ export default {
       commentsSection.scrollIntoView({ behavior: "smooth" });
     }
   },
-
-  computed: {
-    formattedDescription() {
-      return this.description.replace(/(\.[^\.]*){2}/g, "$& ");
-    }
-  }
 }
 </script>
 
