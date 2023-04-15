@@ -7,6 +7,7 @@ const routes = [
       { path: '', name:'LandingPage', component: () => import('src/pages/LandingPage.vue') }
     ]
   },
+
   {
     path: '/home',
     component: () => import('src/layouts/HeaderFooter.vue'),
@@ -32,12 +33,21 @@ const routes = [
   },
 
   {
+    path: '/education',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'Education', component: () => import('src/pages/Education.vue') }
+    ]
+  },
+
+  {
     path: '/catalog',
     component: () => import('src/layouts/HeaderFooter.vue'),
     children: [
       { path: '', name:'Catalog', component: () => import('src/pages/Catalog.vue') }
     ]
   },
+
   {
     path: '/:id',
     component: () => import('src/layouts/HeaderFooter.vue'),
