@@ -81,7 +81,7 @@
           </div>
           <div class="col-4 buy-detail">
             <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
-            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" />
+            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" @click="addToCart(id, name, price)" to="/checkout" />
             <p class="inter-sb text-lg neutral-900 q-mb-none q-my-sm">jam Buka (Waktu Lokal)</p>
             <div class="row justify-between">
               <p class="inter-r text-base neutral-900 q-mb-none">Senin</p>
@@ -146,6 +146,7 @@
 
 <script>
 import { ref } from 'vue';
+import { mapState, mapActions } from 'vuex';
 
 const columns = [
   {
@@ -210,6 +211,7 @@ export default {
 
   data() {
     return {
+      id: this.$route.params.id,
       region: 'Bali',
       category: 'Pantai',
       thumbnail: ['img:/icons/beach.jpg', 'img:/icons/beach-2.jpg', 'img:/icons/beach-3.jpg'],
@@ -235,6 +237,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState('cart', ['items']),
+  },
+
   methods: {
     formatNumber(value) {
       return value.toLocaleString('en-US');
@@ -243,7 +249,19 @@ export default {
     scrollToComments() {
       const commentsSection = document.getElementById("comments-section");
       commentsSection.scrollIntoView({ behavior: "smooth" });
-    }
+    },
+
+    ...mapActions('cart', ['addToCart']),
+
+    addToCart(id, name, price) {
+      const item = {
+        id,
+        name,
+        price,
+        quantity: 1,
+      };
+      this.addToCart(item);
+    },
   },
 }
 </script>

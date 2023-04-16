@@ -56,6 +56,15 @@ const routes = [
     ]
   },
 
+  {
+    path: '/checkout',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'Checkout', component: () => import('src/pages/Checkout.vue') }
+    ]
+  },
+
+
   // Always leave this as last one,
   // but you can also remove it
   {

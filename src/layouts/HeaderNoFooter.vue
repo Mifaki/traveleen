@@ -7,8 +7,8 @@
           <p class="neutral-900 jose-b text-2xl q-mb-none">TRAVELEEN</p>
         </div>
         <div v-if="loggedIn" class="row items-center">
-          <div class="row q-mr-xl">]
-            <router-link to="/about">
+          <div class="row q-mr-xl">
+            <router-link to="/">
               <p class="inter-sb text-base neutral-600 q-mb-none">Tentang</p>
             </router-link>
             <router-link to="/history">

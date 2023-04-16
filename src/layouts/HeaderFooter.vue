@@ -8,7 +8,7 @@
         </div>
         <div v-if="loggedIn" class="row items-center">
           <div class="row q-mr-xl">]
-            <RouterLink to="/about">
+            <RouterLink to="/">
               <p class="inter-sb text-base neutral-600 q-mb-none">Tentang</p>
             </RouterLink>
             <RouterLink to="/history">
