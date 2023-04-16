@@ -33,6 +33,15 @@ const routes = [
   },
 
   {
+    path: '/menu',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'Menu', component: () => import('src/pages/Menu.vue') }
+    ]
+  },
+
+
+  {
     path: '/education',
     component: () => import('src/layouts/HeaderFooter.vue'),
     children: [

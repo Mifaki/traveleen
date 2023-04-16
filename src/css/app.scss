@@ -448,3 +448,25 @@ a {
   width: 100%;
   height: fit-content;
 }
+
+//Menu Page
+.menu-left {
+  width: 384px;
+  height: fit-content;
+  max-height: 358px;
+  padding: 18px 32px;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.1));
+  border-radius: 12px;
+}
+
+.menu-right {
+  width: 800px;
+  height: fit-content;
+  padding: 32px;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
