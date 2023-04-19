@@ -17,10 +17,10 @@
             <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
                 class="inter-sb text-base emerald-600 q-mb-none">({{ coin }})</span></p>
           </div>
-          <div class="row items-center">
+          <q-item clickable to="/menu" replace class="row items-center">
             <q-icon name="img:/icons/header/profile.svg" size="64px" />
             <P class="inter-sb text-base neutral-600 q-mb-none q-ml-md">{{ users.data.first_name }}</P>
-          </div>
+          </q-item>
         </div>
         <div v-else>
           <q-btn flat label="Tentang" class="neutral-600 text-base" no-caps to="/about" replace />

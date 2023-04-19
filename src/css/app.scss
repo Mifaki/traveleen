@@ -470,3 +470,22 @@ a {
     0px 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
+
+//Balance Page
+.balance-header {
+  width: 100%;
+  height: fit-content;
+  padding: 32px 104px;
+  background: #059669;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.04),
+    0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.coint-container {
+  width: fit-content;
+  height: 100%;
+  padding: 27px 92px;
+  background: #FAFAFA;
+  border-radius: 12px;
+}

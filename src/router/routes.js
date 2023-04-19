@@ -73,6 +73,13 @@ const routes = [
     ]
   },
 
+  {
+    path: '/balance',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'Balance', component: () => import('src/pages/Balance.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
