@@ -15,7 +15,8 @@
               <p class="inter-sb text-base neutral-600 q-mb-none q-mx-lg">Riwayat</p>
             </router-link>
             <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
-                class="inter-sb text-base emerald-600 q-mb-none">({{ coin }})</span></p>
+                class="inter-sb text-base emerald-600 q-mb-none">({{
+                  this.coin }})</span></p>
           </div>
           <q-item clickable to="/menu" replace class="row items-center">
             <q-icon name="img:/icons/header/profile.svg" size="64px" />
@@ -37,6 +38,7 @@
 
 <script>
 import { api } from 'src/boot/axios';
+import { coin } from 'src/Store';
 
 export default {
   data() {

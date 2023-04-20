@@ -14,8 +14,10 @@
             <RouterLink to="/history">
               <p class="inter-sb text-base neutral-600 q-mb-none q-mx-lg">Riwayat</p>
             </RouterLink>
-            <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
-                class="inter-sb text-base emerald-600 q-mb-none">({{ coin }})</span></p>
+            <RouterLink to="/balance">
+              <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
+                  class="inter-sb text-base emerald-600 q-mb-none">({{ this.coin.value }})</span></p>
+            </RouterLink>
           </div>
           <q-item clickable to="/menu" replace class="row items-center">
             <q-icon name="img:/icons/header/profile.svg" size="64px" />
@@ -59,6 +61,7 @@
 
 <script>
 import { api } from 'src/boot/axios';
+import { coin } from 'src/Store'
 
 export default {
 
@@ -69,6 +72,7 @@ export default {
       console.log(this.users);
       this.loggedIn = true;
       window.localStorage.setItem('loggedIn', JSON.stringify(true));
+      console.log(coin);
     }
     catch (error) {
       console.log(error);
@@ -79,9 +83,9 @@ export default {
     return {
       users: null,
       loggedIn: false,
-      coin: 28000
+      coin,
     }
-  }
+  },
 }
 </script>
 

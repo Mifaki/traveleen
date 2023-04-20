@@ -5,7 +5,7 @@
         <div class="balance-header row justify-evenly items-center">
           <div class="coint-container text-center">
             <p class="inter-sb text-xl neutral-900 q-mb-none">Total Saldo</p>
-            <P class="inter-b text-4xl  emerald-600 q-mb-none">Rp {{ formatNumber(coint) }}</P>
+            <P class="inter-b text-4xl  emerald-600 q-mb-none">Rp {{ formatNumber(balanceCoin) }}</P>
           </div>
           <div clickable @click="type = true" class="text-center cursor-pointer">
             <q-icon name="img:/icons/Balance/redeemTrash.svg" size="64px" />
@@ -76,13 +76,13 @@
 
 <script>
 import { ref } from 'vue'
+import { updateCoinValue } from 'src/Store'
 
 export default {
   name: 'Balance',
 
   data() {
     return {
-      coint: 28000,
       trash: {
         type: ref(null),
         weight: ref(null),
@@ -90,7 +90,8 @@ export default {
         balance: ref(null),
         code: ref(null),
         status: ref(null)
-      }
+      },
+      totalBalance: ref(null),
     }
   },
 
@@ -228,6 +229,14 @@ export default {
       this.rows.push(this.trash)
       this.resetDefault();
     },
+  },
+
+  computed: {
+    balanceCoin() {
+      this.totalBalance = this.rows.reduce((sum, row) => sum + row.balance, 0);
+      updateCoinValue(this.totalBalance);
+      return this.totalBalance ;
+    }
   }
 }
 </script>
