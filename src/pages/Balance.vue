@@ -83,14 +83,6 @@ export default {
 
   data() {
     return {
-      trash: {
-        type: ref(null),
-        weight: ref(null),
-        location: ref(null),
-        balance: ref(null),
-        code: ref(null),
-        status: ref(null)
-      },
       totalBalance: ref(null),
     }
   },
@@ -207,6 +199,7 @@ export default {
 
       while (true) {
         code = '';
+
         for (let i = 0; i < 3; i++) {
           code += letters.charAt(Math.floor(Math.random() * letters.length));
         }
@@ -224,12 +217,20 @@ export default {
     },
 
     newTrash(argType, argWeight) {
-      this.trash.type = argType;
-      this.trash.weight = argWeight;
-      this.trash.code = this.generateCode()
-      this.trash.balance = 20000
-      this.trash.status = "Menunggu"
-      this.rows.push(this.trash)
+      let trash =  {
+        type: ref(null),
+        weight: ref(null),
+        location: ref(null),
+        balance: ref(null),
+        code: ref(null),
+        status: ref(null)
+      }
+      trash.type = argType;
+      trash.weight = argWeight;
+      trash.code = this.generateCode()
+      trash.balance = argWeight * 20000
+      trash.status = "Menunggu"
+      this.rows.push(trash)
       this.resetDefault();
     },
   },
