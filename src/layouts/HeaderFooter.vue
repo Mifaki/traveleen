@@ -16,7 +16,7 @@
             </RouterLink>
             <RouterLink to="/balance">
               <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
-                  class="inter-sb text-base emerald-600 q-mb-none">({{ this.coin.value }})</span></p>
+                  class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(this.coin.value) }})</span></p>
             </RouterLink>
           </div>
           <q-item clickable to="/menu" replace class="row items-center">
@@ -86,6 +86,15 @@ export default {
       coin,
     }
   },
+
+  methods: {
+    formatNumber(value) {
+      if (value === null || value === undefined) {
+        return '0'
+      }
+      return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(',', '.');
+    },
+  }
 }
 </script>
 

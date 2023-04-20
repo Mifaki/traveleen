@@ -33,8 +33,11 @@ export default {
 
   methods: {
     ...mapActions('cart', ['removeFromCart']),
-    formatNumber(number) {
-      return number.toLocaleString('id-ID', { maximumFractionDigits: 0 });
+    formatNumber(value) {
+      if (value === null || value === undefined) {
+        return '0'
+      }
+      return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(',', '.');
     },
   },
 }

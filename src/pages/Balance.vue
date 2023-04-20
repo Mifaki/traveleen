@@ -187,7 +187,10 @@ export default {
 
   methods: {
     formatNumber(value) {
-      return value.toLocaleString('en-US');
+      if (value === null || value === undefined) {
+        return '0'
+      }
+      return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(',', '.');
     },
 
     resetDefault() {
@@ -235,7 +238,7 @@ export default {
     balanceCoin() {
       this.totalBalance = this.rows.reduce((sum, row) => sum + row.balance, 0);
       updateCoinValue(this.totalBalance);
-      return this.totalBalance ;
+      return this.totalBalance;
     }
   }
 }

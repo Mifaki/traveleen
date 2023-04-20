@@ -16,7 +16,7 @@
             </router-link>
             <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
                 class="inter-sb text-base emerald-600 q-mb-none">({{
-                  this.coin }})</span></p>
+                  formatNumber(this.coin.value )}})</span></p>
           </div>
           <q-item clickable to="/menu" replace class="row items-center">
             <q-icon name="img:/icons/header/profile.svg" size="64px" />
@@ -59,6 +59,15 @@ export default {
     catch (error) {
       console.log(error);
     }
+  },
+
+  methods: {
+    formatNumber(value) {
+      if (value === null || value === undefined) {
+        return '0'
+      }
+      return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(',', '.');
+    },
   }
 }
 </script>
