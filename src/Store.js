@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 
 export let coin = reactive({
-  value: 28000
+  value: 0
 })
 
 export function updateCoinValue(newValue) {

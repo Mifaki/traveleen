@@ -48,18 +48,18 @@ export default {
     }
   },
 
-  async mounted() {
-    try {
-      const response = await api.get('/api/users/2')
-      this.users = response.data
-      console.log(this.users);
-      this.loggedIn = true;
-      window.localStorage.setItem('loggedIn', JSON.stringify(true));
-    }
-    catch (error) {
-      console.log(error);
-    }
-  },
+  // async mounted() {
+  //   try {
+  //     const response = await api.get('/api/users/2')
+  //     this.users = response.data
+  //     console.log(this.users);
+  //     this.loggedIn = true;
+  //     window.localStorage.setItem('loggedIn', JSON.stringify(true));
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  // },
 
   methods: {
     formatNumber(value) {

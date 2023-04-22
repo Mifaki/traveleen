@@ -66,7 +66,8 @@
                     <p class="inter-r text-base neutral-900 q-mb-none">{{ rows[0].name }} - </p>
                     <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ rows[0].date }}</p>
                   </div>
-                  <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end cursor-pointer" @click="scrollToComments">Lihat Semua</p>
+                  <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end cursor-pointer"
+                    @click="scrollToComments">Lihat Semua</p>
                 </div>
               </div>
             </div>
@@ -81,7 +82,8 @@
           </div>
           <div class="col-4 buy-detail">
             <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
-            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" @click="addToCart(id, name, price)" to="/checkout" />
+            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md"
+              @click="addToCart(id, name, price)" to="/checkout" />
             <p class="inter-sb text-lg neutral-900 q-mb-none q-my-sm">jam Buka (Waktu Lokal)</p>
             <div class="row justify-between">
               <p class="inter-r text-base neutral-900 q-mb-none">Senin</p>
@@ -275,3 +277,31 @@ export default {
   height: 48px;
 }
 </style>
+
+{
+  "id": 2,
+  ..... data yang lainnya,
+  "comments": [
+  {
+    "id": 7,
+    "name":
+    "date":
+    "comments":,
+    "image": ["https://reqres.in/img/faces/7-image.jpg", "https://reqres.in/img/faces/7-image.jpg",] (bisa kosong maks 3 gambar)
+},
+{
+  "id": 7,
+  "name":
+  "date":
+  "comments":,
+  "image": ["https://reqres.in/img/faces/7-image.jpg", "https://reqres.in/img/faces/7-image.jpg",] (bisa kosong maks 3 gambar)
+},
+{
+  "id": 7,
+  "name":
+  "date":
+  "comments":,
+  "image": ["https://reqres.in/img/faces/7-image.jpg", "https://reqres.in/img/faces/7-image.jpg",] (bisa kosong maks 3 gambar)
+},
+  ]
+}

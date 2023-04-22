@@ -81,6 +81,14 @@ const routes = [
     ]
   },
 
+  {
+    path: '/history',
+    component: () => import('src/layouts/HeaderFooter.vue'),
+    children: [
+      { path: '', name:'History', component: () => import('src/pages/History.vue') }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

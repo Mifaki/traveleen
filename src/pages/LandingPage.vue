@@ -87,7 +87,7 @@
 </template>
 
 <script>
-const isLoggedIn = JSON.parse(window.localStorage.getItem("loggedIn"))
+const isLoggedIn = JSON.parse(window.localStorage.getItem("loggedIn"));
 
 export default {
   name: 'LandingPage',
