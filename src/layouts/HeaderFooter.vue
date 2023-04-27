@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <q-header class="header column justify-center">
-      <div class="row items-center justify-between q-mx-xl q-px-xl">
+      <div class="main-container-no-top row items-center justify-between">
         <div class="row">
           <q-icon name="img:/icons/icon.svg" size="33px" class="q-mr-sm" />
           <p class="neutral-900 jose-b text-2xl q-mb-none">TRAVELEEN</p>
@@ -65,7 +65,7 @@
       <RouterView></RouterView>
     </q-page-container>
     <q-footer class="footer">
-      <div class="footer-container q-mx-auto text-center">
+      <div class="main-container text-center">
         <p class="jose-b text-2xl q-mb-none q-mb-sm">TRAVELEEN</p>
         <p class="inter-r text-base q-mb-none">"Lingkungan yang Terjaga, Wisata Alam yang Berkesan dengan Traveleen"</p>
         <div class="nav row justify-center q-mt-sm">
@@ -75,15 +75,15 @@
           <p class="inter-sb text-base q-mb-none">Store</p>
         </div>
       </div>
-      <div class="footer-bottom row justify-between items-center">
-        <div class="footer-bottom-left" />
+      <div class="footer-bottom items-center">
+        <div class="footer-bottom-left gt-xs" />
         <div class="footer-contact row justify-evenly">
           <q-icon name="img:/icons/Footer/facebook.svg" size="24px" />
           <q-icon name="img:/icons/Footer/twitter.svg" size="24px" />
           <q-icon name="img:/icons/Footer/linkedin.svg" size="24px" />
           <q-icon name="img:/icons/Footer/instagram.svg" size="24px" />
         </div>
-        <div class="footer-bottom-right" />
+        <div class="footer-bottom-right gt-xs" />
       </div>
     </q-footer>
   </q-layout>

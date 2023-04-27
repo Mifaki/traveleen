@@ -1,11 +1,11 @@
 <template>
   <q-layout view="hHh lpR fF2">
     <q-page>
-      <div class="row q-mx-xl q-px-xl q-mt-xl">
-        <div class="menu-left col-4">
+      <div class="main-container row">
+        <div class="menu-left col-xs-12 col-sm-12 col-md-12 col-lg-4 q-mb-xl">
           <div class="row items-center">
             <q-icon name="img:/icons/header/profile.svg" size="48px" />
-            <div class="q-ml-md">
+            <div class="col-8 q-ml-md">
               <p class="inter-sb text-lg neutral-900 q-mb-none">{{ profile.name }}</p>
               <P class="inter-r text-lg neutral-600 q-mb-none">{{ profile.email }}</P>
             </div>
@@ -29,7 +29,7 @@
             <p class="inter-sb text-base red-600 q-mb-none q-ml-md">Keluar</p>
           </div>
         </div>
-        <div class="menu-right col-8">
+        <div class="menu-right col-xs-12 col-sm-12 col-md-12 col-lg-8">
           <p class="inter-b text-3xl neutral-900 a-mb-none">Data Personal</p>
           <div class="row justify-between items-center">
             <div>
