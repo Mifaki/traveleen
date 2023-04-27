@@ -92,6 +92,7 @@
 <script>
 import { api } from 'src/boot/axios';
 import { coin } from 'src/Store';
+import { setIsLoggedIn } from "src/utils/localstorage";
 import { ref } from 'vue'
 
 export default {
@@ -102,7 +103,9 @@ export default {
       this.users = response.data
       console.log(this.users);
       this.loggedIn = true;
-      window.localStorage.setItem('loggedIn', JSON.stringify(true));
+
+
+      setIsLoggedIn(true);
       console.log(coin);
     }
     catch (error) {

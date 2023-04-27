@@ -65,6 +65,7 @@
 <script>
 import { ref } from 'vue';
 import { api } from 'src/boot/axios';
+import { setToken } from 'src/utils/localstorage';
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -89,9 +90,12 @@ export default {
         email: this.email,
         password: this.password
       }
+      // Udah pake await ngapain masih pake then?
+      // const response = await api.post();
+      // response.data
       await api.post('/api/register', userData).then((response) => {
         let data = response.data;
-        localStorage.setItem('token', data.token);
+        setToken(data.token);
         console.log(data)
         if (response.status === 200) {
           this.$router.push('/login');

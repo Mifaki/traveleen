@@ -52,6 +52,7 @@
 <script>
 import { ref } from 'vue';
 import { api } from 'src/boot/axios';
+import { setToken } from 'src/utils/localstorage';
 
 export default {
   name: 'Landing',
@@ -74,7 +75,7 @@ export default {
       await api.post('/api/login', userData).then((response) => {
         let data = response.data;
         console.log(data);
-        localStorage.setItem('token', data.token);
+        setToken(data.token);
         console.log(response);
         if (response.status === 200) {
           this.$router.push('/');
