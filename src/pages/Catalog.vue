@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fF2">
     <q-page>
-      <div class="q-mx-xl q-px-xl q-mt-xl">
+      <div class="main-container">
         <div class="row justify-center items-center">
           <q-select rounded outlined v-model="chooseRegion" :options="regionOptions" clearable
             class="select-box inter-r text-base emerald-60 q-mr-lg" dense>
@@ -45,7 +45,10 @@
                 </template>
               </q-select>
             </div>
-            <div v-else class="column items-end q-mb-lg">
+            <div v-else class="row justify-between items-end q-mb-lg">
+              <p class="inter-b text-3xl neutral-900 q-mb-none">
+                Menampilkan Semua Tempat wisata
+              </p>
               <q-select rounded outlined v-model="sortBy" :options="sortOptions" clearable
                   class="select-box inter-r text-base emerald-60 q-mr-lg" dense>
                   <template v-slot:selected>

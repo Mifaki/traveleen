@@ -240,6 +240,7 @@ export default {
       const filteredRows = this.rows.filter(row => row.status === 'Berhasil');
       const balances = filteredRows.map(row => row.balance);
       this.totalBalance = balances.reduce((acc, curr) => acc + curr, 0);
+      updateCoinValue(this.totalBalance)
       return this.totalBalance;
     }
   }
