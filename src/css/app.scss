@@ -323,6 +323,9 @@ a {
   height: fit-content;
   background: #059669;
   padding: 48px 96px;
+  @media only screen and (max-width: 1024px){
+
+  }
 }
 
 //login Page
@@ -571,11 +574,6 @@ a {
 
   .education-card {
     margin-bottom: 16px;
-  }
-
-  //Landing Page
-  .green-tagline{
-    padding: 48px 96px;
   }
 }
 
