@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fF2">
     <q-page>
-      <div class="q-mx-xl q-px-xl q-mt-md">
+      <div class="main-container-no-top q-mt-md">
         <div class="balance-header row justify-evenly items-center">
           <div class="coint-container text-center">
             <p class="inter-sb text-xl neutral-900 q-mb-none">Total Saldo</p>
@@ -237,8 +237,9 @@ export default {
 
   computed: {
     balanceCoin() {
-      this.totalBalance = this.rows.reduce((sum, row) => sum + row.balance, 0);
-      updateCoinValue(this.totalBalance);
+      const filteredRows = this.rows.filter(row => row.status === 'Berhasil');
+      const balances = filteredRows.map(row => row.balance);
+      this.totalBalance = balances.reduce((acc, curr) => acc + curr, 0);
       return this.totalBalance;
     }
   }
