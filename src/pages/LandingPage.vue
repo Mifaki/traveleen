@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fF2">
     <q-page>
       <div class="headline-landing row justify-end items-center">
-        <div class="headline-container col-6">
+        <div class="headline-container col-sm-12 col-md-8 col-lg-6">
           <p class="jose-b text-4xl neutral-50 q-mb-none">LINGKUNGKAN YANG TERJAGA, WISATA ALAM YANG BERKESAN DENGAN <span
               class="jose-b text-4xl emerald-600 q-mb-none">TRAVELEEN</span></p>
           <p class="inter-sb text-base neutral-50 q-mb-none">Yuk, jadikan liburanmu lebih berarti dengan Traveleen dan
@@ -12,7 +12,7 @@
           <q-btn v-else unelevated label="Mulai Sekarang" to="/login" class="start-button text-base inter-sb q-mt-lg" no-caps />
         </div>
       </div>
-      <div class="q-mx-xl q-px-xl q-mt-xl">
+      <div class="main-container">
         <div class="landing-desc">
           <p class="inter-b text-4xl neutral-50 q-mb-none text-center">Apa itu Traveleen?</p>
           <p class="inter-sb text-lg neutral-50 q-mb-none q-mt-md">Traveleen adalah sebuah website yang menyediakan
@@ -46,9 +46,9 @@
             </q-card>
           </div>
         </div>
-        <div class="row justify-between items-center q-ma-xl q-py-xl">
-          <q-img src="/icons/LandingPage/tagline.png" class="col-6" />
-          <div class="col-5">
+        <div class="row justify-between items-center q-my-xl q-py-xl">
+          <q-img src="/icons/LandingPage/tagline.png" class="col-6 gt-md" />
+          <div class="col-md-12 col-lg-5">
             <p class="inter-b text-3xl emerald-600 q-mb-none">Cari Destinasi Impianmu</p>
             <p class="inter-r text-base neutral-900 q-mb-none text-justify">Kamu dapat menemukan berbagai pilihan wisata
               alam yang
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="green-tagline row justify-between items-center">
-        <div class="col-5">
+        <div class="col-md-12 col-lg-5">
           <p class="inter-b text-3xl neutral-50 q-mb-none">Bayar Dengan Sampah</p>
           <p class="inter-r text-base neutral-50 q-mb-none text-justify">Kamu dapat menemukan berbagai pilihan wisata alam
             yang
@@ -67,11 +67,11 @@
             banyak lokasi wisata alam yang menakjubkan untuk dinikmati. Jangan ragu untuk mengeksplorasi dan menemukan
             tempat yang paling sesuai dengan minatmu.</p>
         </div>
-        <q-img src="/icons/LandingPage/tagline-2.png" class="col-6" />
+        <q-img src="/icons/LandingPage/tagline-2.png" class="col-6 gt-md" />
       </div>
-      <div class="row justify-between items-center q-ma-xl q-pa-xl">
-        <q-img src="/icons/LandingPage/tagline-3.png" class="col-6" />
-        <div class="col-5">
+      <div class="main-container row justify-between items-center q-pb-xl">
+        <q-img src="/icons/LandingPage/tagline-3.png" class="col-6 gt-md" />
+        <div class="col-md-12 col-lg-5">
           <p class="inter-b text-3xl emerald-600 q-mb-none">Cari Destinasi Impianmu</p>
           <p class="inter-r text-base neutral-900 q-mb-none text-justify">Kamu dapat menemukan berbagai pilihan wisata
             alam yang

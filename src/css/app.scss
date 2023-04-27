@@ -259,13 +259,36 @@ a {
       rgba(0, 0, 0, 0) 100%
     ),
     url("/icons/LandingPage/headline-bg.jpg") round;
-  padding: 0 112px;
+
+  @media only screen and (max-width: 1024px) {
+    background: linear-gradient(
+      270deg,
+      rgba(0, 0, 0, 0.5) 52.38%,
+      rgba(0, 0, 0, 0.400722) 68.16%,
+      rgba(0, 0, 0, 0.257031) 78.83%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("/icons/LandingPage/headline-bg-md.jpg") round;
+    padding: 0 5vw;
+  }
+  @media only screen and (max-width: 600px) {
+    background: linear-gradient(
+      270deg,
+      rgba(0, 0, 0, 0.5) 52.38%,
+      rgba(0, 0, 0, 0.400722) 68.16%,
+      rgba(0, 0, 0, 0.257031) 78.83%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("/icons/LandingPage/headline-bg-sm.jpg") round;
+    padding: 0 10vw;
+  }
+
 }
 
 .landing-desc {
   width: 100%;
   height: fit-content;
-  padding: 49px 98px;
+  padding: 6vw;
   background: #059669;
   border-radius: 12px;
 }
@@ -276,11 +299,12 @@ a {
 
 .feature-card {
   width: 383.48px;
-  height: 516px;
+  min-height: 516px;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.04),
     0px 20px 25px -5px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   padding: 32px;
+  margin: 16px 0;
 }
 
 .feature-image {
@@ -289,6 +313,7 @@ a {
 }
 
 .headline-container {
+  margin-left: 20px;
   max-width: 592px;
   height: fit-content;
 }
@@ -501,7 +526,7 @@ a {
 
 
 //Responsive Styles
-@media only screen and (max-width: $breakpoint-sm) {
+@media only screen and (max-width: 600px) {
   .main-container {
     margin: 48px 12px;
   }
@@ -523,9 +548,14 @@ a {
   .education-card{
     margin-bottom: 12px;
   }
+
+  //Landing Page
+  .green-tagline {
+    padding: 48px 12px;
+  }
 }
 
-@media only screen and (max-width: $breakpoint-md) {
+@media only screen and (max-width: 1024px) {
   .main-container-no-top {
     margin: 0 16px
   }
@@ -541,6 +571,11 @@ a {
 
   .education-card {
     margin-bottom: 16px;
+  }
+
+  //Landing Page
+  .green-tagline{
+    padding: 48px 96px;
   }
 }
 
