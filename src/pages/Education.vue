@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fF2">
     <q-page>
       <div class="popular-education">
-        <p class="inter-b text-3xl neutral-50 q-mb-none text-center">Poopuler di Traveleen</p>
+        <p class="inter-b text-3xl neutral-50 text-center">Poopuler di Traveleen</p>
         <div class="row justify-evenly">
           <q-card class="education-card">
             <q-img src="/icons/education.jpg" />
@@ -21,9 +21,9 @@
           </q-card>
         </div>
       </div>
-      <div class="q-mx-xl q-px-xl">
+      <div class="main-container">
         <div class="column justify-center items-center q-mt-xl q-mb-xl">
-          <q-input rounded outlined v-model="search" type="search" class="search-box" dense>
+          <q-input rounded outlined v-model="search" type="search" class="search-education" dense>
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -120,3 +120,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.bg-green {
+  background: '$emerald-600';
+}
+</style>

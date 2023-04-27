@@ -2,10 +2,10 @@
   <q-layout>
     <q-header class="header column justify-center">
       <div class="main-container-no-top row items-center justify-between">
-        <div class="row">
+        <q-item class="row" clickable to="/home" replace>
           <q-icon name="img:/icons/icon.svg" size="33px" class="q-mr-sm" />
           <p class="neutral-900 jose-b text-2xl q-mb-none">TRAVELEEN</p>
-        </div>
+        </q-item>
         <div v-if="loggedIn">
           <div class="row items-center gt-sm">
             <div class="row q-mr-xl">
@@ -103,7 +103,6 @@ export default {
       this.users = response.data
       console.log(this.users);
       this.loggedIn = true;
-
 
       setIsLoggedIn(true);
       console.log(coin);

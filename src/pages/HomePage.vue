@@ -1,6 +1,6 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="col-11 q-mx-auto">
+  <q-page>
+    <div class="main-container">
       <img src="/icons/HomePage/headline-bg.jpg" />
       <div class="headline-tag">
         <p class="neutral-50 text-5xl inter-b q-mb-none">Berlibur Hemat, Alam Semakin Cemerlang</p>
