@@ -138,7 +138,7 @@ text-8xl {
 }
 
 .auth-form-container {
-  width: 436px;
+  width: 496px;
 }
 
 .select-box {
@@ -260,7 +260,7 @@ a {
     ),
     url("/icons/LandingPage/headline-bg.jpg") round;
 
-  @media only screen and (max-width: 1024px) {
+  @media only screen and (width < 1024px) {
     background: linear-gradient(
       270deg,
       rgba(0, 0, 0, 0.5) 52.38%,
@@ -271,7 +271,7 @@ a {
     url("/icons/LandingPage/headline-bg-md.jpg") round;
     padding: 0 5vw;
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (width <= 600px) {
     background: linear-gradient(
       270deg,
       rgba(0, 0, 0, 0.5) 52.38%,
@@ -330,7 +330,7 @@ a {
 
 //login Page
 .login-container {
-  height: 1024px;
+  height: 100vh;
 }
 
 .login-image {
@@ -338,6 +338,15 @@ a {
   background-repeat: round;
 }
 
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.login-form-container {
+  max-width: 100%;
+}
 //Register Page
 .register-image {
   background-image: url("/icons/Auth/register-bg.jpg");
@@ -394,25 +403,15 @@ a {
   width: 100%;
   height: fit-content;
   background: white;
-  padding: 32px;
+  padding: 5vw;
   box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
     0px 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
 
-.thumbnail-left {
-  width: 773px;
-  height: 494px;
-}
-
-.thumbnail-right {
-  width: 407px;
-  height: 241px;
-}
-
 .detail-rating {
-  width: 800px;
-  height: 338px;
+  width: 100%;
+  height: fit-content;
   padding: 32px;
   background: white;
   box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
@@ -434,7 +433,7 @@ a {
 }
 
 .buy-detail {
-  width: 384px;
+  width: 100%;
   max-height: 397px;
   padding: 32px;
   background: white;
@@ -444,7 +443,7 @@ a {
 }
 
 .detail-description {
-  max-width: 800px;
+  width: 100%;
   height: fit-content;
   background: white;
   padding: 32px;
@@ -454,8 +453,8 @@ a {
 }
 
 .detail-location {
-  width: 800px;
-  height: 295px;
+  width: 100%;
+  height: fit-content;
   padding: 32px;
   background: white;
   box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
@@ -529,7 +528,7 @@ a {
 
 
 //Responsive Styles
-@media only screen and (max-width: 600px) {
+@media only screen and (width <= 600px) {
   .main-container {
     margin: 48px 12px;
   }
@@ -556,9 +555,18 @@ a {
   .green-tagline {
     padding: 48px 12px;
   }
+
+  //Login Page
+  .login-form {
+    justify-content: center;
+  }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (width <= 1024px) {
+  .main-container {
+    margin: 48px 16px;
+  }
+
   .main-container-no-top {
     margin: 0 16px
   }
@@ -575,5 +583,22 @@ a {
   .education-card {
     margin-bottom: 16px;
   }
-}
 
+  //Login Page
+  .login-form {
+    justify-content: center;
+  }
+
+  //Detail Page
+  .buy-detail {
+    margin-top: 32px;
+  }
+
+  .detail-container {
+    justify-content: center;
+  }
+
+  .detail-location {
+    padding: 12px;
+  }
+}

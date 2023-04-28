@@ -1,10 +1,10 @@
 <template>
   <q-layout view="hHh lpR fF2">
     <q-page>
-      <div class="q-mx-xl q-px-xl q-mt-xl">
+      <div class="main-container ">
         <div class="row justify-center items-center">
           <q-select rounded outlined v-model="chooseRegion" :options="regionOptions" clearable
-            class="select-box inter-r text-base emerald-60 q-mr-lg" dense>
+            class="col-4 inter-r text-base emerald-60 q-mr-lg" dense>
             <template v-slot:prepend>
               <q-icon name="img:/icons/Catalog/select.svg" />
             </template>
@@ -15,7 +15,7 @@
               <template v-else>Semua</template>
             </template>
           </q-select>
-          <q-input rounded outlined v-model="search" type="search" class="search-box" dense>
+          <q-input rounded outlined v-model="search" type="search" class="col-7" dense>
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -30,19 +30,19 @@
             <p class="inter-r text-lg neutral-500 q-mb-none q-ml-sm">{{ region }}</p>
           </div>
           <div class="row justify-between items-center">
-            <q-icon :name="thumbnail[0]" class="thumbnail-left" />
-            <div class="column">
-              <q-icon :name="thumbnail[1]" class="thumbnail-right q-mb-md" />
-              <q-icon :name="thumbnail[2]" class="thumbnail-right" />
+            <q-icon :name="thumbnail[0]" class="col-7" />
+            <div class="column col-4">
+              <q-icon :name="thumbnail[1]" class="col-12 q-mb-md" />
+              <q-icon :name="thumbnail[2]" class="col-12" />
             </div>
           </div>
         </div>
-        <div class="row q-mt-xl">
-          <div class="col-8">
+        <div class="row justify-between q-mt-xl">
+          <div class="col-md-12 col-lg-7">
             <div class="detail-rating row justify-between">
               <div>
                 <p class="inter-b text-2xl neutral-900 q-mb-none">Dari {{ totalRatings }} Pengguna</p>
-                <div class="col-3">
+                <div class="col-lg-3">
                   <div class="row items-center q-mt-lg">
                     <div class="rating-bg column justify-center text-center">
                       <p class="inter-b text-3xl q-mb-none">{{ rating }}</p>
@@ -50,13 +50,13 @@
                     <p class="inter-b text-3xl emerald-600 q-mb-none q-ml-md">Luar Biasa</p>
                   </div>
                   <div class="row q-mt-lg">
-                    <q-icon :name='rows[1].thumbnail[0]' size="72px" />
-                    <q-icon :name='rows[1].thumbnail[1]' size="72px" class="q-mx-md" />
-                    <q-icon :name='rows[1].thumbnail[0]' size="72px" />
+                    <q-icon :name='rows[1].thumbnail[0]' class="col-3" />
+                    <q-icon :name='rows[1].thumbnail[1]' class="q-mx-md col-3" />
+                    <q-icon :name='rows[1].thumbnail[0]' class="col-3" />
                   </div>
                 </div>
               </div>
-              <div class="rating-comment column justify-between">
+              <div class="rating-comment column justify-between gt-xs">
                 <div>
                   <p class="inter-b text-2xl neutral-900 q-mb-none">Apa Yang Dikatakan Pengguna</p>
                   <p class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ rows[0].comment }}</p>
@@ -76,11 +76,11 @@
               <p class="inter-r text-base neutral-900 q-mb-none text-justify">{{ description }}</p>
             </div>
             <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Lokasi</p>
-            <div class="detail-location">
+            <div class="detail-location col-12">
               <q-img src="/icons/Detail/location.jpg" />
             </div>
           </div>
-          <div class="col-4 buy-detail">
+          <div class="col-md-12 col-lg-4 buy-detail">
             <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
             <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md"
               @click="addToCart(id, name, price)" to="/checkout" />
@@ -114,32 +114,32 @@
               <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[6] }}</p>
             </div>
           </div>
-          <div class="detail-comments q-mt-xl" id="comments-section">
-            <p class="inter-b text-3xl neutral-900 q-mb-none">{{ totalRatings }} Pengguna <span
-                class="inter-b text-3xl emerald-600 q-mb-none">Traveleen</span> telah membagikan pengalaman di
-              wisata ini:</p>
-            <q-table :rows="rows" :columns="columns" row-key="id" grid hide-header hide-pagination
-              :rows-per-page-options="[10]">
-              <template v-slot:item="props">
-                <div class="comment-container row items-center q-my-sm">
-                  <div class="personal-rating-bg column justify-center text-center">
-                    <p class="inter-b text-xl q-mb-none">{{ props.row.rating }}</p>
-                  </div>
-                  <div class="col-11 column q-ml-md">
-                    <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.name }}</p>
-                    <p class="inter-r text-sm neutral-700 q-mb-none">{{ props.row.date }}</p>
-                    <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ props.row.comment }}</P>
-                    <div class="row q-mt-sm" v-if="props.row.thumbnail[0]">
-                      <q-icon :name='props.row.thumbnail[0]' size="72px" />
-                      <q-icon :name='props.row.thumbnail[1]' size="72px" class="q-mx-md" />
-                      <q-icon :name='props.row.thumbnail[2]' size="72px" />
-                    </div>
-                  </div>
-                  <div class="divider q-my-md" v-if="props.row.id < rows.length" />
+        </div>
+        <div class="detail-comments q-mt-xl" id="comments-section">
+          <p class="inter-b text-3xl neutral-900 q-mb-none">{{ totalRatings }} Pengguna <span
+              class="inter-b text-3xl emerald-600 q-mb-none">Traveleen</span> telah membagikan pengalaman di
+            wisata ini:</p>
+          <q-table :rows="rows" :columns="columns" row-key="id" grid hide-header hide-pagination
+            :rows-per-page-options="[10]">
+            <template v-slot:item="props">
+              <div class="comment-container row items-center q-my-sm">
+                <div class="personal-rating-bg column justify-center text-center">
+                  <p class="inter-b text-xl q-mb-none">{{ props.row.rating }}</p>
                 </div>
-              </template>
-            </q-table>
-          </div>
+                <div class="col-11 column q-ml-md">
+                  <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.name }}</p>
+                  <p class="inter-r text-sm neutral-700 q-mb-none">{{ props.row.date }}</p>
+                  <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ props.row.comment }}</P>
+                  <div class="row q-mt-sm" v-if="props.row.thumbnail[0]">
+                    <q-icon :name='props.row.thumbnail[0]' size="72px" />
+                    <q-icon :name='props.row.thumbnail[1]' size="72px" class="q-mx-md" />
+                    <q-icon :name='props.row.thumbnail[2]' size="72px" />
+                  </div>
+                </div>
+                <div class="divider q-my-md" v-if="props.row.id < rows.length" />
+              </div>
+            </template>
+          </q-table>
         </div>
       </div>
     </q-page>
