@@ -72,20 +72,22 @@ export default {
         email: this.username,
         password: this.password
       }
-      await api.post('/api/login', userData).then((response) => {
+      try {
+        const response = await api.post('/api/login', userData)
         let data = response.data;
         console.log(data);
         setToken(data.token);
         console.log(response);
         if (response.status === 200) {
-          this.$router.push('/');
+          this.$router.push('/home');
         }
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     }
   }
 }
+
 </script>
 
 <style>

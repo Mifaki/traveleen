@@ -17,20 +17,20 @@
               :rules="[(val) => !!val, (val) => isValidEmail(val) || 'email tidak valid']" dense />
             <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-xs">Kata Sandi</p>
             <q-input class="q-mt-sm" outlined v-model="password" :type="isPwd ? 'password' : 'text'" :rules="[
-              (val) => !!val,
-              (val) =>
-                val.length > 5 ||
-                'Password minimal terdiri dari 6 karakter',
-            ]" dense>
+                (val) => !!val,
+                (val) =>
+                  val.length > 5 ||
+                  'Password minimal terdiri dari 6 karakter',
+              ]" dense>
               <template v-slot:append>
                 <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
               </template>
             </q-input>
             <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-xs">Konfirmasi Kata Sandi</p>
             <q-input class="q-mt-sm" outlined v-model="passwordConfirmation" :type="isPwd ? 'password' : 'text'" :rules="[
-              (val) => !!val,
-              (val) => val === password || 'Password confirmation does not match'
-            ]" dense>
+                (val) => !!val,
+                (val) => val === password || 'Password confirmation does not match'
+              ]" dense>
               <template v-slot:append>
                 <q-icon :name="isConfirm ? 'visibility_off' : 'visibility'" class="cursor-pointer"
                   @click="isConfirm = !isConfirm" />
@@ -85,30 +85,30 @@ export default {
   },
 
   methods: {
+
     async submit() {
       const userData = {
         email: this.email,
         password: this.password
       }
-      // Udah pake await ngapain masih pake then?
-      // const response = await api.post();
-      // response.data
-      await api.post('/api/register', userData).then((response) => {
+
+      try {
+        const response = await api.post('/api/register', userData)
         let data = response.data;
         setToken(data.token);
         console.log(data)
         if (response.status === 200) {
           this.$router.push('/login');
         }
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     },
 
     isValidEmail(email) {
       return EMAIL_REGEX.test(email);
     }
-  }
+  },
 }
 </script>
 
