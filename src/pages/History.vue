@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fF2">
     <q-page>
-      <div class="q-mx-xl q-px-xl q-mt-xl">
+      <div class="main-container">
         <p class="inter-b text-4xl neutral-900 q-mb-">Riwayat</p>
         <q-table flat bordered light virtual-scroll :rows="rows" :columns="columns" row-key="index"
           v-model:pagination="pagination" :rows-per-page-options="[0]" hide-pagination

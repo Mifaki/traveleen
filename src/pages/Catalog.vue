@@ -70,7 +70,7 @@
               hide-pagination :rows-per-page-options="[10]">
               <template v-slot:item="props">
                 <div class="q-pa-xs col-xs-12 col-sm-7 col-md-5 col-lg-4 column items-center">
-                  <q-item clickable :to="`/${props.row.id}`" replace>
+                  <q-item clickable :to="`/detail-${props.row.id}`" replace>
                     <q-card class="catalog-card">
                       <q-icon :name=props.row.thumbnail class="catalog-thumbnail" />
                       <div class="row q-mt-md items-center">
