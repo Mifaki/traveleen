@@ -2,12 +2,12 @@
   <q-layout view="hHh lpR fF2">
     <q-page>
       <div class="row">
-        <div class="col-5 q-py-xl column justify-between">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 q-py-xl column justify-between">
           <div class="row items-center q-pl-xl">
             <q-icon name="img:icons/icon.svg" size="33px" />
             <p class="jose-b text-xl q-mb-none q-ml-sm">TRAVELEEN</p>
           </div>
-          <q-form @submit="submit" class="auth-form-container q-mx-auto">
+          <q-form @submit="submit" class="register-form-container q-mx-auto">
             <p class="inter-b text-5xl neutral-900 q-mb-none q-mb-sm text-center">Daftar</p>
             <p class="inter-sb text-lg neutral-500 q-mb-none text-center">Silakan masukan detail anda</p>
             <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-lg">Username</p>
@@ -51,7 +51,7 @@
             </router-link>
           </div>
         </div>
-        <div class="col-7 register-image q-pa-xl column justify-end">
+        <div class="col-7 register-image q-pa-xl column justify-end gt-md">
           <div>
             <p class="inter-b text-5xl neutral-50 q-mb-none">Pantai Sanur</p>
             <p class="inter-b text-2xl neutral-50 q-mb-none">Bali, Indonesia</p>

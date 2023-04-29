@@ -137,10 +137,6 @@ text-8xl {
   display: none;
 }
 
-.auth-form-container {
-  width: 496px;
-}
-
 .select-box {
   width: 280px;
 }
@@ -351,6 +347,11 @@ a {
 .register-image {
   background-image: url("/icons/Auth/register-bg.jpg");
   background-repeat: round;
+}
+
+.register-form-container {
+  width: 80%;
+  max-width: 360px;
 }
 
 //Education Page
