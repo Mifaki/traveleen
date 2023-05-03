@@ -47,17 +47,50 @@
                   <img src="/icons/header/profile.svg" />
                 </q-avatar>
                 <div>
-                  <p class="inter-sb text-lg neutral-900 q-mb-none">{{ users.data.first_name }}</p>
-                  <p class="inter-r text-md neutral-600 q-mb-none">{{ users.data.email }}</p>
+                  <p class="inter-sb text-lg neutral-900 q-mb-none">Janet</p>
+                  <p class="inter-r text-md neutral-600 q-mb-none">janet@gmail.com</p>
                 </div>
               </div>
             </q-drawer>
           </div>
         </div>
         <div v-else>
-          <q-btn flat label="Tentang" class="neutral-600 text-base" no-caps to="/about" replace />
-          <q-btn flat label="Masuk" class="neutral-600 text-base" no-caps to="/login" replace />
-          <q-btn unelevated rounded label="Daftar" class="register-button text-base" no-caps to="/register" replace />
+          <div class="gt-sm">
+            <q-btn flat label="Tentang" class="neutral-600 text-base" no-caps to="/about" replace />
+            <q-btn flat label="Masuk" class="neutral-600 text-base" no-caps to="/login" replace />
+            <q-btn unelevated rounded label="Daftar" class="register-button text-base" no-caps to="/register" replace />
+          </div>
+          <div class="lt-md">
+            <div class="lt-md">
+              <q-btn flat @click="drawer = !drawer" round text-color="grey-10" icon="menu" />
+              <q-drawer v-model="drawer">
+                <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+                  <q-list padding>
+                    <q-item clickable to="/">
+                      <p class="inter-sb text-base neutral-600 q-mb-none">Tentang</p>
+                    </q-item>
+                    <q-item clickable to="/history">
+                      <p class="inter-sb text-base neutral-600 q-mb-none">Riwayat</p>
+                    </q-item>
+                    <q-item clickable to="/balance">
+                      <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
+                          class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(this.coin.value) }})</span>
+                      </p>
+                    </q-item>
+                  </q-list>
+                </q-scroll-area>
+                <div class="row items-center absolute-top bg-transparent q-pa-lg">
+                  <q-avatar size="56px" class="q-mb-sm q-mr-md">
+                    <img src="/icons/header/profile.svg" />
+                  </q-avatar>
+                  <div>
+                    <p class="inter-sb text-lg neutral-900 q-mb-none">Janet</p>
+                    <p class="inter-r text-md neutral-600 q-mb-none">Janet@gmailcom</p>
+                  </div>
+                </div>
+              </q-drawer>
+            </div>
+          </div>
         </div>
       </div>
     </q-header>
