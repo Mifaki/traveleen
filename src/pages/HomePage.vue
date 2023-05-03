@@ -1,30 +1,31 @@
 <template>
   <q-page>
-    <div class="main-container">
-      <img src="/icons/HomePage/headline-bg.jpg" />
-      <div class="headline-tag">
+    <div class="home-headline q-mt-xl gt-xs">
+      <div class="headline-tag q-ml-xl">
         <p class="neutral-50 text-5xl inter-b q-mb-none">Berlibur Hemat, Alam Semakin Cemerlang</p>
         <p class="neutral-50 text-lg inter-sb q-mb-none">Ajak teman-temanmu berlibur ke wisata alam ramah lingkungan
           dengan Traveleen, yang memungkinkan kamu membayar
           tiket masuk dengan poin yang sudah ditukar dengan sampah.</p>
       </div>
       <div class="search-home q-pa-auto">
-        <q-form @submit="submit" class="row items-center justify-evenly">
+        <div class="row items-center justify-evenly">
           <div>
             <p class="inter-sb text-base neutral-500 q-mb-none">
               Lokasi
             </p>
-            <q-input outlined round v-model="location" class="find input q-mt-sm" :rules="[(val) => !!val]" dense />
+            <q-input outlined round v-model="location" class="find input q-mt-sm" dense />
           </div>
           <div>
             <p class="inter-sb text-base neutral-500 q-mb-none">
               Jenis Wisata
             </p>
-            <q-input outlined round v-model="type" class="q-mt-sm" :rules="[(val) => !!val]" dense />
+            <q-input outlined round v-model="type" class="q-mt-sm" dense />
           </div>
-          <q-btn unelevated label="Cari" class="find-button text-base inter-sb" no-caps type="submit" />
-        </q-form>
+          <q-btn unelevated label="Cari" class="find-button text-base inter-sb column" no-caps @click="toCatalog" />
+        </div>
       </div>
+    </div>
+    <div class="main-container">
       <p class="inter-b text-4xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center">#PeduliLingkungan</p>
       <div class="row justify-evenly items-center q-mt-xl">
         <q-card class="education-home">
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import { homeSubmitValue } from 'src/Store';
 import { ref } from 'vue';
 
 export default {
@@ -59,9 +61,11 @@ export default {
   },
 
   methods: {
-    submit() { }
+    toCatalog() {
+      homeSubmitValue(this.location, this.type)
+      this.$router.push('/catalog');
+    }
   }
-
 }
 </script>
 

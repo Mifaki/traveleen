@@ -103,6 +103,7 @@
 
 <script>
 import { ref } from 'vue';
+import { homeLocation, homeType, homeSubmitValue } from 'src/Store';
 
 const columns = [
   {
@@ -304,6 +305,17 @@ export default {
       }
     }
   },
+
+  mounted() {
+    if(homeType.value != null && homeLocation.value != null) {
+      this.chooseCategory  = homeType.value;
+      this.chooseRegion = homeLocation.value;
+    } else if (homeType.value != null) {
+      this.chooseCategory = homeType.value;
+    } else if (homeLocation.value != null) {
+      this.chooseRegion = null;
+    }
+  }
 }
 </script>
 

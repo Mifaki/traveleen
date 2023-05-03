@@ -88,12 +88,13 @@ export default {
 
     async submit() {
       const userData = {
+        username: this.username,
         email: this.email,
         password: this.password
       }
 
       try {
-        const response = await api.post('/api/register', userData)
+        const response = await api.post('/api/v1/user/signup', userData)
         let data = response.data;
         setToken(data.token);
         console.log(data)

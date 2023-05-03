@@ -52,7 +52,7 @@
 <script>
 import { ref } from 'vue';
 import { api } from 'src/boot/axios';
-import { setToken } from 'src/utils/localstorage';
+import { setIsLoggedIn, setToken } from 'src/utils/localstorage';
 
 export default {
   name: 'Landing',
@@ -73,11 +73,10 @@ export default {
         password: this.password
       }
       try {
-        const response = await api.post('/api/login', userData)
-        let data = response.data;
-        console.log(data);
-        setToken(data.token);
+        const response = await api.post('/api/v1/user/login', userData)
         console.log(response);
+        setToken(response.data.data.token);
+        setIsLoggedIn(true)
         if (response.status === 200) {
           this.$router.push('/home');
         }
