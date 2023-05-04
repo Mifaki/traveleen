@@ -156,7 +156,7 @@ a {
 }
 
 .main-container-no-top {
-  margin: 0 96px
+  margin: 0 96px;
 }
 
 //Header
@@ -260,7 +260,7 @@ a {
   height: 48px;
   width: 176px;
   color: white;
-  background-color: #10B981;
+  background-color: #10b981;
 }
 
 //Landing Page
@@ -279,27 +279,26 @@ a {
 
   @media only screen and (width < 1024px) {
     background: linear-gradient(
-      270deg,
-      rgba(0, 0, 0, 0.5) 52.38%,
-      rgba(0, 0, 0, 0.400722) 68.16%,
-      rgba(0, 0, 0, 0.257031) 78.83%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    url("/icons/LandingPage/headline-bg-md.jpg") ;
+        270deg,
+        rgba(0, 0, 0, 0.5) 52.38%,
+        rgba(0, 0, 0, 0.400722) 68.16%,
+        rgba(0, 0, 0, 0.257031) 78.83%,
+        rgba(0, 0, 0, 0) 100%
+      ),
+      url("/icons/LandingPage/headline-bg-md.jpg");
     padding: 0 5vw;
   }
   @media only screen and (width <= 600px) {
     background: linear-gradient(
-      270deg,
-      rgba(0, 0, 0, 0.5) 52.38%,
-      rgba(0, 0, 0, 0.400722) 68.16%,
-      rgba(0, 0, 0, 0.257031) 78.83%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    url("/icons/LandingPage/headline-bg-sm.jpg");
+        270deg,
+        rgba(0, 0, 0, 0.5) 52.38%,
+        rgba(0, 0, 0, 0.400722) 68.16%,
+        rgba(0, 0, 0, 0.257031) 78.83%,
+        rgba(0, 0, 0, 0) 100%
+      ),
+      url("/icons/LandingPage/headline-bg-sm.jpg");
     padding: 0 10vw;
   }
-
 }
 
 .landing-desc {
@@ -340,8 +339,7 @@ a {
   height: fit-content;
   background: #059669;
   padding: 48px 96px;
-  @media only screen and (max-width: 1024px){
-
+  @media only screen and (max-width: 1024px) {
   }
 }
 
@@ -392,7 +390,7 @@ a {
   border-radius: 12px;
 }
 
-.search-education{
+.search-education {
   width: 100%;
 }
 
@@ -551,10 +549,35 @@ a {
   width: fit-content;
   height: 100%;
   padding: 27px 92px;
-  background: #FAFAFA;
+  background: #fafafa;
   border-radius: 12px;
 }
 
+//Checkout Page
+.main-checkout {
+  width: 100%;
+  height: fit-content;
+  background: white;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0px 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.quantity-container {
+  height: fit-content;
+  background: #059669;
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 12px;
+  gap: 16px;
+}
+
+.payment-button {
+  width: 100%;
+  min-height: 52px;
+}
 
 //Responsive Styles
 @media only screen and (width <= 600px) {
@@ -563,7 +586,7 @@ a {
   }
 
   .main-container-no-top {
-    margin: 0 12px
+    margin: 0 12px;
   }
 
   .footer-bottom {
@@ -576,7 +599,7 @@ a {
     padding: 48px 12px;
   }
 
-  .education-card{
+  .education-card {
     margin-bottom: 12px;
   }
 
@@ -607,7 +630,7 @@ a {
   }
 
   .main-container-no-top {
-    margin: 0 16px
+    margin: 0 16px;
   }
 
   .menu-left {
