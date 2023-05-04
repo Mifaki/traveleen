@@ -36,7 +36,9 @@
     </div>
     <div class="main-container">
       <p class="inter-b text-4xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center gt-sm">#PeduliLingkungan</p>
-      <p class="inter-b text-2xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center lt-md">#PeduliLingkungan</p>
+      <router-link to="/education" class="lt-md">
+        <p class="inter-b text-2xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center ">#PeduliLingkungan</p>
+      </router-link>
       <div class="row justify-evenly items-center q-mt-xl">
         <q-card class="education-home col-sm-12 col-md-5 col-lg-5">
           <q-img src="/icons/education.jpg" />
