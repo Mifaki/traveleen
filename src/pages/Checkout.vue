@@ -4,14 +4,25 @@
       <p class="inter-b text-3xl neutral-900 q-mb-none">Pemesanan</p>
       <div class="main-checkout q-mt-md">
         <div class="cart row justify-between items-center" v-for="(cart, index) in carts">
-          <div class="row col-4">
-            <img :src="cart.thumbnail" class="col-7" />
-            <div class="q-ml-md column justify-between col-4">
+          <div class="row col-xs-12 col-sm-8 col-md-6 col-lg-4">
+            <img :src="cart.thumbnail" class="col-xs-12 col-sm-7 col-md-7 col-lg-7" />
+            <div class="column justify-between q-ml-md col-sm-4 col-md-4 col-lg-4 gt-xs">
               <div class="row items-center">
                 <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
                 <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ cart.region }}</p>
               </div>
               <p class="inter-r text-lg emerald-600 q-mb-none">{{ cart.category }}</p>
+              <p class="inter-b text-2xl neutral-900 q-mb-none">{{ cart.name }}</p>
+              <p class="inter-sb text-xl neutral-900 q-mb-none">Rp {{ formatNumber(cart.price) }}</p>
+            </div>
+            <div class="q-mt-md col-xs-12 col-sm-4 lt-sm">
+              <div class="row">
+                <div class="row items-center">
+                  <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
+                  <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ cart.region }}</p>
+                </div>
+                <p class="inter-r text-lg emerald-600 q-mb-none q-ml-lg">{{ cart.category }}</p>
+              </div>
               <p class="inter-b text-2xl neutral-900 q-mb-none">{{ cart.name }}</p>
               <p class="inter-sb text-xl neutral-900 q-mb-none">Rp {{ formatNumber(cart.price) }}</p>
             </div>
@@ -33,7 +44,9 @@
       <p class="inter-b text-3xl nautral-900 q-mt-xl">Metode Pembayaran</p>
       <div class="main-checkout">
         <q-option-group v-model="payment" :options="paymentOptions" color="primary"
-          class="inter-b text-xl neutral-900 row justify-evenly" inline />
+          class="inter-b text-xl neutral-900 row justify-evenly gt-xs" inline />
+          <q-option-group v-model="payment" :options="paymentOptions" color="primary"
+          class="inter-b text-xl neutral-900 lt-sm" />
       </div>
       <q-btn unelevated label="Konfirmasi Pemesanan" color="primary" class="payment-button text-base inter-sb q-mt-xl"
         no-caps to="/history" replace />
