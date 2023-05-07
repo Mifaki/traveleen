@@ -153,7 +153,9 @@
 
 <script>
 import { ref } from 'vue';
+import { api } from 'src/boot/axios';
 import { homeLocation, homeType, homeSubmitValue } from 'src/Store';
+import { getToken } from 'src/utils/localstorage';
 
 const columns = [
   {
@@ -366,7 +368,23 @@ export default {
     } else if (homeLocation.value != null) {
       this.chooseRegion = null;
     }
-  }
+  },
+
+  async mounted() {
+    try {
+      const token = getToken()
+      console.log(token);
+      const response = await api.get('api/v1/tourism/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      console.log(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  },
 }
 </script>
 

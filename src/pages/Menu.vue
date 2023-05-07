@@ -4,7 +4,7 @@
       <div class="main-container row">
         <div class="menu-left col-xs-12 col-sm-12 col-md-12 col-lg-4 q-mb-xl">
           <div class="row items-center">
-            <q-icon name="img:/icons/header/profile.svg" size="48px" />
+            <q-img :src="photoProfile" class="profile-image"/>
             <div class="col-8 q-ml-md">
               <p class="inter-sb text-lg neutral-900 q-mb-none">{{ profile.name }}</p>
               <P class="inter-r text-lg neutral-600 q-mb-none">{{ profile.email }}</P>
@@ -32,20 +32,21 @@
         <div class="menu-right col-xs-12 col-sm-12 col-md-12 col-lg-8">
           <p class="inter-b text-3xl neutral-900 a-mb-none">Data Personal</p>
           <div class="row justify-between items-center">
-            <div>
+            <div class="col-4">
               <p class="inter-r text-sm neutral-600 q-mb-none q-mb-md">Foto Profil</p>
-              <q-icon name="img:/icons/header/profile.svg" size="64px" />
+              <q-img :src="photoProfile" class="edit-image" />
+              <q-input @change="uploadPhoto" @update:model-value="val => { file = val[0] }" flat type="file" class="q-mt-sm" dense />
             </div>
-            <div class="row">
+            <div class="row justify-end col-8">
               <q-btn unelevated label="Hapus" class="clear-button text-sm inter-sb q-mr-md" no-caps />
               <q-btn unelevated label="Ubah" class="edit-button text-sm inter-sb" no-caps @click="isEditing" />
             </div>
           </div>
           <q-form @submit="submit">
             <p class="inter-r text-sm neutral-600 q-mb-none q-mb-sm q-mt-lg">Nama Lengkap</p>
-            <q-input outlined round v-model="name" :rules="[(val) => !!val]" dense :disable="isDisabled" />
+            <q-input outlined round v-model="username" :rules="[(val) => !!val]" dense :disable="isDisabled" />
             <p class="inter-r text-sm neutral-600 q-mb-none q-mb-sm">Jenis Kelamin</p>
-            <q-option-group v-model="sex" :options="sexOptions" color="primary" class="inter-r text-base neutral-900"
+            <q-option-group v-model="gender" :options="sexOptions" color="primary" class="inter-r text-base neutral-900"
               inline :disable="isDisabled" />
             <div class="row justify-between q-mt-lg">
               <div class="col-2">
@@ -56,7 +57,7 @@
                 <p class="inter-r text-sm neutral-600 q-mb-none q-mb-sm">Bulan</p>
                 <q-select outlined v-model="month" :options="monthOptions" clearable
                   class="inter-r text-base emerald-600 q-mr-lg" transition-show="jump-down" transition-hide="jump-up"
-                  dense :disable="isDisabled" >
+                  dense :disable="isDisabled">
                   <template v-slot:selected>
                     <template v-if="month">
                       {{ month }}
@@ -71,11 +72,11 @@
               </div>
             </div>
             <p class="inter-r text-sm neutral-600 q-mb-none q-mb-sm">Kota</p>
-            <q-input outlined round v-model="city" :rules="[(val) => !!val]" dense :disable="isDisabled" />
+            <q-input outlined round v-model="region" :rules="[(val) => !!val]" dense :disable="isDisabled" />
             <p class="inter-r text-sm neutral-600 q-mb-none q-mb-sm">Email</p>
             <q-input outlined round v-model="email" :rules="[(val) => !!val]" dense :disable="isDisabled" />
             <p class="inter-r text-sm neutral-600 q-mb-none q-mb-sm">No. Telpon</p>
-            <q-input outlined round v-model="phoneNumber" :rules="[(val) => !!val]" dense :disable="isDisabled" />
+            <q-input outlined round v-model="contact" :rules="[(val) => !!val]" dense :disable="isDisabled" />
             <q-btn unelevated label="Simpan" class="submit-button text-base inter-sb" no-caps type="submit" />
           </q-form>
         </div>
@@ -86,6 +87,8 @@
 
 <script>
 import { ref } from 'vue';
+import { getToken } from 'src/utils/localstorage';
+import { api } from 'src/boot/axios';
 
 export default {
   name: 'Menu',
@@ -93,30 +96,32 @@ export default {
   data() {
     return {
       profile: {
-        name: "Arthur Morgan",
-        email: 'arthurmorgan@gmail.com'
+        name: ref(null),
+        email: ref(null)
       }
     }
   },
 
   setup() {
     return {
-      name: 'Arthur Morgan',
-      sex: ref('man'),
-      date: '21',
-      month: ref('Januari'),
-      year: '2002',
-      city: 'Depok',
-      email: 'arthurmorgan@gmail.com',
-      phoneNumber: '087865392929',
+      username: ref(null),
+      email: ref(null),
+      gender: ref('Pria'),
+      date: ref(null),
+      month: ref(null),
+      year: ref(null),
+      region: ref(null),
+      contact: ref(null),
+      photoProfile: ref(null),
+      file: ref(null),
       sexOptions: [
         {
           label: 'Pria',
-          value: 'man'
+          value: 'Pria'
         },
         {
           label: 'Wanita',
-          value: 'woman'
+          value: 'Wanita'
         },
       ],
       monthOptions: [
@@ -128,23 +133,82 @@ export default {
 
   methods: {
     submit() {
-      const updateData = {
-        name: this.name,
-        sex: this.sex,
-        date: this.date,
-        month: this.month,
-        year: this.year,
-        city: this.city,
-        email: this.email,
-        phoneNumber: this.phoneNumber,
-      }
+      const birthday = `${this.date} ${this.month} ${this.year}`;
+      const isMale = this.gender == "Pria" ? true : false
+      console.log(isMale);
 
-      this.profile.name = updateData.name;
+      const updateData = {
+        username: this.username,
+        email: this.email,
+        password: 'faiz123',
+        contact: this.contact,
+        region: this.region,
+        gender: isMale,
+        birthday: birthday
+      }
+      console.log(updateData);
+      try {
+        const token = getToken()
+        const response = api.put('api/v1/user/update', updateData, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        console.log(response);
+      }
+      catch (error) {
+        console.log(error);
+      }
+      this.profile.name = updateData.username;
       this.profile.email = updateData.email;
     },
 
     isEditing() {
       this.isDisabled = !this.isDisabled;
+    },
+
+    async uploadPhoto() {
+      const formData = new FormData();
+      formData.append('photoProfile', this.file);
+
+      try {
+        const token = getToken();
+        const response = await api.post('api/v1/user/upload/photo', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response);
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+  },
+
+  async mounted() {
+    try {
+      const token = getToken()
+      console.log(token);
+      const response = await api.get('api/v1/user/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      const responseData = response.data.data
+      this.username = this.profile.name = responseData.username;
+      this.email = this.profile.email = responseData.email;
+      this.contact = responseData.contact;
+      this.region = responseData.region;
+      this.photoProfile = responseData.photo_profile
+      const birthdayParts = responseData.birthday.split(' ');
+      this.date = birthdayParts[0];
+      this.month = birthdayParts[1];
+      this.year = birthdayParts[2];
+    }
+    catch (error) {
+      console.log(error);
     }
   }
 }
@@ -166,5 +230,17 @@ export default {
   height: 48px;
   color: white;
   background-color: #10B981;
+}
+
+.profile-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+}
+
+.edit-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50px;
 }
 </style>

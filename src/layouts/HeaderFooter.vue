@@ -42,7 +42,7 @@
                   </q-item>
                 </q-list>
               </q-scroll-area>
-              <div class="row items-center absolute-top bg-transparent q-pa-lg">
+              <q-item clickable to="/menu" class="row items-center absolute-top bg-transparent q-pa-lg">
                 <q-avatar size="56px" class="q-mb-sm q-mr-md">
                   <img src="/icons/header/profile.svg" />
                 </q-avatar>
@@ -50,7 +50,7 @@
                   <p class="inter-sb text-lg neutral-900 q-mb-none">{{ users.username }}</p>
                   <p class="inter-r text-md neutral-600 q-mb-none">{{ users.email }}</p>
                 </div>
-              </div>
+              </q-item>
             </q-drawer>
           </div>
         </div>
