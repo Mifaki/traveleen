@@ -15,7 +15,7 @@
               <p class="inter-b text-2xl neutral-900 q-mb-none">{{ cart.name }}</p>
               <p class="inter-sb text-xl neutral-900 q-mb-none">Rp {{ formatNumber(cart.price) }}</p>
             </div>
-            <div class="q-mt-md col-xs-12 col-sm-4 lt-sm">
+            <div class="q-mt-md col-xs-10 col-xs-12 col-sm-4 lt-sm">
               <div class="row">
                 <div class="row items-center">
                   <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
@@ -27,7 +27,7 @@
               <p class="inter-sb text-xl neutral-900 q-mb-none">Rp {{ formatNumber(cart.price) }}</p>
             </div>
           </div>
-          <div class="quantity-container">
+          <div class="quantity-counter">
             <q-icon name="img:/icons/Checkout/minus.svg" size="24px" class="cursor-pointer"
               @click="changeQuantity(index, false)" />
             <p class="inter-sb text-lg neutral-50 q-mb-none">{{ cart.quantity }}</p>

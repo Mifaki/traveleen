@@ -3,9 +3,10 @@
     <q-page>
       <div class="main-container-no-top q-mt-md">
         <div class="balance-header row justify-evenly items-center">
-          <div class="coint-container text-center">
+          <div class="coint-container text-center col-sm-12 col-md-6 col-lg-6">
             <p class="inter-sb text-xl neutral-900 q-mb-none">Total Saldo</p>
-            <P class="inter-b text-4xl  emerald-600 q-mb-none">Rp {{ formatNumber(balanceCoin) }}</P>
+            <P v-if="users" class="inter-b text-4xl  emerald-600 q-mb-none">Rp {{ formatNumber(users.wallet) }}</P>
+            <P v-else class="inter-b text-4xl  emerald-600 q-mb-none">Rp 0</P>
           </div>
           <div clickable @click="type = true" class="text-center cursor-pointer">
             <q-icon name="img:/icons/Balance/redeemTrash.svg" size="64px" />
@@ -36,7 +37,7 @@
                 </template>
               </q-select>
               <q-btn unelevated color="primary" label="Selanjutnya" no-caps class="dialog-buttons q-mt-lg"
-                @click="quantity = true" :disable="chooseType == null" />
+                @click="setQuantityAndPricePerKg" :disable="chooseType == null" />
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -45,14 +46,14 @@
             <q-card-section>
               <q-img src="/icons/Balance/plastic.jpg" />
             </q-card-section>
-            <q-card-section class="row q-mt-lg">
+            <q-card-section class="row justify-between q-mt-lg">
               <div>
                 <p class="inter-r text-md neutral-500 q-mb-none q-mb-sm">Jenis Sampah</p>
                 <P class="inter-r text-md neutral-500 q-mb-none">Nilai Penukaran</P>
               </div>
               <div class="q-ml-xl">
                 <p class="inter-sb text-md neutral-900 q-mb-none q-mb-sm">{{ chooseType }}</p>
-                <P class="inter-sb text-md neutral-900 q-mb-none">Rp.20.000/kg</P>
+                <P class="inter-sb text-md neutral-900 q-mb-none">Rp {{ getPricePerKg() }}</P>
               </div>
             </q-card-section>
             <q-card-section class="q-mt-lg">
@@ -61,7 +62,7 @@
               <q-btn outline color="red" label="Batal" class="dialog-buttons q-mt-lg q-mb-md"
                 @click="quantity = false, type = false" />
               <q-btn unelevated color="primary" label="Selanjutnya" class="dialog-buttons"
-                @click="newTrash(chooseType, weight)" />
+                @click="updateTrash(chooseType, weight)" />
             </q-card-section>
           </q-card>
         </q-dialog>
@@ -76,7 +77,8 @@
 
 <script>
 import { ref } from 'vue'
-import { updateCoinValue } from 'src/Store'
+import { getToken } from 'src/utils/localstorage'
+import { api } from 'src/boot/axios'
 
 export default {
   name: 'Balance',
@@ -84,17 +86,18 @@ export default {
   data() {
     return {
       totalBalance: ref(null),
+      users: ref(null)
     }
   },
 
   setup() {
     const columns = [
       {
-        name: 'type',
+        name: 'categoty',
         required: true,
         label: 'Jenis',
         align: 'left',
-        field: row => row.type,
+        field: row => row.category,
         format: val => `${val}`,
       },
       {
@@ -104,66 +107,27 @@ export default {
         field: row => row.location ? row.location : '-'
       },
       {
-        name: 'weight',
+        name: 'mass',
         label: 'Berat',
-        field: 'weight',
+        field: 'mass',
         sortable: true,
         format: val => `${val} Kg`
       },
       {
-        name: 'balance',
+        name: 'exchange_totals',
         align: 'center',
         label: 'Total Saldo',
-        field: 'balance',
+        field: 'exchange_totals',
         sortable: true,
         format: val => `Rp ${val.toLocaleString('en-US')}`
       },
       { name: 'code', align: 'center', label: 'Kode', field: 'code' },
       { name: 'status', label: 'Status', field: 'status' },
     ]
-    const originalRows = [
-      {
-        id: 1,
-        type: "Plastik",
-        location: null,
-        weight: 1,
-        balance: 20000,
-        code: "P102A938L7",
-        status: "Menunggu"
-      },
-      {
-        id: 2,
-        type: "Kertas",
-        location: "Pantai Nusa Dua, Bali",
-        weight: 2,
-        balance: 20000,
-        code: "K186A442F1",
-        status: "Berhasil"
-      },
-      {
-        id: 3,
-        type: "Plastik  ",
-        location: "Pantai Nusa Dua, Bali",
-        weight: 0.4,
-        balance: 8000,
-        code: "P224A611L3",
-        status: "Berhasil"
-      },
-      {
-        id: 4,
-        type: "Kardus",
-        location: null,
-        weight: 0.9,
-        balance: 13500,
-        code: "K717B529D7",
-        status: "Gagal"
-      },
-    ]
-    const rows = ref([...originalRows])
+    const rows = ref([])
     return {
       columns,
       rows,
-      originalRows,
       pagination: ref({
         rowsPerPage: 0
       }),
@@ -185,6 +149,32 @@ export default {
       return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(',', '.');
     },
 
+    setQuantityAndPricePerKg() {
+      this.quantity = true;
+      this.getPricePerKg();
+    },
+
+    getPricePerKg() {
+      switch (this.chooseType) {
+        case 'Plastik':
+          return '2.000'
+        case 'Kaca':
+          return '5.000';
+        case 'Kertas':
+          return '1.000';
+        case 'Elektronik':
+          return '25.000';
+        case 'Metal':
+          return '15.000';
+        case 'Kardus':
+          return '7.000';
+        case 'Organik':
+          return '2.000';
+        default:
+          return '0';
+      }
+    },
+
     resetDefault() {
       this.quantity = false;
       this.type = false;
@@ -192,56 +182,72 @@ export default {
       this.weight = 1;
     },
 
-    generateCode() {
-      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const numbers = '0123456789';
-      let code = '';
+    async updateTrash(argType, argWeight) {
+      try {
+        const token = getToken();
+        const response = await api.post('api/v1/trash/exchange', {
+          category: argType,
+          mass: argWeight
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      while (true) {
-        code = '';
-
-        for (let i = 0; i < 3; i++) {
-          code += letters.charAt(Math.floor(Math.random() * letters.length));
-        }
-        for (let i = 0; i < 3; i++) {
-          code += numbers.charAt(Math.floor(Math.random() * numbers.length));
-        }
-        for (let i = 0; i < 3; i++) {
-          code += letters.charAt(Math.floor(Math.random() * letters.length));
-        }
-
-        if (!this.rows.some(row => row.code === code)) {
-          return code;
-        }
+        const data = response.data.data;
+        console.log(data);
+        const trash = {
+          category: data.category,
+          location: data.location !== '-' ? data.location : null,
+          mass: data.mass,
+          exchange_totals: data.exchange_totals,
+          code: data.code,
+          status: data.status
+        };
+        this.rows.push(trash);
+        const userResponse = await api.get('api/v1/user/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.users.wallet = userResponse.data.data.wallet;
+        this.resetDefault();
+      } catch (error) {
+        console.log(error);
       }
-    },
-
-    newTrash(argType, argWeight) {
-      let trash =  {
-        type: ref(null),
-        weight: ref(null),
-        location: ref(null),
-        balance: ref(null),
-        code: ref(null),
-        status: ref(null)
-      }
-      trash.type = argType;
-      trash.weight = argWeight;
-      trash.code = this.generateCode()
-      trash.balance = argWeight * 20000
-      trash.status = "Menunggu"
-      this.rows.push(trash)
-      this.resetDefault();
     },
   },
 
-  computed: {
-    balanceCoin() {
-      const filteredRows = this.rows.filter(row => row.status === 'Berhasil');
-      const balances = filteredRows.map(row => row.balance);
-      this.totalBalance = balances.reduce((acc, curr) => acc + curr, 0);
-      updateCoinValue(this.totalBalance)
-      return this.totalBalance;
+  async mounted() {
+    try {
+      const token = getToken();
+      const historyResponse = await api.get('api/v1/trash/exchange/history', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (historyResponse.data.status) {
+        const data = historyResponse.data.data;
+        this.rows = data.map(item => ({
+          category: item.category,
+          location: item.location !== '-' ? item.location : null,
+          mass: item.mass,
+          exchange_totals: item.exchange_totals,
+          code: item.code,
+          status: item.status
+        }));
+      }
+
+      const userResponse = await api.get('api/v1/user/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      this.users = userResponse.data.data
+      console.log(this.users);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
@@ -254,9 +260,10 @@ export default {
 }
 
 .quantity-container {
-  width: 100%;
   height: fit-content;
+  width: 700px;
+  max-width: 80vw;
   background: white;
-  padding: 32px 16px;
+  padding: 24px 16px;
 }
 </style>

@@ -140,7 +140,6 @@ export default {
       const updateData = {
         username: this.username,
         email: this.email,
-        password: 'faiz123',
         contact: this.contact,
         region: this.region,
         gender: isMale,
