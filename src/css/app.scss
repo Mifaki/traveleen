@@ -397,6 +397,7 @@ a {
 //Catalog Page
 .catalog-card {
   width: fit-content;
+  min-width: 280px;
   height: fit-content;
   padding: 12px;
   background: white;
@@ -406,7 +407,10 @@ a {
 
 .catalog-thumbnail {
   width: 100%;
+  max-width: 256px;
   height: 100%;
+  max-height: 177px;
+  object-fit: cover;;
 }
 
 .category-option {

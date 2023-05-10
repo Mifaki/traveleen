@@ -26,7 +26,8 @@
             <p class="inter-b text-xl neutral-900 q-mb-none gt-xs">
               Menampilkan Tempat wisata di {{ chooseRegion }}
             </p>
-            <q-btn flat label="Filter" class="inter-b neutral-900 text-lg" icon-right="sort" no-caps @click="slide = !slide" />
+            <q-btn flat label="Filter" class="inter-b neutral-900 text-lg" icon-right="sort" no-caps
+              @click="slide = !slide" />
           </div>
           <div v-else class="row justify-between items-center">
             <p class="inter-b text-xl neutral-900 q-mb-none gt-xs">
@@ -67,7 +68,8 @@
               </q-select>
               <p class="inter-sb text-base neutral-900 q-mb-none q-mb-sm q-mt-md">Kategori</p>
               <q-option-group v-model="chooseCategory" :options="options" color="green" inline />
-              <q-btn unelevated label="Selesai" class="filter-button text-base inter-sb q-mt-xl" color="primary" no-caps @click="slide = !slide" />
+              <q-btn unelevated label="Selesai" class="filter-button text-base inter-sb q-mt-xl" color="primary" no-caps
+                @click="slide = !slide" />
             </div>
           </q-slide-transition>
         </div>
@@ -117,12 +119,12 @@
                 sampah, yuk peduli dalam mengurangi sampah</p>
             </q-parallax>
             <q-table :rows="filteredRows" :columns="columns" :filter="chooseCategory" row-key="id" grid hide-header
-              hide-pagination :rows-per-page-options="[10]">
+              hide-pagination v-model:pagination="pagination">
               <template v-slot:item="props">
                 <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-4 column items-center">
                   <q-item clickable :to="`/detail-${props.row.id}`" replace>
                     <q-card class="catalog-card">
-                      <q-icon :name=props.row.thumbnail class="catalog-thumbnail" />
+                      <q-img :src=props.row.thumbnail class="catalog-thumbnail" />
                       <div class="row q-mt-md items-center">
                         <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
                         <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ props.row.region }}</p>
@@ -134,7 +136,7 @@
                           <q-icon name="img:/icons/Catalog/star.svg" size="26px" />
                           <div class="row items-end">
                             <p class="inter-b text-base emerald-600 q-mb-none">{{ props.row.rating }}</p>
-                            <p class="inter-r text-base neutral-500 q-mb-none">({{ props.row.totalRatings }})</p>
+                            <p class="inter-r text-base neutral-500 q-mb-none">{{ props.row.totalRatings }}</p>
                           </div>
                         </div>
                         <P class="inter-sb text-xl neutral-900 q-mb-none">RP {{ formatNumber(props.row.price) }}</P>
@@ -144,6 +146,10 @@
                 </div>
               </template>
             </q-table>
+            <div class="row justify-center q-mt-md">
+              <q-pagination v-model="pagination" color="teal" :max="pagesNumber" :max-pages="5" :ellipses="false"
+                :boundary-numbers="false" size="sm" />
+            </div>
           </div>
         </div>
       </div>
@@ -152,134 +158,42 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { api } from 'src/boot/axios';
-import { homeLocation, homeType, homeSubmitValue } from 'src/Store';
+import { homeLocation, homeType } from 'src/Store';
 import { getToken } from 'src/utils/localstorage';
-
-const columns = [
-  {
-    name: 'id',
-    required: true,
-    field: row => row.id,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'region', field: 'region', sortable: true },
-  { name: 'category', field: 'category', sortable: true },
-  { name: 'name', field: 'name', sortable: true },
-  { name: 'rating', field: 'rating', sortable: false },
-  { name: 'totalRatings', field: 'totalRatings', sortable: false },
-  { name: 'price', field: 'price', sortable: false },
-]
-
-const rows = [
-  {
-    id: 1,
-    region: 'Bali',
-    category: 'Pantai',
-    thumbnail: 'img:/icons/beach.jpg',
-    name: 'Nusa Dua',
-    rating: 8.7,
-    totalRatings: 375,
-    price: 90000
-  },
-  {
-    id: 2,
-    region: 'Jawa Barat',
-    category: 'Air Terjun',
-    thumbnail: 'img:/icons/Catalog/waterfall.jpg',
-    name: 'Curug Ciherang',
-    rating: 9.1,
-    totalRatings: 480,
-    price: 75000
-  },
-  {
-    id: 3,
-    region: 'Jawa Timur',
-    category: 'Gunung',
-    thumbnail: 'img:/icons/Catalog/mountain.jpg',
-    name: 'Gunung Semeru',
-    rating: 9.5,
-    totalRatings: 950,
-    price: 125000
-  },
-  {
-    id: 4,
-    region: 'Jawa Tengah',
-    category: 'Air Terjun',
-    thumbnail: 'img:/icons/Catalog/waterfall.jpg',
-    name: 'Curug Lawe',
-    rating: 8.9,
-    totalRatings: 625,
-    price: 65000
-  },
-  {
-    id: 5,
-    region: 'Bali',
-    category: 'Pantai',
-    thumbnail: 'img:/icons/beach.jpg',
-    name: 'Kuta Beach',
-    rating: 8.3,
-    totalRatings: 425,
-    price: 95000
-  },
-  {
-    id: 6,
-    region: 'Jawa Timur',
-    category: 'Gunung',
-    thumbnail: 'img:/icons/Catalog/mountain.jpg',
-    name: 'Gunung Bromo',
-    rating: 8.6,
-    totalRatings: 870,
-    price: 115000
-  },
-  {
-    id: 7,
-    region: 'Jawa Tengah',
-    category: 'Air Terjun',
-    thumbnail: 'img:/icons/Catalog/waterfall.jpg',
-    name: 'Curug Cikaso',
-    rating: 9.2,
-    totalRatings: 510,
-    price: 80000
-  },
-  {
-    id: 8,
-    region: 'Bali',
-    category: 'Pantai',
-    thumbnail: 'img:/icons/beach.jpg',
-    name: 'Sanur Beach',
-    rating: 8.1,
-    totalRatings: 310,
-    price: 85000
-  },
-  {
-    id: 9,
-    region: 'Jawa Timur',
-    category: 'Gunung',
-    thumbnail: 'img:/icons/Catalog/mountain.jpg',
-    name: 'Gunung Ijen',
-    rating: 9.4,
-    totalRatings: 920,
-    price: 135000
-  },
-  {
-    id: 10,
-    region: 'Jawa Barat',
-    category: 'Air Terjun',
-    thumbnail: 'img:/icons/Catalog/waterfall.jpg',
-    name: 'Curug Cimahi',
-    rating: 8.8,
-    totalRatings: 560,
-    price: 70000
-  }
-]
 
 export default {
   name: 'Catalog',
 
   setup() {
+    const columns = [
+      {
+        name: 'id',
+        required: true,
+        field: row => row.id,
+        format: val => `${val}`,
+        sortable: true
+      },
+      { name: 'region', field: 'region', sortable: true },
+      { name: 'category', field: 'category', sortable: true },
+      { name: 'thumbnail', field: 'thumbnail', sortable: true },
+      { name: 'name', field: 'name', sortable: true },
+      { name: 'rating', field: 'rating', sortable: false },
+      { name: 'totalRatings', field: 'totalRatings', sortable: false },
+      { name: 'price', field: 'price', sortable: false },
+    ]
+
+    const rows = ref([])
+
+    const pagination = ref({
+      sortBy: 'desc',
+      descending: false,
+      page: 2,
+      rowsPerPage: 3,
+      rowsNumber: 20
+    })
+
     return {
       search: ref(''),
       model: ref(null),
@@ -289,6 +203,8 @@ export default {
       slide: ref(false),
       columns,
       rows,
+      pagination,
+      pagesNumber: computed(() => Math.ceil(rows.length / pagination.value.rowsPerPage)),
       regionOptions: [
         'Bali', 'Jawa Timur', 'Jawa Tengah', 'Jawa Barat'
       ],
@@ -380,6 +296,18 @@ export default {
         }
       })
       console.log(response.data);
+      if (response.data.status) {
+        const data = response.data.data;
+        this.rows = data.map(item => ({
+          id: item.id,
+          thumbnail: item.thumbnail[0],
+          region: item.region,
+          category: item.category,
+          name: item.name,
+          rating: item.rating,
+          price: item.price
+        }));
+      }
     }
     catch (error) {
       console.log(error);
