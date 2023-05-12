@@ -3,23 +3,17 @@
     <q-page>
       <div class="popular-education">
         <p class="inter-b text-3xl neutral-50 text-center">Poopuler di Traveleen</p>
-        <div class="row justify-evenly">
-          <q-card class="education-card">
-            <q-img src="/icons/education.jpg" />
-            <p class="inter-r text-lg neutral-900 q-mb-none q-pa-md">Liburan Seru di Wisata Alam Tanpa Merusak Lingkungan:
-              Tips dan Trik</p>
-          </q-card>
-          <q-card class="education-card">
-            <q-img src="/icons/education-2.jpg" />
-            <p class="inter-r text-lg neutral-900 q-mb-none q-pa-md">Cara Memilah Sampah yang Benar: Membantu Mengurangi
-              Beban Lingkungan</p>
-          </q-card>
-          <q-card class="education-card">
-            <q-img src="/icons/education-3.jpg" />
-            <p class="inter-r text-lg neutral-900 q-mb-none q-pa-md">7 Cara Mudah Menerapkan Prinsip 3R (Reduce, Reuse,
-              Recycle) di Rumah</p>
-          </q-card>
-        </div>
+        <q-table :rows="rows" :columns="columns" :filter="search" row-key="id" grid hide-header hide-pagination
+          :rows-per-page-options="[3]">
+          <template v-slot:item="props">
+            <div class="q-pa-xs col-xs-12 col-sm-7 col-md-5 col-lg-4 q-mb-xl">
+              <q-card class="education-card">
+                <q-img :src="props.row.thumbnail" class="article-thumbnail" />
+                <p class="inter-r text-lg neutral-900 q-mb-none q-pa-md">{{ props.row.title }}</p>
+              </q-card>
+            </div>
+          </template>
+        </q-table>
       </div>
       <div class="main-container">
         <div class="column justify-center items-center q-mt-xl q-mb-xl">
@@ -34,7 +28,7 @@
           <template v-slot:item="props">
             <div class="q-pa-xs col-xs-12 col-sm-7 col-md-5 col-lg-4 q-mb-xl">
               <q-card class="education-card">
-                <q-img :src="props.row.thumbnail" />
+                <q-img :src="props.row.thumbnail" class="article-thumbnail" />
                 <p class="inter-r text-lg neutral-900 q-mb-none q-pa-md">{{ props.row.title }}</p>
               </q-card>
             </div>
@@ -47,75 +41,54 @@
 
 <script>
 import { ref } from 'vue';
-
-const columns = [
-  {
-    name: 'id',
-    required: true,
-    field: row => row.id,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'thumbnail', field: 'thumbnail', sortable: false },
-  { name: 'title', field: 'title', sortable: true },
-]
-
-const rows = [
-  {
-    id: 1,
-    thumbnail: '/icons/education-4.jpg',
-    title: 'Memahami Dampak Negatif Sampah Plastik Terhadap Lingkungan',
-  },
-  {
-    id: 2,
-    thumbnail: '/icons/education-5.jpg',
-    title: '5 Wisata Alam Terbaik yang Dapat Mengajarkan Kita Tentang Pentingnya Konservasi Lingkungan',
-  },
-  {
-    id: 3,
-    thumbnail: '/icons/education-6.jpg',
-    title: 'Mengajarkan Anak-Anak Cara Memilah Sampah dengan Metode yang Menyenangkan',
-  },
-  {
-    id: 4,
-    thumbnail: '/icons/education-7.jpg',
-    title: '10 Ide Kreatif Mengubah Sampah Menjadi Barang yang Bernilai Tinggi',
-  },
-  {
-    id: 5,
-    thumbnail: '/icons/education-8.jpg',
-    title: 'Ekowisata: Menjaga Kelestarian Alam dan Meningkatkan Kesejahteraan Ekonomi Masyarakat Lokal',
-  },
-  {
-    id: 6,
-    thumbnail: '/icons/education-9.jpg',
-    title: 'Sampah Organik vs Non-Organik: Mana yang Harus Didaur Ulang dan Bagaimana Caranya?',
-  },
-  {
-    id: 7,
-    thumbnail: '/icons/education-10.jpg',
-    title: 'Memahami Konsep Zero Waste dan Langkah-Langkah Mudah untuk Menerapkannya',
-  },
-  {
-    id: 8,
-    thumbnail: '/icons/education-11.jpg',
-    title: 'Wisata Edukasi Lingkungan: Mengunjungi Tempat Pengolahan Sampah yang Ramah Lingkungan',
-  },
-  {
-    id: 9,
-    thumbnail: '/icons/education-12.jpg',
-    title: 'Mengenal Jenis-Jenis Sampah Berbahaya dan Cara Mengolahnya dengan Aman',
-  },
-]
+import { getToken } from 'src/utils/localstorage';
+import { api } from 'src/boot/axios';
 
 export default {
   name: 'Education',
 
   setup() {
+    const columns = [
+      {
+        name: 'id',
+        required: true,
+        field: row => row.id,
+        format: val => `${val}`,
+        sortable: false
+      },
+      { name: 'date', field: 'date', sortable: false },
+      { name: 'thumbnail', required: true, field: 'thumbnail', sortable: false },
+      { name: 'title', required: true, field: 'title', sortable: true },
+    ]
+
+    const rows = ref([])
     return {
       search: ref(null),
       rows,
       columns,
+    }
+  },
+
+  async mounted() {
+    try {
+      const token = getToken();
+      const response = await api.get('api/v1/article/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log(response.data.data);
+      if (response.data.status) {
+        const data = response.data.data;
+        this.rows = data.map(item => ({
+          id: item.id,
+          date: item.date,
+          thumbnail: item.thumbnail,
+          title: item.title
+        }));
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }
@@ -124,5 +97,12 @@ export default {
 <style>
 .bg-green {
   background: '$emerald-600';
+}
+
+.article-thumbnail {
+  width: 100%;
+  height: 100%;
+  max-height: 137px;
+  object-fit: cover;
 }
 </style>
