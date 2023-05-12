@@ -13,6 +13,8 @@
 
 <script>
 import { ref } from "vue"
+import { getToken } from "src/utils/localstorage"
+import { api } from "src/boot/axios"
 
 export default {
   name: 'History',
@@ -20,13 +22,14 @@ export default {
   setup() {
     const columns = [
       {
-        name: 'name',
-        label: 'Jenis',
+        name: 'place',
+        label: 'Tiket',
         align: 'left',
-        field: 'name',
-        field: row => row.name,
+        field: 'place',
+        field: row => row.place,
         format: val => `${val}`,
       },
+      { name: 'date', align: 'center', label: 'Tanggal Pembelian', field: 'date' },
       {
         name: 'quantity',
         label: 'Kuantitas',
@@ -35,40 +38,48 @@ export default {
         format: val => `${val}`
       },
       {
-        name: 'totalPrice',
+        name: 'total_price',
         align: 'center',
-        label: 'Total Saldo',
-        field: 'totalPrice',
+        label: 'Total',
+        field: 'total_price',
         sortable: true,
         format: val => `Rp ${val.toLocaleString('en-US')}`
       },
       { name: 'code', align: 'center', label: 'Kode', field: 'code' },
       { name: 'status', label: 'Status', field: 'status' },
     ]
-    const rows = [
-      {
-        id: 1,
-        name: "Pantai Nusa Dua, Bali",
-        quantity: 1,
-        totalPrice: 10000,
-        code: "-",
-        status: "Menunggu"
-      },
-      {
-        id: 1,
-        name: "Air Terjun Tegunungan, Bali",
-        quantity: 1,
-        totalPrice: 15000,
-        code: "K186A442F1",
-        status: "Berhasil"
-      },
-    ]
+    const rows = ref([])
     return {
       columns,
       rows,
       pagination: ref({
         rowsPerPage: 0
       }),
+    }
+  },
+
+  async mounted() {
+    try {
+      const token = getToken();
+      const response = await api.get('api/v1/user/history', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log(response.data.data);
+      if (response.data.status) {
+        const data = response.data.data;
+        this.rows = data.map(item => ({
+          place: item.place,
+          date: item.date,
+          quantity: item.quantity,
+          total_price: item.total_price,
+          code: item.code,
+          status: item.status
+        }));
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }
