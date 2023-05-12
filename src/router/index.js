@@ -1,6 +1,8 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import { getToken } from 'src/utils/localstorage'
+import { Notify } from 'quasar'
 
 /*
  * If not building with SSR mode, you can
@@ -24,6 +26,26 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE)
+  })
+
+  Router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.auth)) {
+      if (getToken() == null || getToken() == undefined) {
+        next({
+          path: '/login'
+        })
+        Notify.create({
+          color: 'red',
+          message: 'Anda Belum Login',
+          position: 'bottom',
+          timeout: 3000,
+        });
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
   })
 
   return Router

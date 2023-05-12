@@ -35,6 +35,9 @@ const routes = [
   {
     path: '/menu',
     component: () => import('src/layouts/HeaderFooter.vue'),
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name:'Menu', component: () => import('src/pages/Menu.vue') }
     ]
@@ -60,6 +63,9 @@ const routes = [
   {
     path: '/detail-:id',
     component: () => import('src/layouts/HeaderFooter.vue'),
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name:'Detail', component: () => import('src/pages/Detail.vue') }
     ]
@@ -68,6 +74,9 @@ const routes = [
   {
     path: '/checkout',
     component: () => import('src/layouts/HeaderFooter.vue'),
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name:'Checkout', component: () => import('src/pages/Checkout.vue') }
     ]
@@ -76,6 +85,9 @@ const routes = [
   {
     path: '/balance',
     component: () => import('src/layouts/HeaderFooter.vue'),
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name:'Balance', component: () => import('src/pages/Balance.vue') }
     ]
@@ -84,13 +96,13 @@ const routes = [
   {
     path: '/history',
     component: () => import('src/layouts/HeaderFooter.vue'),
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name:'History', component: () => import('src/pages/History.vue') }
     ]
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
