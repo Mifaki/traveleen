@@ -53,6 +53,12 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
+      bodyClasses: () => {
+        return {
+          "q-body--light": true,
+        };
+      },
+
       vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
