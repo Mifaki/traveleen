@@ -21,26 +21,25 @@
             </template>
           </q-input>
         </div>
-        <p class="inter-r text-xs neutral-900 q-mb-none">{{ $route.params.id }}</p>
-        <div class="detail-header">
-          <p class="inter-r text-2xl emeral-600 q-mb-none">{{ category }}</p>
+        <div class="detail-header q-mt-xl">
+          <p class="inter-r text-xl emerald-600 q-mb-none">{{ category }}</p>
           <p class="inter-b text-4xl neutral-900 q-mb-none">{{ name }}</p>
           <div class="row q-mt-sm q-mb-sm items-center">
             <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
             <p class="inter-r text-lg neutral-500 q-mb-none q-ml-sm">{{ region }}</p>
           </div>
           <div class="row justify-between items-center">
-            <q-icon :name="thumbnail[0]" class="col-7" />
+            <q-img :src="thumbnail[0]" class="left-image col-7" />
             <div class="column col-4">
-              <q-icon :name="thumbnail[1]" class="col-12 q-mb-md" />
-              <q-icon :name="thumbnail[2]" class="col-12" />
+              <q-img :src="thumbnail[1]" class="right-image q-mb-md" />
+              <q-img :src="thumbnail[2]" class="right-image " />
             </div>
           </div>
         </div>
         <div class="row justify-between q-mt-xl">
           <div class="col-md-12 col-lg-7">
             <div class="detail-rating row justify-between">
-              <div>
+              <div class="col-5">
                 <p class="inter-b text-2xl neutral-900 q-mb-none">Dari {{ totalRatings }} Pengguna</p>
                 <div class="col-lg-3">
                   <div class="row items-center q-mt-lg">
@@ -49,22 +48,22 @@
                     </div>
                     <p class="inter-b text-3xl emerald-600 q-mb-none q-ml-md">Luar Biasa</p>
                   </div>
-                  <div class="row q-mt-lg">
-                    <q-icon :name='rows[1].thumbnail[0]' class="col-3" />
-                    <q-icon :name='rows[1].thumbnail[1]' class="q-mx-md col-3" />
-                    <q-icon :name='rows[1].thumbnail[0]' class="col-3" />
+                  <div class="row q-mt-lg" v-if="topThumbnail">
+                    <q-img :src='topThumbnail[0]' class="col-3" />
+                    <q-img :src='topThumbnail[1]' class="q-mx-md col-3" />
+                    <q-img :src='topThumbnail[2]' class="col-3" />
                   </div>
                 </div>
               </div>
-              <div class="rating-comment column justify-between gt-xs">
+              <div class="rating-comment column justify-between gt-xs col-6">
                 <div>
                   <p class="inter-b text-2xl neutral-900 q-mb-none">Apa Yang Dikatakan Pengguna</p>
-                  <p class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ rows[0].comment }}</p>
+                  <p class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ topBody }}</p>
                 </div>
                 <div>
-                  <div class="row">
-                    <p class="inter-r text-base neutral-900 q-mb-none">{{ rows[0].name }} - </p>
-                    <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ rows[0].date }}</p>
+                  <div class="row q-mt-md">
+                    <p class="inter-r text-base neutral-900 q-mb-none">{{ topUsername }} - </p>
+                    <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ topDate }}</p>
                   </div>
                   <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end cursor-pointer"
                     @click="scrollToComments">Lihat Semua</p>
@@ -77,13 +76,12 @@
             </div>
             <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Lokasi</p>
             <div class="detail-location col-12">
-              <q-img src="/icons/Detail/location.jpg" />
+              <iframe :src="map" frameborder="0" class="detail-map" allowfullscreen></iframe>
             </div>
           </div>
           <div class="col-md-12 col-lg-4 buy-detail">
             <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
-            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md"
-              @click="addToCart(id, name, price)" to="/checkout" />
+            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" @click="addtoCart()" />
             <p class="inter-sb text-lg neutral-900 q-mb-none q-my-sm">jam Buka (Waktu Lokal)</p>
             <div class="row justify-between">
               <p class="inter-r text-base neutral-900 q-mb-none">Senin</p>
@@ -126,14 +124,14 @@
                 <div class="personal-rating-bg column justify-center text-center">
                   <p class="inter-b text-xl q-mb-none">{{ props.row.rating }}</p>
                 </div>
-                <div class="col-11 column q-ml-md">
-                  <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.name }}</p>
+                <div class="col-10 column q-ml-md">
+                  <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.username }}</p>
                   <p class="inter-r text-sm neutral-700 q-mb-none">{{ props.row.date }}</p>
-                  <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm">{{ props.row.comment }}</P>
-                  <div class="row q-mt-sm" v-if="props.row.thumbnail[0]">
-                    <q-icon :name='props.row.thumbnail[0]' size="72px" />
-                    <q-icon :name='props.row.thumbnail[1]' size="72px" class="q-mx-md" />
-                    <q-icon :name='props.row.thumbnail[2]' size="72px" />
+                  <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ props.row.body }}</P>
+                  <div class="row q-mt-sm" v-if="props.row.thumbnail">
+                    <q-img :src='props.row.thumbnail[0]' class="comment-image" />
+                    <q-img :src='props.row.thumbnail[1]'  class="comment-image q-mx-md" />
+                    <q-img :src='props.row.thumbnail[2]' class="comment-image" />
                   </div>
                 </div>
                 <div class="divider q-my-md" v-if="props.row.id < rows.length" />
@@ -147,66 +145,9 @@
 </template>
 
 <script>
+import { api } from 'src/boot/axios';
+import { getToken } from 'src/utils/localstorage';
 import { ref } from 'vue';
-import { mapState, mapActions } from 'vuex';
-
-const columns = [
-  {
-    name: 'id',
-    required: true,
-    field: row => row.id,
-    format: val => `${val}`,
-    sortable: false
-  },
-  { name: 'name', field: 'name', sortable: false },
-  { name: 'date', field: 'date', sortable: false },
-  { name: 'rating', field: 'rating', sortable: false },
-  { name: 'comment', field: 'comment', sortable: false },
-  { name: 'thumbnail', field: 'thumbnail', sortable: false },
-]
-
-const rows = [
-  {
-    id: 1,
-    name: 'John Martson',
-    date: 'Senin, 5 April 2023',
-    comment: 'Pantai Nusa Dua adalah pantai yang sangat indah. Airnya bersih dan pasirnya putih seperti gula. Saya sangat menikmati waktu saya di sini.',
-    rating: 9,
-    thumbnail: [],
-  },
-  {
-    id: 2,
-    name: 'Dutch Van Der Linde',
-    date: 'Senin, 5 April 2023',
-    comment: 'Pantai Nusa Dua adalah pantai yang lumayan bagus. Tidak terlalu ramai, tapi juga tidak terlalu sepi. Pantainya bersih dan bagus untuk berjemur.',
-    rating: 7,
-    thumbnail: ['img:/icons/Detail/comments-image.jpg', 'img:/icons/Detail/comments-image-2.jpg'],
-  },
-  {
-    id: 3,
-    name: 'Mary Beth',
-    date: 'Kamis, 1 Januari 2023',
-    comment: 'Pantai Nusa Dua adalah tempat yang sangat bagus untuk bersantai. Saya suka suasananya yang tenang dan airnya yang jernih. Sayangnya, pantainya agak terlalu berbatu untuk berenang.',
-    rating: 8,
-    thumbnail: [],
-  },
-  {
-    id: 4,
-    name: 'Jason Todd',
-    date: 'Rabu, 29 Desember 2022',
-    comment: 'Pantai Nusa Dua adalah pantai terbaik yang pernah saya kunjungi. Pemandangannya sangat indah dan pantainya bersih sekali. Saya pasti akan kembali ke sini suatu saat nanti.',
-    rating: 10,
-    thumbnail: [],
-  },
-  {
-    id: 5,
-    name: 'Kal Cestis',
-    date: 'Kamis, 28 oktober 2022',
-    comment: 'Pantai Nusa Dua adalah pantai yang sangat bagus. Airnya bersih dan pantainya sangat indah. Ada banyak kegiatan air yang bisa dinikmati di sini dan saya pasti akan kembali ke sini suatu saat nanti.',
-    rating: 9,
-    thumbnail: ['img:/icons/Detail/comments-image-3.jpg', 'img:/icons/Detail/comments-image-4.jpg', 'img:/icons/Detail/comments-image-5.jpg'],
-  },
-]
 
 export default {
   name: 'Detail',
@@ -214,20 +155,42 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      region: 'Bali',
-      category: 'Pantai',
-      thumbnail: ['img:/icons/beach.jpg', 'img:/icons/beach-2.jpg', 'img:/icons/beach-3.jpg'],
-      name: 'Nusa Dua',
-      rating: 8.7,
-      totalRatings: 375,
-      price: 10000,
-      description: 'Nusa Dua adalah sebuah pantai yang terletak di Bali, Indonesia. Pantai ini terkenal sebagai salah satu pantai yang sangat eksklusif dan mewah di Bali. Nusa Dua memiliki pasir putih yang halus dan air laut yang jernih dan tenang, sehingga pantai ini sangat cocok untuk berenang atau hanya sekedar bersantai di tepi pantai. Selain itu, pantai ini juga dikelilingi oleh hotel-hotel bintang lima dan tempat-tempat wisata yang menarik. Di Nusa Dua, Anda dapat menikmati berbagai aktivitas seperti jet ski, snorkeling, atau bahkan menyelam untuk melihat keindahan terumbu karang yang berwarna-warni. Pantai ini juga memiliki pemandangan matahari terbenam yang sangat indah, sehingga sangat disarankan untuk menikmati keindahan ini bersama pasangan atau keluarga. Selain itu, Nusa Dua juga memiliki banyak restoran dan kafe yang menyajikan makanan dan minuman yang lezat dengan pemandangan pantai yang indah. Anda juga dapat membeli oleh-oleh khas Bali di toko-toko yang terdapat di sekitar pantai ini. Secara keseluruhan, Nusa Dua adalah tempat yang sangat cocok untuk menikmati liburan yang tenang dan santai di Bali. Dengan pasir putih yang lembut, air laut yang tenang, dan banyaknya aktivitas yang dapat dilakukan, Nusa Dua akan menjadi tempat yang tak terlupakan bagi siapa saja yang mengunjunginya.',
-      jamOperasional: ['09.30 - 16.00', '09.30 - 16.00', '09.30 - 16.00', '09.30 - 16.00', '09.30 - 16.00', '08.30 - 18.00', '08.30 - 18.00']
-
+      fetchUrl: 'api/v1/tourism/',
+      cartUrl: 'api/v1/tourism/add/',
+      region: ref(''),
+      category: ref(''),
+      thumbnail: ref([]),
+      name: ref(''),
+      rating: ref(0),
+      totalRatings: ref(0),
+      price: ref(0),
+      description: ref(''),
+      map: ref(''),
+      jamOperasional: ref([]),
+      topBody: ref(''),
+      topUsername: ref(''),
+      topDate: ref(''),
+      topThumbnail: ref([])
     }
   },
 
   setup() {
+    const columns = [
+      {
+        name: 'id',
+        required: true,
+        field: row => row.id,
+        format: val => `${val}`,
+        sortable: false
+      },
+      { name: 'username', field: 'username', sortable: false },
+      { name: 'date', field: 'date', sortable: false },
+      { name: 'rating', field: 'rating', sortable: false },
+      { name: 'body', field: 'body', sortable: false },
+      { name: 'thumbnail', field: 'thumbnail', sortable: false },
+    ]
+
+    const rows = ref([])
     return {
       search: ref(null),
       chooseRegion: ref(null),
@@ -237,10 +200,6 @@ export default {
       columns,
       rows,
     }
-  },
-
-  computed: {
-    ...mapState('cart', ['items']),
   },
 
   methods: {
@@ -256,18 +215,67 @@ export default {
       commentsSection.scrollIntoView({ behavior: "smooth" });
     },
 
-    ...mapActions('cart', ['addToCart']),
+    async addtoCart() {
+      try {
+        const token = getToken()
+        console.log(token);
+        const argQuantity = 1;
+        const url = this.cartUrl + this.id + '/cart';
+        const response = await api.post(url, {
+          quantity: argQuantity
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        if (response.data.data) this.$router.push('/checkout');
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-    addToCart(id, name, price) {
-      const item = {
-        id,
-        name,
-        price,
-        quantity: 1,
-      };
-      this.addToCart(item);
-    },
   },
+
+  async mounted() {
+    try {
+      const token = getToken()
+      const url = this.fetchUrl + this.id;
+      const response = await api.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      console.log(response.data.data);
+      const ecotourismData = response.data.data
+      if (response.data.status) {
+        this.category = ecotourismData.category;
+        this.name = ecotourismData.name;
+        this.description = ecotourismData.description;
+        this.thumbnail = ecotourismData.thumbnail;
+        this.region = ecotourismData.region;
+        this.jamOperasional = ecotourismData.operational_time;
+        this.price = ecotourismData.price;
+        this.rating = ecotourismData.rating;
+        this.totalRatings = ecotourismData.total_ratings;
+        this.map = ecotourismData.maps;
+        this.rows = ecotourismData.comments.map(item => ({
+          id: item.id,
+          date: item.date,
+          username: item.user.username,
+          rating: item.rating,
+          body: item.body,
+          thumbnail: item.thumbnail
+        }));
+        this.topBody = ecotourismData.comments[0].body
+        this.topUsername = ecotourismData.comments[0].user.username
+        this.topDate = ecotourismData.comments[0].date
+        this.topThumbnail = ecotourismData.comments[0].thumbnail
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 }
 </script>
 
@@ -277,31 +285,3 @@ export default {
   height: 48px;
 }
 </style>
-
-{
-  "id": 2,
-  ..... data yang lainnya,
-  "comments": [
-  {
-    "id": 7,
-    "name":
-    "date":
-    "comments":,
-    "image": ["https://reqres.in/img/faces/7-image.jpg", "https://reqres.in/img/faces/7-image.jpg",] (bisa kosong maks 3 gambar)
-},
-{
-  "id": 7,
-  "name":
-  "date":
-  "comments":,
-  "image": ["https://reqres.in/img/faces/7-image.jpg", "https://reqres.in/img/faces/7-image.jpg",] (bisa kosong maks 3 gambar)
-},
-{
-  "id": 7,
-  "name":
-  "date":
-  "comments":,
-  "image": ["https://reqres.in/img/faces/7-image.jpg", "https://reqres.in/img/faces/7-image.jpg",] (bisa kosong maks 3 gambar)
-},
-  ]
-}
