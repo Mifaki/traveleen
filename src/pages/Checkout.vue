@@ -58,6 +58,8 @@
 import { ref } from 'vue'
 import { getToken } from 'src/utils/localstorage'
 import { api } from 'src/boot/axios'
+import { Notify, useQuasar } from 'quasar'
+import { onBeforeUnmount } from 'vue'
 
 export default {
   name: 'Checkout',
@@ -72,6 +74,15 @@ export default {
 
   setup() {
     const wallet = ref(0);
+    const $q = useQuasar()
+    let timer
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer)
+        $q.loading.hide()
+      }
+    })
 
     async function fetchUserProfile() {
       try {
@@ -98,7 +109,17 @@ export default {
           label: 'Pembayaran Online',
           value: 'online'
         },
-      ]
+      ],
+      showLoading() {
+        $q.loading.show({
+          message: 'Pembayaran sedang diproses...'
+        })
+
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          timer = void 0
+        }, 10000)
+      }
     }
   },
 
@@ -114,6 +135,7 @@ export default {
       try {
         const token = getToken()
         const url = this.cartUrl + argId + '/cart';
+        this.showLoading
         const response = await api.post(url, {
           quantity: argQuantity
         }, {
@@ -172,6 +194,7 @@ export default {
     async checkoutCart() {
       const isOnline = this.payment == "online" ? true : false;
       console.log(isOnline);
+      this.showLoading();
       try {
         const token = getToken()
         const response = await api.post('api/v1/user/payment', {
@@ -181,11 +204,18 @@ export default {
             Authorization: `Bearer ${token}`
           }
         });
-        window.open(response.data.data.url);
-        this.$router.push('/history');
+        const url = response.data.data.url
+        window.location.href = url;
       }
       catch (error) {
-        console.log(error);
+        if (error.response && error.response.status === 500) {
+          Notify.create({
+            color: 'red',
+            message: 'Pembayaran gagal silakan coba kembali',
+            position: 'top',
+            timeout: 2500
+          });
+        }
       }
     }
   },
