@@ -55,6 +55,9 @@ const routes = [
   {
     path: '/catalog',
     component: () => import('src/layouts/HeaderFooter.vue'),
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name:'Catalog', component: () => import('src/pages/Catalog.vue') }
     ]

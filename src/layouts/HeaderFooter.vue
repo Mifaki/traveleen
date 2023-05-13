@@ -21,7 +21,8 @@
               </RouterLink>
             </div>
             <q-item clickable to="/menu" replace class="row items-center">
-              <q-icon name="img:/icons/header/profile.svg" size="64px" />
+              <q-img v-if="users.photo_profile" :src="users.photo_profile" class="profile-image" />
+              <q-icon v-else name="img:/icons/header/profile.svg" size="64px" />
               <P class="inter-sb text-base neutral-600 q-mb-none q-ml-md">{{ users.username }}</P>
             </q-item>
           </div>
@@ -44,7 +45,8 @@
               </q-scroll-area>
               <q-item clickable to="/menu" class="row items-center absolute-top bg-transparent q-pa-lg">
                 <q-avatar size="56px" class="q-mb-sm q-mr-md">
-                  <img src="/icons/header/profile.svg" />
+                  <q-img v-if="users.photo_profile" :src="users.photo_profile" class="profile-image" />
+                  <img v-else="users.photo_profile" src="/icons/header/profile.svg" />
                 </q-avatar>
                 <div>
                   <p class="inter-sb text-lg neutral-900 q-mb-none">{{ users.username }}</p>
@@ -95,10 +97,18 @@
         <p class="jose-b text-2xl q-mb-none q-mb-sm">TRAVELEEN</p>
         <p class="inter-r text-base q-mb-none">"Lingkungan yang Terjaga, Wisata Alam yang Berkesan dengan Traveleen"</p>
         <div class="nav row justify-center q-mt-sm">
-          <p class="inter-sb text-base q-mb-none">Beranda</p>
-          <p class="inter-sb text-base q-mb-none">About</p>
-          <p class="inter-sb text-base q-mb-none">Destination</p>
-          <p class="inter-sb text-base q-mb-none">Store</p>
+          <q-item clickable to="/home">
+            <p class="inter-sb text-base neutral-50 q-mb-none">Beranda</p>
+          </q-item>
+          <q-item clickable to="/">
+            <p class="inter-sb text-base neutral-50 q-mb-none">About</p>
+          </q-item>
+          <q-item clickable to="/catalog">
+            <p class="inter-sb text-base neutral-50 q-mb-none">Destination</p>
+          </q-item>
+          <q-item clickable to="/ini kmn?">
+            <p class="inter-sb text-base neutral-50 q-mb-none">Store</p>
+          </q-item>
         </div>
       </div>
       <div class="footer-bottom items-center">
@@ -137,12 +147,19 @@ export default {
       this.loggedIn = true;
 
       setIsLoggedIn(true);
-      console.log(coin);
     }
     catch (error) {
       console.log(error);
+      if (error.response.data.message == "Invalid JWT token") {
+        Notify.create({
+          color: 'red',
+          message: 'Sesi telah berakhir silahkan login kembali',
+          position: 'top',
+          timeout: 2500
+        });
+      }
     }
-    
+
   },
 
   data() {
@@ -177,5 +194,11 @@ export default {
   background-color: #10B981;
   width: 97px;
   height: 52px;
+}
+
+.profile-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50px;
 }
 </style>

@@ -36,7 +36,7 @@ export default route(function (/* { store, ssrContext } */) {
         })
         Notify.create({
           color: 'red',
-          message: 'Anda Belum Login',
+          message: 'Silahkan login terlebih dahulu',
           position: 'bottom',
           timeout: 3000,
         });
