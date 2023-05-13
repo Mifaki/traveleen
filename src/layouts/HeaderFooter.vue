@@ -136,17 +136,19 @@ export default {
   async mounted() {
     try {
       const token = getToken()
-      console.log(token);
-      const response = await api.get('api/v1/user/profile', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      this.users = response.data.data
-      console.log(this.users);
-      this.loggedIn = true;
+      if(token != null) {
+        console.log(token);
+        const response = await api.get('api/v1/user/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        this.users = response.data.data
+        console.log(this.users);
+        this.loggedIn = true;
 
-      setIsLoggedIn(true);
+        setIsLoggedIn(true);
+      }
     }
     catch (error) {
       console.log(error);
