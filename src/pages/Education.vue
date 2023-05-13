@@ -3,7 +3,30 @@
     <q-page>
       <div class="popular-education">
         <p class="inter-b text-3xl neutral-50 text-center">Poopuler di Traveleen</p>
-        <q-table :rows="rows" :columns="columns" :filter="search" row-key="id" grid hide-header hide-pagination
+        <div v-if="isLoading" class="row justify-evenly">
+          <q-card flat bordered class="education-card col-3">
+            <q-skeleton height="200px" square animation="fade" />
+            <q-card-section>
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+            </q-card-section>
+          </q-card>
+          <q-card flat bordered class="education-card col-3">
+            <q-skeleton height="200px" square animation="fade" />
+            <q-card-section>
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+            </q-card-section>
+          </q-card>
+          <q-card flat bordered class="education-card col-3">
+            <q-skeleton height="200px" square animation="fade" />
+            <q-card-section>
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+            </q-card-section>
+          </q-card>
+        </div>
+        <q-table v-else :rows="rows" :columns="columns" :filter="search" row-key="id" grid hide-header hide-pagination
           :rows-per-page-options="[3]">
           <template v-slot:item="props">
             <div class="q-pa-xs col-xs-12 col-sm-7 col-md-5 col-lg-4 q-mb-xl">
@@ -23,7 +46,30 @@
             </template>
           </q-input>
         </div>
-        <q-table :rows="rows" :columns="columns" :filter="search" row-key="id" grid hide-header hide-pagination
+        <div v-if="isLoading" class="row justify-evenly">
+          <q-card flat bordered class="education-card col-3">
+            <q-skeleton height="200px" square animation="fade" />
+            <q-card-section>
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+            </q-card-section>
+          </q-card>
+          <q-card flat bordered class="education-card col-3">
+            <q-skeleton height="200px" square animation="fade" />
+            <q-card-section>
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+            </q-card-section>
+          </q-card>
+          <q-card flat bordered class="education-card col-3">
+            <q-skeleton height="200px" square animation="fade" />
+            <q-card-section>
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+              <q-skeleton type="text" width="100%" height="24px" animation="fade" />
+            </q-card-section>
+          </q-card>
+        </div>
+        <q-table v-else :rows="rows" :columns="columns" :filter="search" row-key="id" grid hide-header hide-pagination
           :rows-per-page-options="[9]">
           <template v-slot:item="props">
             <div class="q-pa-xs col-xs-12 col-sm-7 col-md-5 col-lg-4 q-mb-xl">
@@ -47,6 +93,12 @@ import { Notify } from 'quasar';
 
 export default {
   name: 'Education',
+
+  data() {
+    return {
+      isLoading: ref(true)
+    }
+  },
 
   setup() {
     const columns = [
@@ -88,6 +140,7 @@ export default {
           title: item.title
         }));
       }
+      this.isLoading = false;
     } catch (error) {
       console.log(error);
       Notify.create({
