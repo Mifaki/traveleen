@@ -130,7 +130,7 @@
                   <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ props.row.body }}</P>
                   <div class="row q-mt-sm" v-if="props.row.thumbnail">
                     <q-img :src='props.row.thumbnail[0]' class="comment-image" />
-                    <q-img :src='props.row.thumbnail[1]'  class="comment-image q-mx-md" />
+                    <q-img :src='props.row.thumbnail[1]' class="comment-image q-mx-md" />
                     <q-img :src='props.row.thumbnail[2]' class="comment-image" />
                   </div>
                 </div>
@@ -148,6 +148,8 @@
 import { api } from 'src/boot/axios';
 import { getToken } from 'src/utils/localstorage';
 import { ref } from 'vue';
+import { Notify, useQuasar } from 'quasar';
+import { onBeforeUnmount } from 'vue'
 
 export default {
   name: 'Detail',
@@ -191,6 +193,17 @@ export default {
     ]
 
     const rows = ref([])
+
+    const $q = useQuasar()
+    let timer
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer)
+        $q.loading.hide()
+      }
+    })
+
     return {
       search: ref(null),
       chooseRegion: ref(null),
@@ -199,6 +212,16 @@ export default {
       ],
       columns,
       rows,
+      showLoading() {
+        $q.loading.show({
+          message: 'Memasukkan kedalam keranjang...'
+        })
+
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          timer = void 0
+        }, 10000)
+      }
     }
   },
 
@@ -216,6 +239,7 @@ export default {
     },
 
     async addtoCart() {
+      this.showLoading()
       try {
         const token = getToken()
         console.log(token);
@@ -231,6 +255,15 @@ export default {
         if (response.data.data) this.$router.push('/checkout');
       } catch (error) {
         console.log(error);
+        this.$q.loading.hide()
+        if (error.response) {
+          Notify.create({
+            color: 'red',
+            message: 'Gagal menambahkan kedalam keranjang silahkan coba kembali',
+            position: 'top',
+            timeout: 2500
+          });
+        }
       }
     }
 
@@ -274,6 +307,14 @@ export default {
     }
     catch (error) {
       console.log(error);
+      if (error.response) {
+          Notify.create({
+            color: 'red',
+            message: 'Gagal mengambil data silahkan refresh halaman',
+            position: 'top',
+            timeout: 2500
+          });
+        }
     }
   }
 }
