@@ -50,9 +50,66 @@
             </tr>
           </tbody>
         </q-markup-table>
-        <q-table  v-else flat bordered light virtual-scroll :rows="rows" :columns="columns" row-key="index"
+        <q-table v-else flat bordered light virtual-scroll :rows="rows" :columns="columns" row-key="index"
           v-model:pagination="pagination" :rows-per-page-options="[0]" hide-pagination
-          class="inter-r text-base neutral-900" />
+          class="inter-r text-base neutral-900">
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td key="place" :props="props">
+                {{ props.row.place }}
+              </q-td>
+              <q-td key="date" :props="props">
+                {{ props.row.date }}
+              </q-td>
+              <q-td key="time" :props="props">
+                {{ props.row.time }}
+              </q-td>
+              <q-td key="quantity" :props="props">
+                {{ props.row.quantity }}
+              </q-td>
+              <q-td key="total_price" :props="props">
+                {{ props.row.total_price }}
+              </q-td>
+              <q-td key="code" :props="props">
+                {{ props.row.code }}
+              </q-td>
+              <q-td key="status" :props="props">
+                {{ props.row.status }}
+              </q-td>
+            </q-tr>
+            <q-tr v-if="props.row.status == 'Berhasil'">
+              <q-td>
+                <q-btn class="comment-btn" label="Nilai" flat no-caps @click="openDialog(props.row)" />
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+        <q-dialog v-model="comment">
+          <q-card style="width: 700px; max-width: 80vw;">
+            <q-card-section class="row">
+              <q-img :src="commenTData.eco_image" class="col-3" />
+              <div class="column q-ml-md">
+                <div class="row items-center">
+                  <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
+                  <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ commenTData.eco_location }}</p>
+                </div>
+                <p class="inter-r text-base emerald-600 q-mb-none q-mt-md">{{ commenTData.eco_location }}</p>
+                <p class="inter-b text-2xl neutral-900 q-mb-none">{{ commenTData.eco_name }}</p>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              <p class="inter-b text-2xl neutral-900 q-mb-none">Penilaian</p>
+              <q-option-group v-model="rating" :options="ratingOptions" color="green" inline />
+              <p class="inter-r text-xs neutral-600 q-mb-none q-mt-md">Bagikan Pengalamanmu</p>
+              <q-input v-model="commentBody" outlined type="textarea" />
+            </q-card-section>
+
+            <q-card-actions>
+              <q-btn flat label="Kirim" class="submit-comment" @click="submitComment(rating, commentBody)"/>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
       </div>
     </q-page>
   </q-layout>
@@ -62,14 +119,18 @@
 import { ref } from "vue"
 import { getToken } from "src/utils/localstorage"
 import { api } from "src/boot/axios"
-import { Notify } from "quasar"
+import { Notify, useQuasar } from 'quasar'
+import { onBeforeUnmount } from 'vue'
 
 export default {
   name: 'History',
 
   data() {
     return {
-      isLoading: ref(true)
+      isLoading: ref(true),
+      true: ref(true),
+      comment: ref(false),
+      commenTData: ref([])
     }
   },
 
@@ -102,14 +163,113 @@ export default {
       },
       { name: 'code', align: 'center', label: 'Kode', field: 'code' },
       { name: 'status', label: 'Status', field: 'status' },
+      { name: 'eco_image', field: 'eco_image' },
+      { name: 'eco_location', field: 'eco_location' },
+      { name: 'eco_category', field: 'eco_category' },
     ]
     const rows = ref([])
+    const $q = useQuasar()
+    let timer
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer)
+        $q.loading.hide()
+      }
+    })
+
     return {
       columns,
       rows,
       pagination: ref({
         rowsPerPage: 0
       }),
+      rating: ref(1),
+      ratingOptions: [
+        {
+          label: '1',
+          value: 1,
+        },
+        {
+          label: '2',
+          value: 2,
+        },
+        {
+          label: '3',
+          value: 3,
+        },
+        {
+          label: '4',
+          value: 4,
+        },
+        {
+          label: '5',
+          value: 5,
+        },
+        {
+          label: '6',
+          value: 6,
+        },
+        {
+          label: '7',
+          value: 7,
+        },
+        {
+          label: '8',
+          value: 8,
+        },
+        {
+          label: '9',
+          value: 9,
+        },
+        {
+          label: '10',
+          value: 10,
+        },
+      ],
+      commentBody: ref(''),
+      showLoading() {
+        $q.loading.show({
+          message: 'Pembayaran sedang diproses...'
+        })
+
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          timer = void 0
+        }, 10000)
+      }
+    }
+  },
+
+  methods: {
+    openDialog(row) {
+      this.selectedRow = row;
+      this.commenTData.eco_name = this.selectedRow.eco_name;
+      this.commenTData.eco_image = this.selectedRow.eco_image;
+      this.commenTData.eco_location = this.selectedRow.eco_location;
+      this.commenTData.eco_category = this.selectedRow.eco_category;
+      this.comment = true;
+    },
+
+    resetDefault() {
+      this.comment = false;
+        this.rating = 1;
+        this.commentBody = '';
+    },
+
+    async submitComment(argRating, argBody) {
+      try {
+        this.showLoading()
+        const token = getToken()
+        this.resetDefault()
+      } catch (error) {
+        Notify.create({
+        color: 'red',
+        message: 'Gagal menambahkan komen silahkan coba kembali',
+        position: 'top',
+        timeout: 2500
+      });
+      }
     }
   },
 
@@ -131,7 +291,11 @@ export default {
           quantity: item.quantity,
           total_price: item.total_price,
           code: item.code,
-          status: item.status
+          status: item.status,
+          eco_name: item.eco_name,
+          eco_image: item.eco_image,
+          eco_location: item.eco_location,
+          eco_category: item.eco_category
         }));
       }
       this.isLoading = false;
@@ -147,3 +311,21 @@ export default {
   }
 }
 </script>
+
+<style>
+.comment-btn {
+  color: white;
+  background-color: #10B981;
+}
+
+.comment-image {
+  width: 100%;
+}
+
+.submit-comment {
+  background: #10B981;
+  color: white;
+  width: 100%;
+  height: 52px;
+}
+</style>
