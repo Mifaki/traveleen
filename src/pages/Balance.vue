@@ -79,6 +79,8 @@
 import { ref } from 'vue'
 import { getToken } from 'src/utils/localstorage'
 import { api } from 'src/boot/axios'
+import { Notify, useQuasar } from 'quasar'
+import { onBeforeUnmount } from 'vue'
 
 export default {
   name: 'Balance',
@@ -125,6 +127,17 @@ export default {
       { name: 'status', label: 'Status', field: 'status' },
     ]
     const rows = ref([])
+
+    const $q = useQuasar()
+    let timer
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer)
+        $q.loading.hide()
+      }
+    })
+
     return {
       columns,
       rows,
@@ -138,6 +151,18 @@ export default {
       ],
       quantity: ref(false),
       weight: ref(1),
+
+      showLoading() {
+        $q.loading.show({
+          message: 'Menukarkan Sampah...'
+        })
+
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          timer = void 0
+        }, 10000)
+      }
+
     }
   },
 
@@ -184,7 +209,9 @@ export default {
 
     async updateTrash(argType, argWeight) {
       try {
+        this.showLoading()
         const token = getToken();
+        console.log(argType, argWeight);
         const response = await api.post('api/v1/trash/exchange', {
           category: argType,
           mass: argWeight
@@ -211,9 +238,16 @@ export default {
           }
         });
         this.users.wallet = userResponse.data.data.wallet;
+        this.$q.loading.hide()
         this.resetDefault();
       } catch (error) {
         console.log(error);
+        Notify.create({
+          color: 'red',
+          message: 'Gagal menukarkan sampah silahkan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     },
   },
@@ -248,6 +282,12 @@ export default {
       console.log(this.users);
     } catch (error) {
       console.log(error);
+      Notify.create({
+        color: 'red',
+        message: 'Gagal mengambil data silahkan refresh halaman',
+        position: 'top',
+        timeout: 2500
+      });
     }
   }
 }
