@@ -118,7 +118,45 @@
               <p class="inter-b text-3xl neutral-50 q-mb-none q-pa-xl">Jangan biarkan lingkungan kita tercemar oleh
                 sampah, yuk peduli dalam mengurangi sampah</p>
             </q-parallax>
-            <q-table :rows="filteredRows" :columns="columns" :filter="chooseCategory" row-key="id" grid hide-header
+            <div v-if="isLoading" class="row justify-evenly q-mt-xl">
+              <q-card flat bordered class="catalog-card">
+              <q-skeleton height="200px" square animation="fade" />
+              <q-card-section>
+                <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                <q-skeleton type="text" width="100%" class="text-subtitle1" animation="fade" />
+                <div class="row justify-between">
+                  <q-skeleton type="text" width="40%" class="text-subtitle2" animation="fade" />
+                  <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                </div>
+              </q-card-section>
+            </q-card>
+            <q-card flat bordered class="catalog-card">
+              <q-skeleton height="200px" square animation="fade" />
+              <q-card-section>
+                <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                <q-skeleton type="text" width="100%" class="text-subtitle1" animation="fade" />
+                <div class="row justify-between">
+                  <q-skeleton type="text" width="40%" class="text-subtitle2" animation="fade" />
+                  <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                </div>
+              </q-card-section>
+            </q-card>
+            <q-card flat bordered class="catalog-card">
+              <q-skeleton height="200px" square animation="fade" />
+              <q-card-section>
+                <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                <q-skeleton type="text" width="100%" class="text-subtitle1" animation="fade" />
+                <div class="row justify-between">
+                  <q-skeleton type="text" width="40%" class="text-subtitle2" animation="fade" />
+                  <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                </div>
+              </q-card-section>
+            </q-card>
+            </div>
+            <q-table v-else :rows="filteredRows" :columns="columns" :filter="chooseCategory" row-key="id" grid hide-header
               hide-pagination v-model:pagination="pagination">
               <template v-slot:item="props">
                 <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-4 column items-center">
@@ -166,6 +204,12 @@ import { Notify } from 'quasar';
 
 export default {
   name: 'Catalog',
+
+  data() {
+    return {
+      isLoading: ref(true)
+    }
+  },
 
   setup() {
     const columns = [
@@ -306,9 +350,16 @@ export default {
       } else if (homeLocation.value != null) {
         this.chooseRegion = null;
       }
+      this.isLoading = false;
     }
     catch (error) {
       console.log(error);
+      Notify.create({
+        color: 'red',
+        message: 'Gagal mengambil data silahkan refresh halaman',
+        position: 'top',
+        timeout: 2500
+      });
     }
   },
 }
