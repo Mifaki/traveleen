@@ -17,7 +17,7 @@
               </RouterLink>
               <RouterLink to="/balance">
                 <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
-                    class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(this.coin.value) }})</span></p>
+                    class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(users.wallet) }})</span></p>
               </RouterLink>
             </div>
             <q-item clickable to="/menu" replace class="row items-center">
@@ -39,7 +39,7 @@
                   </q-item>
                   <q-item clickable to="/balance">
                     <p class="inter-sb text-base neutral-600 q-mb-none">Koin <span
-                        class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(this.coin.value) }})</span></p>
+                        class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(users.wallet) }})</span></p>
                   </q-item>
                 </q-list>
               </q-scroll-area>
@@ -127,7 +127,6 @@
 
 <script>
 import { api } from 'src/boot/axios';
-import { coin } from 'src/Store';
 import { getToken, setIsLoggedIn } from "src/utils/localstorage";
 import { ref } from 'vue'
 
@@ -166,7 +165,6 @@ export default {
     return {
       users: null,
       loggedIn: false,
-      coin,
       drawer: ref(false)
     }
   },

@@ -22,13 +22,15 @@
             <p class="inter-sb text-base neutral-500 q-mb-none">
               Lokasi
             </p>
-            <q-input outlined round v-model="location" class="find input q-mt-sm" dense />
+            <q-select outlined v-model="chooseRegion" :options="regionOptions" clearable
+            class="choose-region inter-r text-base emerald-60" dense />
           </div>
           <div>
             <p class="inter-sb text-base neutral-500 q-mb-none">
               Jenis Wisata
             </p>
-            <q-input outlined round v-model="type" class="q-mt-sm" dense />
+            <q-select outlined v-model="chooseCategory" :options="categoryOptions" clearable
+            class="choose-region inter-r text-base emerald-60" dense />
           </div>
           <q-btn unelevated label="Cari" class="find-button text-base inter-sb column" no-caps @click="toCatalog" />
         </div>
@@ -72,9 +74,22 @@ export default {
     };
   },
 
+  setup() {
+    return {
+      chooseRegion: ref(null),
+      chooseCategory: ref(null),
+      regionOptions: [
+        'Bali', 'Jawa Timur', 'Jawa Tengah', 'Jawa Barat'
+      ],
+      categoryOptions: [
+        'Pantai', 'Air Terjun', 'Gunung',
+      ],
+    }
+  },
+
   methods: {
     toCatalog() {
-      homeSubmitValue(this.location, this.type)
+      homeSubmitValue(this.chooseRegion, this.chooseCategory)
       this.$router.push('/catalog');
     }
   }
@@ -84,5 +99,9 @@ export default {
 <style>
 .find-input {
   width: 260px;
+}
+
+.choose-region {
+  min-width: 260px;
 }
 </style>
