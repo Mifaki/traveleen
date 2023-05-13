@@ -93,7 +93,7 @@ export default {
   setup() {
     const columns = [
       {
-        name: 'categoty',
+        name: 'category',
         required: true,
         label: 'Jenis',
         align: 'left',
