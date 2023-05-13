@@ -21,123 +21,137 @@
             </template>
           </q-input>
         </div>
-        <div class="detail-header q-mt-xl">
-          <p class="inter-r text-xl emerald-600 q-mb-none">{{ category }}</p>
-          <p class="inter-b text-4xl neutral-900 q-mb-none">{{ name }}</p>
-          <div class="row q-mt-sm q-mb-sm items-center">
-            <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
-            <p class="inter-r text-lg neutral-500 q-mb-none q-ml-sm">{{ region }}</p>
-          </div>
-          <div class="row justify-between items-center">
-            <q-img :src="thumbnail[0]" class="left-image col-7" />
+        <div v-if="isLoading" class="detail-header q-mt-xl">
+          <q-skeleton type="text" width="20%" class="text-subtitle1" animation="fade" />
+          <q-skeleton type="text" width="40%" height="36px" animation="fade" />
+          <q-skeleton type="text" width="30%" class="text-subtitle1" animation="fade" />
+          <div class="row justify-between items-center q-mt-md">
+            <q-skeleton width="60%" height="400px" square animation="fade" />
             <div class="column col-4">
-              <q-img :src="thumbnail[1]" class="right-image q-mb-md" />
-              <q-img :src="thumbnail[2]" class="right-image " />
+              <q-skeleton width="100%" height="200px" square animation="fade" class="col-7 q-mb-md" />
+              <q-skeleton width="100%" height="200px" square animation="fade" class="col-7" />
             </div>
           </div>
         </div>
-        <div class="row justify-between q-mt-xl">
-          <div class="col-md-12 col-lg-7">
-            <div class="detail-rating row justify-between">
-              <div class="col-5">
-                <p class="inter-b text-2xl neutral-900 q-mb-none">Dari {{ totalRatings }} Pengguna</p>
-                <div class="col-lg-3">
-                  <div class="row items-center q-mt-lg">
-                    <div class="rating-bg column justify-center text-center">
-                      <p class="inter-b text-3xl q-mb-none">{{ rating }}</p>
+        <div v-else>
+          <div class="detail-header q-mt-xl">
+            <p class="inter-r text-xl emerald-600 q-mb-none">{{ category }}</p>
+            <p class="inter-b text-4xl neutral-900 q-mb-none">{{ name }}</p>
+            <div class="row q-mt-sm q-mb-sm items-center">
+              <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
+              <p class="inter-r text-lg neutral-500 q-mb-none q-ml-sm">{{ region }}</p>
+            </div>
+            <div class="row justify-between items-center">
+              <q-img :src="thumbnail[0]" class="left-image col-7" />
+              <div class="column col-4">
+                <q-img :src="thumbnail[1]" class="right-image q-mb-md" />
+                <q-img :src="thumbnail[2]" class="right-image " />
+              </div>
+            </div>
+          </div>
+          <div class="row justify-between q-mt-xl">
+            <div class="col-md-12 col-lg-7">
+              <div class="detail-rating row justify-between">
+                <div class="col-5">
+                  <p class="inter-b text-2xl neutral-900 q-mb-none">Dari {{ totalRatings }} Pengguna</p>
+                  <div class="col-lg-3">
+                    <div class="row items-center q-mt-lg">
+                      <div class="rating-bg column justify-center text-center">
+                        <p class="inter-b text-3xl q-mb-none">{{ rating }}</p>
+                      </div>
+                      <p class="inter-b text-3xl emerald-600 q-mb-none q-ml-md">Luar Biasa</p>
                     </div>
-                    <p class="inter-b text-3xl emerald-600 q-mb-none q-ml-md">Luar Biasa</p>
+                    <div class="row q-mt-lg" v-if="topThumbnail">
+                      <q-img :src='topThumbnail[0]' class="col-3" />
+                      <q-img :src='topThumbnail[1]' class="q-mx-md col-3" />
+                      <q-img :src='topThumbnail[2]' class="col-3" />
+                    </div>
                   </div>
-                  <div class="row q-mt-lg" v-if="topThumbnail">
-                    <q-img :src='topThumbnail[0]' class="col-3" />
-                    <q-img :src='topThumbnail[1]' class="q-mx-md col-3" />
-                    <q-img :src='topThumbnail[2]' class="col-3" />
+                </div>
+                <div class="rating-comment column justify-between gt-xs col-6">
+                  <div>
+                    <p class="inter-b text-2xl neutral-900 q-mb-none">Apa Yang Dikatakan Pengguna</p>
+                    <p class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ topBody }}</p>
+                  </div>
+                  <div>
+                    <div class="row q-mt-md">
+                      <p class="inter-r text-base neutral-900 q-mb-none">{{ topUsername }} - </p>
+                      <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ topDate }}</p>
+                    </div>
+                    <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end cursor-pointer"
+                      @click="scrollToComments">Lihat Semua</p>
                   </div>
                 </div>
               </div>
-              <div class="rating-comment column justify-between gt-xs col-6">
-                <div>
-                  <p class="inter-b text-2xl neutral-900 q-mb-none">Apa Yang Dikatakan Pengguna</p>
-                  <p class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ topBody }}</p>
-                </div>
-                <div>
-                  <div class="row q-mt-md">
-                    <p class="inter-r text-base neutral-900 q-mb-none">{{ topUsername }} - </p>
-                    <p class="inter-r text-base neutral-700 q-mb-none q-ml-xs">{{ topDate }}</p>
-                  </div>
-                  <p class="inter-r text-base emerald-600 q-mb-none q-mt-sm column items-end cursor-pointer"
-                    @click="scrollToComments">Lihat Semua</p>
-                </div>
+              <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Wisata</p>
+              <div class="detail-description">
+                <p class="inter-r text-base neutral-900 q-mb-none text-justify">{{ description }}</p>
+              </div>
+              <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Lokasi</p>
+              <div class="detail-location col-12">
+                <iframe :src="map" frameborder="0" class="detail-map" allowfullscreen></iframe>
               </div>
             </div>
-            <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Wisata</p>
-            <div class="detail-description">
-              <p class="inter-r text-base neutral-900 q-mb-none text-justify">{{ description }}</p>
-            </div>
-            <p class="inter-b text-3xl neutral-900 q-mb-none q-mt-xl q-mb-md">Detail Lokasi</p>
-            <div class="detail-location col-12">
-              <iframe :src="map" frameborder="0" class="detail-map" allowfullscreen></iframe>
+            <div class="col-md-12 col-lg-4 buy-detail">
+              <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
+              <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" @click="addtoCart()" />
+              <p class="inter-sb text-lg neutral-900 q-mb-none q-my-sm">jam Buka (Waktu Lokal)</p>
+              <div class="row justify-between">
+                <p class="inter-r text-base neutral-900 q-mb-none">Senin</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[0] }}</p>
+              </div>
+              <div class="row justify-between q-my-xs">
+                <p class="inter-r text-base neutral-900 q-mb-none">Selasa</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[1] }}</p>
+              </div>
+              <div class="row justify-between">
+                <p class="inter-r text-base neutral-900 q-mb-none">Rabu</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[2] }}</p>
+              </div>
+              <div class="row justify-between q-my-xs">
+                <p class="inter-r text-base neutral-900 q-mb-none">Kamis</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[3] }}</p>
+              </div>
+              <div class="row justify-between">
+                <p class="inter-r text-base neutral-900 q-mb-none">Jumat</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[4] }}</p>
+              </div>
+              <div class="row justify-between q-my-xs">
+                <p class="inter-r text-base neutral-900 q-mb-none">Sabtu</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[5] }}</p>
+              </div>
+              <div class="row justify-between">
+                <p class="inter-r text-base neutral-900 q-mb-none">Minggu</p>
+                <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[6] }}</p>
+              </div>
             </div>
           </div>
-          <div class="col-md-12 col-lg-4 buy-detail">
-            <p class="inter-b text-2xl emerald-600 q-mb-none">Rp {{ formatNumber(price) }}</p>
-            <q-btn unelevated color="primary" label="Beli" no-caps class="buy-button q-mt-md" @click="addtoCart()" />
-            <p class="inter-sb text-lg neutral-900 q-mb-none q-my-sm">jam Buka (Waktu Lokal)</p>
-            <div class="row justify-between">
-              <p class="inter-r text-base neutral-900 q-mb-none">Senin</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[0] }}</p>
-            </div>
-            <div class="row justify-between q-my-xs">
-              <p class="inter-r text-base neutral-900 q-mb-none">Selasa</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[1] }}</p>
-            </div>
-            <div class="row justify-between">
-              <p class="inter-r text-base neutral-900 q-mb-none">Rabu</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[2] }}</p>
-            </div>
-            <div class="row justify-between q-my-xs">
-              <p class="inter-r text-base neutral-900 q-mb-none">Kamis</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[3] }}</p>
-            </div>
-            <div class="row justify-between">
-              <p class="inter-r text-base neutral-900 q-mb-none">Jumat</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[4] }}</p>
-            </div>
-            <div class="row justify-between q-my-xs">
-              <p class="inter-r text-base neutral-900 q-mb-none">Sabtu</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[5] }}</p>
-            </div>
-            <div class="row justify-between">
-              <p class="inter-r text-base neutral-900 q-mb-none">Minggu</p>
-              <p class="inter-b text-base neutral-900 q-mb-none">{{ jamOperasional[6] }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="detail-comments q-mt-xl" id="comments-section">
-          <p class="inter-b text-3xl neutral-900 q-mb-none">{{ totalRatings }} Pengguna <span
-              class="inter-b text-3xl emerald-600 q-mb-none">Traveleen</span> telah membagikan pengalaman di
-            wisata ini:</p>
-          <q-table :rows="rows" :columns="columns" row-key="id" grid hide-header hide-pagination
-            :rows-per-page-options="[10]">
-            <template v-slot:item="props">
-              <div class="comment-container row items-center q-my-sm">
-                <div class="personal-rating-bg column justify-center text-center">
-                  <p class="inter-b text-xl q-mb-none">{{ props.row.rating }}</p>
-                </div>
-                <div class="col-10 column q-ml-md">
-                  <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.username }}</p>
-                  <p class="inter-r text-sm neutral-700 q-mb-none">{{ props.row.date }}</p>
-                  <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ props.row.body }}</P>
-                  <div class="row q-mt-sm" v-if="props.row.thumbnail">
-                    <q-img :src='props.row.thumbnail[0]' class="comment-image" />
-                    <q-img :src='props.row.thumbnail[1]' class="comment-image q-mx-md" />
-                    <q-img :src='props.row.thumbnail[2]' class="comment-image" />
+          <div class="detail-comments q-mt-xl" id="comments-section">
+            <p class="inter-b text-3xl neutral-900 q-mb-none">{{ totalRatings }} Pengguna <span
+                class="inter-b text-3xl emerald-600 q-mb-none">Traveleen</span> telah membagikan pengalaman di
+              wisata ini:</p>
+            <q-table :rows="rows" :columns="columns" row-key="id" grid hide-header hide-pagination
+              :rows-per-page-options="[10]">
+              <template v-slot:item="props">
+                <div class="comment-container row items-center q-my-sm">
+                  <div class="personal-rating-bg column justify-center text-center">
+                    <p class="inter-b text-xl q-mb-none">{{ props.row.rating }}</p>
                   </div>
+                  <div class="col-10 column q-ml-md">
+                    <p class="inter-sb text-base neutral-900 q-mb-none">{{ props.row.username }}</p>
+                    <p class="inter-r text-sm neutral-700 q-mb-none">{{ props.row.date }}</p>
+                    <P class="inter-r text-base neutral-900 q-mb-none q-mt-sm text-justify">{{ props.row.body }}</P>
+                    <div class="row q-mt-sm" v-if="props.row.thumbnail">
+                      <q-img :src='props.row.thumbnail[0]' class="comment-image" />
+                      <q-img :src='props.row.thumbnail[1]' class="comment-image q-mx-md" />
+                      <q-img :src='props.row.thumbnail[2]' class="comment-image" />
+                    </div>
+                  </div>
+                  <div class="divider q-my-md" v-if="props.row.id < rows.length" />
                 </div>
-                <div class="divider q-my-md" v-if="props.row.id < rows.length" />
-              </div>
-            </template>
-          </q-table>
+              </template>
+            </q-table>
+          </div>
         </div>
       </div>
     </q-page>
@@ -172,7 +186,8 @@ export default {
       topBody: ref(''),
       topUsername: ref(''),
       topDate: ref(''),
-      topThumbnail: ref([])
+      topThumbnail: ref([]),
+      isLoading: ref(true)
     }
   },
 
@@ -301,6 +316,7 @@ export default {
         this.topDate = ecotourismData.comments[0].date
         this.topThumbnail = ecotourismData.comments[0].thumbnail
       }
+      this.isLoading = false;
     }
     catch (error) {
       console.log(error);
