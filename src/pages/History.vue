@@ -29,7 +29,8 @@ export default {
         field: row => row.place,
         format: val => `${val}`,
       },
-      { name: 'date', align: 'center', label: 'Tanggal Pembelian', field: 'date' },
+      { name: 'date', align: 'center', label: 'Tanggal Pembelian', field: 'date', sortable: true },
+      { name: 'time', align: 'center', label: 'Waktu Pembelian', field: 'time', sortable: true },
       {
         name: 'quantity',
         label: 'Kuantitas',
@@ -72,6 +73,7 @@ export default {
         this.rows = data.map(item => ({
           place: item.place,
           date: item.date,
+          time: item.time,
           quantity: item.quantity,
           total_price: item.total_price,
           code: item.code,

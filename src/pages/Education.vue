@@ -98,11 +98,4 @@ export default {
 .bg-green {
   background: '$emerald-600';
 }
-
-.article-thumbnail {
-  width: 100%;
-  height: 100%;
-  max-height: 137px;
-  object-fit: cover;
-}
 </style>
