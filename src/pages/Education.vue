@@ -43,6 +43,7 @@
 import { ref } from 'vue';
 import { getToken } from 'src/utils/localstorage';
 import { api } from 'src/boot/axios';
+import { Notify } from 'quasar';
 
 export default {
   name: 'Education',
@@ -89,6 +90,12 @@ export default {
       }
     } catch (error) {
       console.log(error);
+      Notify.create({
+        color: 'red',
+        message: 'Gagal mengambil data silahkan refresh halaman',
+        position: 'top',
+        timeout: 2500
+      });
     }
   }
 }
