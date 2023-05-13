@@ -67,7 +67,54 @@
           </q-card>
         </q-dialog>
         <P class="inter-b text-4xl neutral-900 q-mb-none q-my-lg">Riwayat</P>
-        <q-table flat bordered light virtual-scroll :rows="rows" :columns="columns" row-key="index"
+        <q-markup-table v-if="isLoading">
+          <thead>
+            <tr>
+              <th class="text-left" style="width: 150px">
+                <q-skeleton animation="blink" type="text" />
+              </th>
+              <th class="text-right">
+                <q-skeleton animation="blink" type="text" />
+              </th>
+              <th class="text-right">
+                <q-skeleton animation="blink" type="text" />
+              </th>
+              <th class="text-right">
+                <q-skeleton animation="blink" type="text" />
+              </th>
+              <th class="text-right">
+                <q-skeleton animation="blink" type="text" />
+              </th>
+              <th class="text-right">
+                <q-skeleton animation="blink" type="text" />
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="n in 5" :key="n">
+              <td class="text-left">
+                <q-skeleton animation="blink" type="text" width="85px" />
+              </td>
+              <td class="text-right">
+                <q-skeleton animation="blink" type="text" width="50px" />
+              </td>
+              <td class="text-right">
+                <q-skeleton animation="blink" type="text" width="35px" />
+              </td>
+              <td class="text-right">
+                <q-skeleton animation="blink" type="text" width="65px" />
+              </td>
+              <td class="text-right">
+                <q-skeleton animation="blink" type="text" width="25px" />
+              </td>
+              <td class="text-right">
+                <q-skeleton animation="blink" type="text" width="85px" />
+              </td>
+            </tr>
+          </tbody>
+        </q-markup-table>
+        <q-table v-else flat bordered light virtual-scroll :rows="rows" :columns="columns" row-key="index"
           v-model:pagination="pagination" :rows-per-page-options="[0]" hide-pagination
           class="inter-r text-base neutral-900" />
       </div>
@@ -88,10 +135,10 @@ export default {
   data() {
     return {
       totalBalance: ref(null),
-      users: ref(null)
+      users: ref(null),
+      isLoading: ref(true)
     }
   },
-
   setup() {
     const columns = [
       {
@@ -279,6 +326,7 @@ export default {
         }
       })
       this.users = userResponse.data.data
+      this.isLoading = false;
       console.log(this.users);
     } catch (error) {
       console.log(error);
