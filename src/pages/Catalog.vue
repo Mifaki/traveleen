@@ -162,6 +162,7 @@ import { computed, ref } from 'vue';
 import { api } from 'src/boot/axios';
 import { homeLocation, homeType } from 'src/Store';
 import { getToken } from 'src/utils/localstorage';
+import { Notify } from 'quasar';
 
 export default {
   name: 'Catalog',

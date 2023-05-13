@@ -53,6 +53,7 @@
 import { ref } from 'vue';
 import { api } from 'src/boot/axios';
 import { setIsLoggedIn, setToken } from 'src/utils/localstorage';
+import { Notify } from 'quasar';
 
 export default {
   name: 'Landing',
@@ -67,6 +68,13 @@ export default {
   },
 
   methods: {
+
+    resetDefault() {
+      this.username = ref(null);
+      this.password = ref(null);
+      this.isPwd = ref(true);
+    },
+
     async submit() {
       const userData = {
         email: this.username,
@@ -82,6 +90,13 @@ export default {
         }
       } catch (error) {
         console.log(error);
+        this.resetDefault();
+        Notify.create({
+        color: 'red',
+        message: 'Gagal login silahkan coba kembali',
+        position: 'top',
+        timeout: 2500
+      });
       }
     }
   }

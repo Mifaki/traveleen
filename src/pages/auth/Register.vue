@@ -66,6 +66,7 @@
 import { ref } from 'vue';
 import { api } from 'src/boot/axios';
 import { setToken } from 'src/utils/localstorage';
+import { Notify } from 'quasar';
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -86,13 +87,21 @@ export default {
 
   methods: {
 
+    resetDefault() {
+      this.username =  ref(null);
+      this.email =  ref(null);
+      this.password =  ref(null),
+      this.passwordConfirmation =  ref(null);
+      this.isPwd =  ref(true);
+      this.isConfirm =  ref(true);
+    },
+
     async submit() {
       const userData = {
         username: this.username,
         email: this.email,
         password: this.password
       }
-
       try {
         const response = await api.post('/api/v1/user/signup', userData)
         let data = response.data;
@@ -103,6 +112,13 @@ export default {
         }
       } catch (error) {
         console.log(error);
+        this.resetDefault();
+        Notify.create({
+        color: 'red',
+        message: 'Gagal mendaftarkan akun silahkan coba kembali',
+        position: 'top',
+        timeout: 2500
+      });
       }
     },
 

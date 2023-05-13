@@ -129,6 +129,7 @@
 import { api } from 'src/boot/axios';
 import { getToken, setIsLoggedIn } from "src/utils/localstorage";
 import { ref } from 'vue'
+import { Notify } from 'quasar';
 
 export default {
 
@@ -156,9 +157,9 @@ export default {
           position: 'top',
           timeout: 2500
         });
+        this.$router.push('/login');
       }
     }
-
   },
 
   data() {

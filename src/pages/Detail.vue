@@ -256,17 +256,14 @@ export default {
       } catch (error) {
         console.log(error);
         this.$q.loading.hide()
-        if (error.response) {
-          Notify.create({
-            color: 'red',
-            message: 'Gagal menambahkan kedalam keranjang silahkan coba kembali',
-            position: 'top',
-            timeout: 2500
-          });
-        }
+        Notify.create({
+          color: 'red',
+          message: 'Gagal menambahkan kedalam keranjang silahkan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     }
-
   },
 
   async mounted() {
@@ -307,14 +304,12 @@ export default {
     }
     catch (error) {
       console.log(error);
-      if (error.response) {
-          Notify.create({
-            color: 'red',
-            message: 'Gagal mengambil data silahkan refresh halaman',
-            position: 'top',
-            timeout: 2500
-          });
-        }
+      Notify.create({
+        color: 'red',
+        message: 'Gagal mengambil data silahkan refresh halaman',
+        position: 'top',
+        timeout: 2500
+      });
     }
   }
 }

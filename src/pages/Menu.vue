@@ -89,6 +89,7 @@
 import { ref } from 'vue';
 import { getToken } from 'src/utils/localstorage';
 import { api } from 'src/boot/axios';
+import { Notify } from 'quasar';
 
 export default {
   name: 'Menu',
@@ -154,12 +155,18 @@ export default {
           }
         })
         console.log(response);
+        this.profile.name = updateData.username;
+        this.profile.email = updateData.email;
       }
       catch (error) {
         console.log(error);
+        Notify.create({
+        color: 'red',
+        message: 'Gagal mengupdate data silahkan coba kembali',
+        position: 'top',
+        timeout: 2500
+      });
       }
-      this.profile.name = updateData.username;
-      this.profile.email = updateData.email;
     },
 
     isEditing() {
@@ -208,6 +215,12 @@ export default {
     }
     catch (error) {
       console.log(error);
+      Notify.create({
+        color: 'red',
+        message: 'Gagal mengambil data silahkan refresh halaman',
+        position: 'top',
+        timeout: 2500
+      });
     }
   }
 }
