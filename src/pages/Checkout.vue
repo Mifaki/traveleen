@@ -214,6 +214,7 @@ export default {
         }
       }
       catch (error) {
+        this.$q.loading.hide()
         Notify.create({
           color: 'red',
           message: 'Pembayaran gagal silakan coba kembali',
