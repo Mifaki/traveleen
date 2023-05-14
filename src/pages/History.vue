@@ -270,8 +270,7 @@ export default {
         this.showLoading()
         const token = getToken()
         const formData = new FormData();
-        console.log(this.files);
-        formData.append('thumbnail', this.files);
+        if(this.files) formData.append('thumbnail', this.files);
         formData.append('rating', argRating);
         formData.append('body', argBody);
 

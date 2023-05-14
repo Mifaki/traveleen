@@ -24,7 +24,7 @@
             <q-icon name="img:/icons/menu/settings.svg" size="24px" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Sunnting Akun</p>
           </div>
-          <div class="row items-center q-mt-md">
+          <div @click="signOut()" class="row items-center q-mt-md cursor-pointer">
             <q-icon name="img:/icons/menu/logOut.svg" size="24px" />
             <p class="inter-sb text-base red-600 q-mb-none q-ml-md">Keluar</p>
           </div>
@@ -87,7 +87,7 @@
 
 <script>
 import { ref } from 'vue';
-import { getToken } from 'src/utils/localstorage';
+import { getToken, setToken } from 'src/utils/localstorage';
 import { api } from 'src/boot/axios';
 import { Notify } from 'quasar';
 
@@ -167,6 +167,11 @@ export default {
         timeout: 2500
       });
       }
+    },
+
+    signOut() {
+      setToken(null);
+      window.location.reload();
     },
 
     isEditing() {
