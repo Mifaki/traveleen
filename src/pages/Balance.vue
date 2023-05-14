@@ -258,7 +258,6 @@ export default {
       try {
         this.showLoading()
         const token = getToken();
-        console.log(argType, argWeight);
         const response = await api.post('api/v1/trash/exchange', {
           category: argType,
           mass: argWeight
@@ -269,7 +268,7 @@ export default {
         });
 
         const data = response.data.data;
-        console.log(data);
+
         const trash = {
           category: data.category,
           location: data.location !== '-' ? data.location : null,
@@ -288,7 +287,6 @@ export default {
         this.$q.loading.hide()
         this.resetDefault();
       } catch (error) {
-        console.log(error);
         Notify.create({
           color: 'red',
           message: 'Gagal menukarkan sampah silahkan coba kembali',
@@ -327,9 +325,7 @@ export default {
       })
       this.users = userResponse.data.data
       this.isLoading = false;
-      console.log(this.users);
     } catch (error) {
-      console.log(error);
       Notify.create({
         color: 'red',
         message: 'Gagal mengambil data silahkan refresh halaman',

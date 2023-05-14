@@ -91,7 +91,8 @@
 import { ref } from 'vue';
 import { getToken, setToken } from 'src/utils/localstorage';
 import { api } from 'src/boot/axios';
-import { Notify } from 'quasar';
+import { Notify, useQuasar } from 'quasar';
+import { onBeforeUnmount } from 'vue'
 
 export default {
   name: 'Menu',
@@ -106,6 +107,16 @@ export default {
   },
 
   setup() {
+    const $q = useQuasar()
+    let timer
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer)
+        $q.loading.hide()
+      }
+    })
+
     return {
       username: ref(null),
       email: ref(null),
@@ -131,6 +142,16 @@ export default {
         'Januari', 'Febuari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
       ],
       isDisabled: ref(true),
+      showLoading() {
+        $q.loading.show({
+          message: 'Memperbaharui Foto Profil...'
+        })
+
+        timer = setTimeout(() => {
+          $q.loading.hide()
+          timer = void 0
+        }, 10000)
+      }
     }
   },
 
@@ -138,7 +159,6 @@ export default {
     submit() {
       const birthday = `${this.date} ${this.month} ${this.year}`;
       const isMale = this.gender == "Pria" ? true : false
-      console.log(isMale);
 
       const updateData = {
         username: this.username,
@@ -148,7 +168,6 @@ export default {
         gender: isMale,
         birthday: birthday
       }
-      console.log(updateData);
       try {
         const token = getToken()
         const response = api.put('api/v1/user/update', updateData, {
@@ -156,9 +175,9 @@ export default {
             Authorization: `Bearer ${token}`
           }
         })
-        console.log(response);
         this.profile.name = updateData.username;
         this.profile.email = updateData.email;
+        window.location.reload();
       }
       catch (error) {
         console.log(error);
@@ -181,8 +200,9 @@ export default {
     },
 
     async uploadPhoto() {
+      this.showLoading();
 
-      const isEmpty = this.file ? this.file : null;
+      const isEmpty = this.file == null ? null : this.file;
       const formData = new FormData();
       formData.append('photoProfile', isEmpty);
 
@@ -193,10 +213,9 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
         window.location.reload();
       } catch (error) {
-        console.log(error);
+        this.$q.loading.hide();
         Notify.create({
         color: 'red',
         message: 'Gagal mengupdate foto silahkan coba kembali',
@@ -229,7 +248,6 @@ export default {
       this.year = birthdayParts[2];
     }
     catch (error) {
-      console.log(error);
       Notify.create({
         color: 'red',
         message: 'Gagal mengambil data silahkan refresh halaman',
@@ -242,10 +260,6 @@ export default {
 </script>
 
 <style>
-.icon-menu {
-  width: 24px;
-  height: 24px;
-}
 .clear-button {
   color: white;
   background-color: #DC2626;
@@ -261,16 +275,5 @@ export default {
   height: 48px;
   color: white;
   background-color: #10B981;
-}
-.profile-image {
-  width: 48px;
-  height: 48px;
-  border-radius: 50px;
-}
-
-.edit-image {
-  width: 64px;
-  height: 64px;
-  border-radius: 50px;
 }
 </style>

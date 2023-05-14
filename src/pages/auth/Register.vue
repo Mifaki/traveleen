@@ -27,7 +27,7 @@
               </template>
             </q-input>
             <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-xs">Konfirmasi Kata Sandi</p>
-            <q-input class="q-mt-sm" outlined v-model="passwordConfirmation" :type="isPwd ? 'password' : 'text'" :rules="[
+            <q-input class="q-mt-sm" outlined v-model="passwordConfirmation" :type="isConfirm ? 'password' : 'text'" :rules="[
                 (val) => !!val,
                 (val) => val === password || 'Password confirmation does not match'
               ]" dense>
@@ -106,12 +106,10 @@ export default {
         const response = await api.post('/api/v1/user/signup', userData)
         let data = response.data;
         setToken(data.token);
-        console.log(data);
         if (response.status === 200) {
           this.$router.push('/login');
         }
       } catch (error) {
-        console.log(error);
         this.resetDefault();
         Notify.create({
         color: 'red',
@@ -135,9 +133,5 @@ export default {
   width: 100%;
   height: 32px;
   border-radius: 6px;
-}
-
-.register-link {
-  text-decoration: none;
 }
 </style>

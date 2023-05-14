@@ -137,14 +137,12 @@ export default {
     try {
       const token = getToken()
       if(token != null) {
-        console.log(token);
         const response = await api.get('api/v1/user/profile', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
-        this.users = response.data.data
-        console.log(this.users);
+        this.users = response.data.data;
         this.loggedIn = true;
 
         setIsLoggedIn(true);

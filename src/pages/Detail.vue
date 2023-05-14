@@ -171,8 +171,6 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      fetchUrl: 'api/v1/tourism/',
-      cartUrl: 'api/v1/tourism/add/',
       region: ref(''),
       category: ref(''),
       thumbnail: ref([]),
@@ -257,9 +255,8 @@ export default {
       this.showLoading()
       try {
         const token = getToken()
-        console.log(token);
         const argQuantity = 1;
-        const url = this.cartUrl + this.id + '/cart';
+        const url = 'api/v1/tourism/add/' + this.id + '/cart';
         const response = await api.post(url, {
           quantity: argQuantity
         }, {
@@ -269,7 +266,6 @@ export default {
         })
         if (response.data.data) this.$router.push('/checkout');
       } catch (error) {
-        console.log(error);
         this.$q.loading.hide()
         Notify.create({
           color: 'red',
@@ -284,13 +280,12 @@ export default {
   async mounted() {
     try {
       const token = getToken()
-      const url = this.fetchUrl + this.id;
+      const url = 'api/v1/tourism/' + this.id;
       const response = await api.get(url, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(response.data.data);
       const ecotourismData = response.data.data
       if (response.data.status) {
         this.category = ecotourismData.category;
@@ -319,7 +314,6 @@ export default {
       this.isLoading = false;
     }
     catch (error) {
-      console.log(error);
       Notify.create({
         color: 'red',
         message: 'Gagal mengambil data silahkan refresh halaman',

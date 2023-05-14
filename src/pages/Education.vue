@@ -130,7 +130,6 @@ export default {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response.data.data);
       if (response.data.status) {
         const data = response.data.data;
         this.rows = data.map(item => ({
@@ -153,9 +152,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.bg-green {
-  background: '$emerald-600';
-}
-</style>

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { getToken } from 'src/utils/localstorage'
 import { api } from 'src/boot/axios'
 import { Notify, useQuasar } from 'quasar'
@@ -66,8 +66,6 @@ export default {
   data() {
     return {
       carts: [],
-      cartUrl: 'api/v1/tourism/add/',
-      delUrl: 'api/v1/tourism/del/',
       isCalculate: ref(true),
     }
   },
@@ -119,7 +117,7 @@ export default {
     async addToServer(argQuantity, argId) {
       try {
         const token = getToken()
-        const url = this.cartUrl + argId + '/cart';
+        const url = 'api/v1/tourism/add/' + argId + '/cart';
         this.showLoading
         const response = await api.post(url, {
           quantity: argQuantity
@@ -128,24 +126,44 @@ export default {
             Authorization: `Bearer ${token}`
           }
         })
-        console.log(response.data);
+        Notify.create({
+          color: 'green',
+          message: 'Berhasil memperbaharui keranjang',
+          position: 'top',
+          timeout: 2500
+        });
       } catch (error) {
-        console.log(error);
+        Notify.create({
+          color: 'red',
+          message: 'Gagal menambahkan kedalam keranjang silakan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     },
 
     async removeFromServer(argId) {
       try {
         const token = getToken()
-        const url = this.delUrl + argId + '/cart';
+        const url = 'api/v1/tourism/del/' + argId + '/cart';
         const response = await api.delete(url, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
-        console.log(response.data);
+        Notify.create({
+          color: 'green',
+          message: 'Berhasil menghapus dari keranjang',
+          position: 'top',
+          timeout: 2500
+        });
       } catch (error) {
-        console.log(error);
+        Notify.create({
+          color: 'red',
+          message: 'Gagal menghapus dari keranjang',
+          position: 'top',
+          timeout: 2500
+        });
       }
     },
 
@@ -178,7 +196,6 @@ export default {
 
     async checkoutCart() {
       const isOnline = this.payment == "online" ? true : false;
-      console.log(isOnline);
       this.showLoading();
       try {
         const token = getToken()
@@ -197,14 +214,12 @@ export default {
         }
       }
       catch (error) {
-        if (error.response && error.response.status === 500) {
-          Notify.create({
-            color: 'red',
-            message: 'Pembayaran gagal silakan coba kembali',
-            position: 'top',
-            timeout: 2500
-          });
-        }
+        Notify.create({
+          color: 'red',
+          message: 'Pembayaran gagal silakan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     }
   },
@@ -217,7 +232,6 @@ export default {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(cartResponse.data);
       this.carts = cartResponse.data.data.cart_product.map((cartProduct) => {
         return {
           id: cartProduct.eco_id,
@@ -234,7 +248,12 @@ export default {
       this.isCalculate = false;
     }
     catch (error) {
-      console.log(error);
+      Notify.create({
+          color: 'red',
+          message: 'Gagal mengambil data silahkan refresh halaman',
+          position: 'top',
+          timeout: 2500
+        });
     }
   }
 }

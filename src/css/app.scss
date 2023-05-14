@@ -574,6 +574,18 @@ a {
   border-radius: 12px;
 }
 
+.profile-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+}
+
+.edit-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50px;
+}
+
 //Balance Page
 .balance-header {
   min-width: 100%;
@@ -591,6 +603,14 @@ a {
   padding: 27px 92px;
   background: #fafafa;
   border-radius: 12px;
+}
+
+.quantity-container {
+  height: fit-content;
+  width: 700px;
+  max-width: 80vw;
+  background: white;
+  padding: 24px 16px;
 }
 
 //Checkout Page
@@ -617,6 +637,19 @@ a {
 .payment-button {
   width: 100%;
   min-height: 52px;
+}
+
+//History Page
+.submit-comment {
+  background: #10B981;
+  color: white;
+  width: 100%;
+  height: 52px;
+}
+
+.comment-dialog {
+  width: 700px;
+  max-width: 80vw;
 }
 
 //Responsive Styles

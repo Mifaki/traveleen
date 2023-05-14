@@ -184,10 +184,6 @@
                 </div>
               </template>
             </q-table>
-            <div class="row justify-center q-mt-md">
-              <q-pagination v-model="pagination" color="teal" :max="pagesNumber" :max-pages="5" :ellipses="false"
-                :boundary-numbers="false" size="sm" />
-            </div>
           </div>
         </div>
       </div>
@@ -196,7 +192,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { api } from 'src/boot/axios';
 import { homeLocation, homeType } from 'src/Store';
 import { getToken } from 'src/utils/localstorage';
@@ -249,7 +245,6 @@ export default {
       columns,
       rows,
       pagination,
-      pagesNumber: computed(() => Math.ceil(rows.length / pagination.value.rowsPerPage)),
       regionOptions: [
         'Bali', 'Jawa Timur', 'Jawa Tengah', 'Jawa Barat'
       ],
@@ -323,13 +318,11 @@ export default {
   async mounted() {
     try {
       const token = getToken()
-      console.log(token);
       const response = await api.get('api/v1/tourism/', {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(response.data);
       if (response.data.status) {
         const data = response.data.data;
         this.rows = data.map(item => ({
@@ -353,7 +346,6 @@ export default {
       this.isLoading = false;
     }
     catch (error) {
-      console.log(error);
       Notify.create({
         color: 'red',
         message: 'Gagal mengambil data silahkan refresh halaman',

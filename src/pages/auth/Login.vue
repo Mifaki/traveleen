@@ -82,14 +82,12 @@ export default {
       }
       try {
         const response = await api.post('/api/v1/user/login', userData)
-        console.log(response);
         setToken(response.data.data.token);
         setIsLoggedIn(true)
         if (response.status === 200) {
           this.$router.push('/home');
         }
       } catch (error) {
-        console.log(error);
         this.resetDefault();
         Notify.create({
         color: 'red',

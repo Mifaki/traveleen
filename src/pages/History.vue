@@ -85,7 +85,7 @@
           </template>
         </q-table>
         <q-dialog v-model="comment">
-          <q-card style="width: 700px; max-width: 80vw;">
+          <q-card class="comment-dialog">
             <q-card-section class="row">
               <q-img :src="commentData.eco_image" class="col-3" />
               <div class="column q-ml-md">
@@ -277,7 +277,6 @@ export default {
         formData.append('rating', argRating);
         formData.append('body', argBody);
 
-        console.log(formData);
         const url = `api/v1/tourism/${id}/comment`;
         const response = await api.post(url, formData, {
           headers: {
@@ -285,20 +284,18 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log(response.data);
         this.$q.loading.hide();
-        if(response.data.status) {
+        if (response.data.status) {
           Notify.create({
-          color: 'green',
-          message: 'Berhasil menambahkan komentar',
-          position: 'top',
-          timeout: 2500
-        });
+            color: 'green',
+            message: 'Berhasil menambahkan komentar',
+            position: 'top',
+            timeout: 2500
+          });
         }
         this.resetDefault()
       } catch (error) {
         this.$q.loading.hide();
-        console.log(error)
         Notify.create({
           color: 'red',
           message: 'Gagal menambahkan komentar silahkan coba kembali',
@@ -357,12 +354,5 @@ export default {
 
 .comment-image {
   width: 100%;
-}
-
-.submit-comment {
-  background: #10B981;
-  color: white;
-  width: 100%;
-  height: 52px;
 }
 </style>
