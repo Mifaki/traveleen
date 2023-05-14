@@ -4,7 +4,7 @@
       <div class="main-container row">
         <div class="menu-left col-xs-12 col-sm-12 col-md-12 col-lg-4 q-mb-xl">
           <div class="row items-center">
-            <q-img v-if="photoProfile" :src="photoProfile" class="profile-image"/>
+            <q-img v-if="photoProfile" :src="photoProfile" class="profile-image" />
             <q-img v-else="users.photo_profile" src="/icons/header/profile.svg" class="profile-image" />
             <div class="col-8 q-ml-md">
               <p class="inter-sb text-lg neutral-900 q-mb-none">{{ profile.name }}</p>
@@ -12,23 +12,11 @@
             </div>
           </div>
           <div class="divider q-my-lg" />
-          <div class="row items-center">
-            <q-icon name="img:/icons/menu/orders.jpg" size="24px" />
-            <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Pemesanan Saya</p>
-          </div>
-          <div class="row items-center q-mt-md">
-            <q-icon name="img:/icons/menu/promo.jpg" size="24px" />
-            <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Informasi Promo</p>
-          </div>
+          <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Pemesanan Saya</p>
+          <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md q-mt-md">Informasi Promo</p>
           <div class="divider q-my-lg" />
-          <div class="row items-center">
-            <q-icon name="img:/icons/menu/settings.jpg" size="24px" />
-            <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Sunnting Akun</p>
-          </div>
-          <div @click="signOut()" class="row items-center q-mt-md cursor-pointer">
-            <q-icon name="img:/icons/menu/logOut.jpg" size="24px" />
-            <p class="inter-sb text-base red-600 q-mb-none q-ml-md">Keluar</p>
-          </div>
+          <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Sunnting Akun</p>
+          <p @click="signOut" class="inter-sb text-base red-600 q-mb-none q-ml-md q-mt-md cursor-pointer">Keluar</p>
         </div>
         <div class="menu-right col-xs-12 col-sm-12 col-md-12 col-lg-8">
           <p class="inter-b text-3xl neutral-900 a-mb-none">Data Personal</p>
@@ -37,10 +25,12 @@
               <p class="inter-r text-sm neutral-600 q-mb-none q-mb-md">Foto Profil</p>
               <q-img v-if="photoProfile" :src="photoProfile" class="edit-image" />
               <q-img v-else="users.photo_profile" src="/icons/header/profile.svg" class="edit-image" />
-              <q-input @change="uploadPhoto" @update:model-value="val => { file = val[0] }" flat type="file" class="q-mt-sm" dense />
+              <q-input @change="uploadPhoto" @update:model-value="val => { file = val[0] }" flat type="file"
+                class="q-mt-sm" dense />
             </div>
             <div class="row justify-end col-8">
-              <q-btn unelevated label="Hapus" class="clear-button text-sm inter-sb q-mr-md" @click="uploadPhoto()" no-caps />
+              <q-btn unelevated label="Hapus" class="clear-button text-sm inter-sb q-mr-md" @click="uploadPhoto()"
+                no-caps />
               <q-btn unelevated label="Ubah" class="edit-button text-sm inter-sb" no-caps @click="isEditing" />
             </div>
           </div>
@@ -182,11 +172,11 @@ export default {
       catch (error) {
         console.log(error);
         Notify.create({
-        color: 'red',
-        message: 'Gagal mengupdate data silahkan coba kembali',
-        position: 'top',
-        timeout: 2500
-      });
+          color: 'red',
+          message: 'Gagal mengupdate data silahkan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     },
 
@@ -217,11 +207,11 @@ export default {
       } catch (error) {
         this.$q.loading.hide();
         Notify.create({
-        color: 'red',
-        message: 'Gagal mengupdate foto silahkan coba kembali',
-        position: 'top',
-        timeout: 2500
-      });
+          color: 'red',
+          message: 'Gagal mengupdate foto silahkan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     },
 
