@@ -73,12 +73,6 @@ export default {
   },
 
   setup() {
-    let wallet = ref(0);
-    let walletLabel = computed(() => {
-      return `Koin (${wallet.value})`;
-    });
-
-
     const $q = useQuasar()
     let timer
 
@@ -91,11 +85,9 @@ export default {
 
     return {
       payment: ref('coin'),
-      wallet,
-      walletLabel,
       paymentOptions: [
         {
-          label: `${walletLabel.value}`,
+          label: `Koin`,
           value: 'coin'
         },
         {
@@ -240,14 +232,6 @@ export default {
       });
 
       this.isCalculate = false;
-      const userResponse = await api.get('api/v1/user/profile', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      this.wallet = userResponse.data.data.wallet;
-      console.log(this.wallet);
     }
     catch (error) {
       console.log(error);

@@ -13,7 +13,7 @@
             <p class="inter-b text-2xl neutral-50 q-mb-none">Tukar Sampah</p>
           </div>
           <div class="text-center">
-            <q-icon name="img:/icons/Balance/topUp.svg" size="64px" />
+            <q-icon name="img:/icons/Balance/topUp.png" size="64px" />
             <p class="inter-b text-2xl neutral-50 q-mb-none">Isi Saldo</p>
           </div>
         </div>
