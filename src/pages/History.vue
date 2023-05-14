@@ -87,14 +87,14 @@
         <q-dialog v-model="comment">
           <q-card style="width: 700px; max-width: 80vw;">
             <q-card-section class="row">
-              <q-img :src="commenTData.eco_image" class="col-3" />
+              <q-img :src="commentData.eco_image" class="col-3" />
               <div class="column q-ml-md">
                 <div class="row items-center">
                   <q-icon name="img:/icons/Catalog/region.svg" size="24px" />
-                  <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ commenTData.eco_location }}</p>
+                  <p class="inter-r text-base neutral-500 q-mb-none q-ml-sm">{{ commentData.eco_location }}</p>
                 </div>
-                <p class="inter-r text-base emerald-600 q-mb-none q-mt-md">{{ commenTData.eco_location }}</p>
-                <p class="inter-b text-2xl neutral-900 q-mb-none">{{ commenTData.eco_name }}</p>
+                <p class="inter-r text-base emerald-600 q-mb-none q-mt-md">{{ commentData.eco_category }}</p>
+                <p class="inter-b text-2xl neutral-900 q-mb-none">{{ commentData.eco_name }}</p>
               </div>
             </q-card-section>
 
@@ -103,10 +103,13 @@
               <q-option-group v-model="rating" :options="ratingOptions" color="green" inline />
               <p class="inter-r text-xs neutral-600 q-mb-none q-mt-md">Bagikan Pengalamanmu</p>
               <q-input v-model="commentBody" outlined type="textarea" />
+              <p class="inter-r text-xs neutral-600 q-mb-none q-mt-md">Unggah Foto Perjalananmu (optional)</p>
+              <q-input @update:model-value="val => { files = val }" multiple type="file" dense />
             </q-card-section>
 
             <q-card-actions>
-              <q-btn flat label="Kirim" class="submit-comment" @click="submitComment(rating, commentBody)"/>
+              <q-btn flat label="Kirim" class="submit-comment"
+                @click="submitComment(rating, commentBody, commentData.id)" />
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -129,8 +132,10 @@ export default {
     return {
       isLoading: ref(true),
       true: ref(true),
+      commentUrl: 'api/v1/tourism/',
       comment: ref(false),
-      commenTData: ref([])
+      selectedRow: ref([]),
+      commentData: ref([])
     }
   },
 
@@ -163,6 +168,7 @@ export default {
       },
       { name: 'code', align: 'center', label: 'Kode', field: 'code' },
       { name: 'status', label: 'Status', field: 'status' },
+      { name: 'id', field: 'id' },
       { name: 'eco_image', field: 'eco_image' },
       { name: 'eco_location', field: 'eco_location' },
       { name: 'eco_category', field: 'eco_category' },
@@ -184,47 +190,48 @@ export default {
       pagination: ref({
         rowsPerPage: 0
       }),
+      files: ref(null),
       rating: ref(1),
       ratingOptions: [
         {
           label: '1',
-          value: 1,
+          value: '1',
         },
         {
           label: '2',
-          value: 2,
+          value: '2',
         },
         {
           label: '3',
-          value: 3,
+          value: '3',
         },
         {
           label: '4',
-          value: 4,
+          value: '4',
         },
         {
           label: '5',
-          value: 5,
+          value: '5',
         },
         {
           label: '6',
-          value: 6,
+          value: '6',
         },
         {
           label: '7',
-          value: 7,
+          value: '7',
         },
         {
           label: '8',
-          value: 8,
+          value: '8',
         },
         {
           label: '9',
-          value: 9,
+          value: '9',
         },
         {
           label: '10',
-          value: 10,
+          value: '10',
         },
       ],
       commentBody: ref(''),
@@ -244,31 +251,49 @@ export default {
   methods: {
     openDialog(row) {
       this.selectedRow = row;
-      this.commenTData.eco_name = this.selectedRow.eco_name;
-      this.commenTData.eco_image = this.selectedRow.eco_image;
-      this.commenTData.eco_location = this.selectedRow.eco_location;
-      this.commenTData.eco_category = this.selectedRow.eco_category;
+      this.commentData.id = this.selectedRow.id;
+      this.commentData.eco_name = this.selectedRow.eco_name;
+      this.commentData.eco_image = this.selectedRow.eco_image;
+      this.commentData.eco_location = this.selectedRow.eco_location;
+      this.commentData.eco_category = this.selectedRow.eco_category;
       this.comment = true;
     },
 
     resetDefault() {
       this.comment = false;
-        this.rating = 1;
-        this.commentBody = '';
+      this.rating = 1;
+      this.commentBody = '';
     },
 
-    async submitComment(argRating, argBody) {
+    async submitComment(argRating, argBody, id) {
       try {
         this.showLoading()
         const token = getToken()
+        const formData = new FormData();
+        console.log(this.files);
+        formData.append('thumbnail', this.files);
+        formData.append('rating', argRating);
+        formData.append('body', argBody);
+
+        const url = `api/v1/tourism/${id}/comment`;
+        const response = await api.post(url, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log(response.data);
+        this.$q.loading.hide();
         this.resetDefault()
       } catch (error) {
+        this.$q.loading.hide();
+        console.log(error)
         Notify.create({
-        color: 'red',
-        message: 'Gagal menambahkan komen silahkan coba kembali',
-        position: 'top',
-        timeout: 2500
-      });
+          color: 'red',
+          message: 'Gagal menambahkan komen silahkan coba kembali',
+          position: 'top',
+          timeout: 2500
+        });
       }
     }
   },
@@ -292,6 +317,7 @@ export default {
           total_price: item.total_price,
           code: item.code,
           status: item.status,
+          id: item.id,
           eco_name: item.eco_name,
           eco_image: item.eco_image,
           eco_location: item.eco_location,
