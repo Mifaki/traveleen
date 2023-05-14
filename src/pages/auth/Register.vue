@@ -40,11 +40,11 @@
               Ketentuan,
               Kebijakan Privasi, dan Kebijakan Cookie kami. Kami dapat mengirimkan pemberitahuan SMS yang dapat dihentikan
               kapan saja.</p>
-            <q-btn class="masuk-button jakarta-b q-mb-md" type="submit" unelevated label="Masuk" text-color="white"
+            <q-btn class="masuk-button jakarta-b q-mb-md" type="submit" unelevated label="Daftar" text-color="white"
               no-caps />
           </q-form>
           <div class="register-link row q-mx-auto">
-            <p class="inter-sb text-base neutral-500 q-mb-none">Tidak Punya Akun?</p>
+            <p class="inter-sb text-base neutral-500 q-mb-none">Sudah Punya Akun?</p>
             <router-link class="inter-sb text-base neutral-900 q-mb-none q-ml-xs cursor-pointer register-link"
               to="/login">
               Masuk
@@ -106,7 +106,7 @@ export default {
         const response = await api.post('/api/v1/user/signup', userData)
         let data = response.data;
         setToken(data.token);
-        console.log(data)
+        console.log(data);
         if (response.status === 200) {
           this.$router.push('/login');
         }

@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fF2">
     <q-page>
       <div class="popular-education">
-        <p class="inter-b text-3xl neutral-50 text-center">Poopuler di Traveleen</p>
+        <p class="inter-b text-3xl neutral-50 text-center">Populer di Traveleen</p>
         <div v-if="isLoading" class="row justify-evenly">
           <q-card flat bordered class="education-card col-3">
             <q-skeleton height="200px" square animation="fade" />

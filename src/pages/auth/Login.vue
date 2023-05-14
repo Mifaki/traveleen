@@ -10,7 +10,7 @@
           <q-form @submit="submit" class="login-form-container q-mx-auto">
             <p class="inter-b text-5xl neutral-900 q-mb-none q-mb-sm text-center">Masuk</p>
             <p class="inter-sb text-lg neutral-500 q-mb-none text-center">Silakan masukan detail anda</p>
-            <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-lg">Username atau Email</p>
+            <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-lg">Email</p>
             <q-input outlined round v-model="username" :rules="[(val) => !!val]" dense />
             <p class="inter-r text-sm neutral-900 q-mb-none q-mb-sm q-mt-xs">Kata Sandi</p>
             <q-input class="q-mt-sm" outlined v-model="password" :type="isPwd ? 'password' : 'text'" :rules="[
