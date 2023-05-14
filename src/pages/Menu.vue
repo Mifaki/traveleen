@@ -13,20 +13,20 @@
           </div>
           <div class="divider q-my-lg" />
           <div class="row items-center">
-            <q-icon name="img:/icons/menu/orders.png" size="24px" />
+            <q-img src="/icons/menu/orders.png" class="icon-menu" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Pemesanan Saya</p>
           </div>
           <div class="row items-center q-mt-md">
-            <q-icon name="img:/icons/menu/promo.png" size="24px" />
+            <q-img src="/icons/menu/promo.png" class="icon-menu" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Informasi Promo</p>
           </div>
           <div class="divider q-my-lg" />
           <div class="row items-center">
-            <q-icon name="img:/icons/menu/settings.png" size="24px" />
+            <q-img src="/icons/menu/settings.png" class="icon-menu" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Sunnting Akun</p>
           </div>
           <div @click="signOut()" class="row items-center q-mt-md cursor-pointer">
-            <q-icon name="img:/icons/menu/logOut.png" size="24px" />
+            <q-img src="/icons/menu/logOut.png" class="icon-menu" />
             <p class="inter-sb text-base red-600 q-mb-none q-ml-md">Keluar</p>
           </div>
         </div>
@@ -242,6 +242,10 @@ export default {
 </script>
 
 <style>
+.icon-menu {
+  width: 24px;
+  height: 24px;
+}
 .clear-button {
   color: white;
   background-color: #DC2626;
@@ -258,7 +262,6 @@ export default {
   color: white;
   background-color: #10B981;
 }
-
 .profile-image {
   width: 48px;
   height: 48px;
