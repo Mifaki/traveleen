@@ -18,14 +18,14 @@
       </div>
       <div class="search-home q-pa-auto">
         <div class="row items-center justify-evenly">
-          <div>
+          <div class="q-mt-sm col-xs-12 col-sm-5 col-md-4 col-lg-4">
             <p class="inter-sb text-base neutral-500 q-mb-none">
               Lokasi
             </p>
             <q-select outlined v-model="chooseRegion" :options="regionOptions" clearable
             class="choose-region inter-r text-base emerald-60" dense />
           </div>
-          <div>
+          <div class="q-mt-sm col-xs-12 col-sm-5 col-md-4 col-lg-4">
             <p class="inter-sb text-base neutral-500 q-mb-none">
               Jenis Wisata
             </p>
@@ -97,11 +97,7 @@ export default {
 </script>
 
 <style>
-.find-input {
-  width: 260px;
-}
-
 .choose-region {
-  min-width: 260px;
+  width: 100%;
 }
 </style>
