@@ -13,20 +13,20 @@
           </div>
           <div class="divider q-my-lg" />
           <div class="row items-center">
-            <q-img src="/icons/menu/orders.png" class="icon-menu" />
+            <q-icon name="img:/icons/menu/orders.svg" size="24px" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Pemesanan Saya</p>
           </div>
           <div class="row items-center q-mt-md">
-            <q-img src="/icons/menu/promo.png" class="icon-menu" />
+            <q-icon name="img:/icons/menu/promo.svg" size="24px" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Informasi Promo</p>
           </div>
           <div class="divider q-my-lg" />
           <div class="row items-center">
-            <q-img src="/icons/menu/settings.png" class="icon-menu" />
+            <q-icon name="img:/icons/menu/settings.svg" size="24px" />
             <p class="inter-sb text-base neutral-600 q-mb-none q-ml-md">Sunnting Akun</p>
           </div>
           <div @click="signOut()" class="row items-center q-mt-md cursor-pointer">
-            <q-img src="/icons/menu/logOut.png" class="icon-menu" />
+            <q-icon name="img:/icons/menu/logOut.svg" size="24px" />
             <p class="inter-sb text-base red-600 q-mb-none q-ml-md">Keluar</p>
           </div>
         </div>
