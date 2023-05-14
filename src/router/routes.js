@@ -33,7 +33,7 @@ const routes = [
   },
 
   {
-    path: '/menu',
+    path: '/profile',
     component: () => import('src/layouts/HeaderFooter.vue'),
     meta: {
       auth: true

@@ -20,7 +20,7 @@
                     class="inter-sb text-base emerald-600 q-mb-none">({{ formatNumber(users.wallet) }})</span></p>
               </RouterLink>
             </div>
-            <q-item clickable to="/menu" replace class="row items-center">
+            <q-item clickable to="/profile" replace class="row items-center">
               <q-img v-if="users.photo_profile" :src="users.photo_profile" class="profile-image" />
               <q-icon v-else name="img:/icons/header/profile.svg" size="64px" />
               <P class="inter-sb text-base neutral-600 q-mb-none q-ml-md">{{ users.username }}</P>
@@ -43,7 +43,7 @@
                   </q-item>
                 </q-list>
               </q-scroll-area>
-              <q-item clickable to="/menu" class="row items-center absolute-top bg-transparent q-pa-lg">
+              <q-item clickable to="/profile" class="row items-center absolute-top bg-transparent q-pa-lg">
                 <q-avatar size="56px" class="q-mb-sm q-mr-md">
                   <q-img v-if="users.photo_profile" :src="users.photo_profile" class="profile-image" />
                   <img v-else="users.photo_profile" src="/icons/header/profile.svg" />
