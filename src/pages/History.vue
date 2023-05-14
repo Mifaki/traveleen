@@ -132,7 +132,6 @@ export default {
     return {
       isLoading: ref(true),
       true: ref(true),
-      commentUrl: 'api/v1/tourism/',
       comment: ref(false),
       selectedRow: ref([]),
       commentData: ref([])
@@ -270,10 +269,15 @@ export default {
         this.showLoading()
         const token = getToken()
         const formData = new FormData();
-        if(this.files) formData.append('thumbnail', this.files);
+        if (this.files && this.files.length > 0) {
+          for (let i = 0; i < this.files.length; i++) {
+            formData.append('thumbnail', this.files[i]);
+          }
+        }
         formData.append('rating', argRating);
         formData.append('body', argBody);
 
+        console.log(formData);
         const url = `api/v1/tourism/${id}/comment`;
         const response = await api.post(url, formData, {
           headers: {
@@ -283,13 +287,21 @@ export default {
         });
         console.log(response.data);
         this.$q.loading.hide();
+        if(response.data.status) {
+          Notify.create({
+          color: 'green',
+          message: 'Berhasil menambahkan komentar',
+          position: 'top',
+          timeout: 2500
+        });
+        }
         this.resetDefault()
       } catch (error) {
         this.$q.loading.hide();
         console.log(error)
         Notify.create({
           color: 'red',
-          message: 'Gagal menambahkan komen silahkan coba kembali',
+          message: 'Gagal menambahkan komentar silahkan coba kembali',
           position: 'top',
           timeout: 2500
         });
