@@ -38,7 +38,7 @@
               <q-input @change="uploadPhoto" @update:model-value="val => { file = val[0] }" flat type="file" class="q-mt-sm" dense />
             </div>
             <div class="row justify-end col-8">
-              <q-btn unelevated label="Hapus" class="clear-button text-sm inter-sb q-mr-md" no-caps />
+              <q-btn unelevated label="Hapus" class="clear-button text-sm inter-sb q-mr-md" @click="uploadPhoto()" no-caps />
               <q-btn unelevated label="Ubah" class="edit-button text-sm inter-sb" no-caps @click="isEditing" />
             </div>
           </div>
@@ -179,8 +179,10 @@ export default {
     },
 
     async uploadPhoto() {
+
+      const isEmpty = this.file ? this.file : null;
       const formData = new FormData();
-      formData.append('photoProfile', this.file);
+      formData.append('photoProfile', isEmpty);
 
       try {
         const token = getToken();
@@ -193,6 +195,12 @@ export default {
         window.location.reload();
       } catch (error) {
         console.log(error);
+        Notify.create({
+        color: 'red',
+        message: 'Gagal mengupdate foto silahkan coba kembali',
+        position: 'top',
+        timeout: 2500
+      });
       }
     },
 
