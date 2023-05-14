@@ -43,9 +43,9 @@
       </div>
       <p class="inter-b text-3xl nautral-900 q-mt-xl">Metode Pembayaran</p>
       <div class="main-checkout">
-        <q-option-group v-model="payment" :options="paymentOptions" color="primary"
+        <q-option-group v-if="wallet != 0" v-model="payment" :options="paymentOptions" color="primary"
           class="inter-b text-xl neutral-900 row justify-evenly gt-xs" inline />
-        <q-option-group v-model="payment" :options="paymentOptions" color="primary"
+        <q-option-group v-if="wallet != 0" v-model="payment" :options="paymentOptions" color="primary"
           class="inter-b text-xl neutral-900 lt-sm" />
       </div>
       <q-btn unelevated label="Konfirmasi Pemesanan" color="primary" class="payment-button text-base inter-sb q-mt-xl"
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { getToken } from 'src/utils/localstorage'
 import { api } from 'src/boot/axios'
 import { Notify, useQuasar } from 'quasar'
@@ -73,7 +73,12 @@ export default {
   },
 
   setup() {
-    const wallet = ref(0);
+    let wallet = ref(0);
+    let walletLabel = computed(() => {
+      return `Koin (${wallet.value})`;
+    });
+
+
     const $q = useQuasar()
     let timer
 
@@ -84,25 +89,13 @@ export default {
       }
     })
 
-    async function fetchUserProfile() {
-      try {
-        const token = getToken();
-        const response = await api.get('api/v1/user/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        return wallet.value = response.data.data.wallet;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     return {
       payment: ref('coin'),
+      wallet,
+      walletLabel,
       paymentOptions: [
         {
-          label: `Koin (${fetchUserProfile()})`,
+          label: `${walletLabel.value}`,
           value: 'coin'
         },
         {
@@ -119,7 +112,7 @@ export default {
           $q.loading.hide()
           timer = void 0
         }, 10000)
-      }
+      },
     }
   },
 
@@ -204,8 +197,12 @@ export default {
             Authorization: `Bearer ${token}`
           }
         });
-        const url = response.data.data.url
-        window.location.href = url;
+        if (isOnline) {
+          const url = response.data.data.url
+          window.location.href = url;
+        } else {
+          this.$router.push('/history')
+        }
       }
       catch (error) {
         if (error.response && error.response.status === 500) {
@@ -243,6 +240,14 @@ export default {
       });
 
       this.isCalculate = false;
+      const userResponse = await api.get('api/v1/user/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      this.wallet = userResponse.data.data.wallet;
+      console.log(this.wallet);
     }
     catch (error) {
       console.log(error);
