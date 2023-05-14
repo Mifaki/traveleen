@@ -103,10 +103,10 @@
           <q-item clickable to="/">
             <p class="inter-sb text-base neutral-50 q-mb-none">About</p>
           </q-item>
-          <q-item clickable to="/catalog">
+          <q-item>
             <p class="inter-sb text-base neutral-50 q-mb-none">Destination</p>
           </q-item>
-          <q-item clickable to="/ini kmn?">
+          <q-item>
             <p class="inter-sb text-base neutral-50 q-mb-none">Store</p>
           </q-item>
         </div>
