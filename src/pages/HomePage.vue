@@ -37,7 +37,9 @@
       </div>
     </div>
     <div class="main-container">
-      <p class="inter-b text-4xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center gt-sm">#PeduliLingkungan</p>
+      <router-link to="/education" class="gt-sm cursor-pointer">
+        <p class="inter-b text-4xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center">#PeduliLingkungan</p>
+      </router-link>
       <router-link to="/education" class="lt-md">
         <p class="inter-b text-2xl neutral-900 q-mb-none q-mt-xl q-pt-xl text-center ">#PeduliLingkungan</p>
       </router-link>
