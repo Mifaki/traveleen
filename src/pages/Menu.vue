@@ -4,7 +4,8 @@
       <div class="main-container row">
         <div class="menu-left col-xs-12 col-sm-12 col-md-12 col-lg-4 q-mb-xl">
           <div class="row items-center">
-            <q-img :src="photoProfile" class="profile-image"/>
+            <q-img v-if="photoProfile" :src="photoProfile" class="profile-image"/>
+            <q-img v-else="users.photo_profile" src="/icons/header/profile.svg" class="profile-image" />
             <div class="col-8 q-ml-md">
               <p class="inter-sb text-lg neutral-900 q-mb-none">{{ profile.name }}</p>
               <P class="inter-r text-lg neutral-600 q-mb-none">{{ profile.email }}</P>
@@ -34,7 +35,8 @@
           <div class="row justify-between items-center">
             <div class="col-4">
               <p class="inter-r text-sm neutral-600 q-mb-none q-mb-md">Foto Profil</p>
-              <q-img :src="photoProfile" class="edit-image" />
+              <q-img v-if="photoProfile" :src="photoProfile" class="edit-image" />
+              <q-img v-else="users.photo_profile" src="/icons/header/profile.svg" class="edit-image" />
               <q-input @change="uploadPhoto" @update:model-value="val => { file = val[0] }" flat type="file" class="q-mt-sm" dense />
             </div>
             <div class="row justify-end col-8">
